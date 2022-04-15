@@ -6,6 +6,17 @@ from minimizer.interfaces.minimizer import Minimizer
 
 
 class StatisticalModel(ABC):
+    def __call__(self,  x: np.ndarray, theta: np.ndarray):
+        """
+        If the statistical model hase an underlying function, this can be called here.
+        :param x:
+        :type x:
+        :param theta:
+        :type theta:
+        :return:
+        :rtype:
+        """
+        raise NotImplementedError
 
     @abstractmethod
     def random(self, x: np.ndarray, theta: np.ndarray) -> np.ndarray:
@@ -54,4 +65,9 @@ class StatisticalModel(ABC):
     @property
     @abstractmethod
     def upper_bounds_x(self) -> np.ndarray:
+        pass
+
+    @property
+    @abstractmethod
+    def name(self) -> str:
         pass

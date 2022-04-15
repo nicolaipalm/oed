@@ -21,6 +21,9 @@ class GaussianNoiseModel(StatisticalModel):
         self._lower_bounds_x = lower_bounds_x
         self._upper_bounds_x = upper_bounds_x
 
+    def __call__(self, x: np.ndarray, theta: np.ndarray) -> float:
+        return self._function(theta=theta, x=x)
+
     def random(self, x: np.ndarray, theta: np.ndarray) -> np.ndarray:
         return np.random.normal(loc=self._function(theta=theta, x=x),
                                 scale=np.sqrt(self._sigma))
@@ -69,7 +72,6 @@ class GaussianNoiseModel(StatisticalModel):
                          lower_bounds=self.lower_bounds_theta,
                          upper_bounds=self.upper_bounds_theta, )
 
-
     @property
     def lower_bounds_theta(self) -> np.ndarray:
         return self._lower_bounds_theta
@@ -85,3 +87,7 @@ class GaussianNoiseModel(StatisticalModel):
     @property
     def upper_bounds_x(self) -> np.ndarray:
         return self._upper_bounds_x
+
+    @property
+    def name(self) -> np.ndarray:
+        return "Gaussian white noise model"
