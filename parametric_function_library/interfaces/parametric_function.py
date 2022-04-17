@@ -39,3 +39,6 @@ class ParametricFunction(ABC):
                                   parameter1_index: int,
                                   parameter2_index: int) -> float:
         pass
+
+
+

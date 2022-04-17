@@ -58,7 +58,7 @@ def styled_figure(title: str = 'Plot', data: list = []) -> go.Figure:
             spikesnap="data",
             showline=True,
             linewidth=1,
-            automargin = True,
+            automargin=True,
         ),
         yaxis=dict(
             title="",
@@ -70,8 +70,8 @@ def styled_figure(title: str = 'Plot', data: list = []) -> go.Figure:
     )
     fig = go.Figure(data=data, layout=layout)
     fig.update_layout(plot_bgcolor='rgba(0,0,0,0)',
-                      #xaxis_title='input values',
-                      #yaxis_title='output values',
+                      # xaxis_title='input values',
+                      # yaxis_title='output values',
                       legend=dict(yanchor="top",
                                   y=0.9,
                                   xanchor="right",
@@ -105,6 +105,8 @@ def dot_scatter(
         x_dots: np.array = np.array([]),
         y_dots: np.array = np.array([]),
         name_dots: str = 'Observed points',
+        fill='tonexty',
+        mode="markers+text",
         text=None
 ) -> go.Scatter:
     # Adding the dots
@@ -114,9 +116,9 @@ def dot_scatter(
         y=y_dots,
         text=text,
         textposition="top center",
-        mode="markers+text",
+        mode=mode,
         name=name_dots,
-        fill='tonexty',
+        fill=fill,
         fillcolor='rgba(100, 100, 100, 0.2)',
         marker=dict(size=8),
     )

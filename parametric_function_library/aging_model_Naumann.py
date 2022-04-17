@@ -73,6 +73,12 @@ class Aging_Model_Nau:
 
 class AgingModelNaumann(ParametricFunction):
     def __call__(self, theta: np.ndarray, x: np.ndarray) -> float:
+        if np.sum(Aging_Model_Nau().Calendar_Aging(theta=theta, x=x))<0:
+            print(np.sum(Aging_Model_Nau().Calendar_Aging(theta=theta, x=x)),x,theta)
+
+        if np.sum(Aging_Model_Nau().Calendar_Aging(theta=theta, x=x))>10000:
+            print(np.sum(Aging_Model_Nau().Calendar_Aging(theta=theta, x=x)),x,theta)
+
         return np.sum(Aging_Model_Nau().Calendar_Aging(theta=theta, x=x))
 
     def partial_derivative(self, theta: np.ndarray, x: np.ndarray, parameter_index: int) -> float:

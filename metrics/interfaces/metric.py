@@ -16,6 +16,7 @@ class Metric(ABC):
                   design: DesignOfExperiment,
                   ) -> np.ndarray:
         """
+        Either one, evaluations of blackbox OR estimations of parameter may be no
         :return Numpy array of dimension 1.
         """
         pass
@@ -36,7 +37,8 @@ class Metric(ABC):
         :param estimations_of_parameter_for_each_design:
         :type estimations_of_parameter_for_each_design:
         :param baseline:
-        :type baseline: min,max,zero or a default parameter stored in a numpy array of length equal the length of parameters; by default min
+        :type baseline:
+        min,max,zero or a default parameter stored in a numpy array of length equal the length of parameters; by default min
         :return:
         :rtype:
         """
@@ -44,6 +46,13 @@ class Metric(ABC):
         # Add the data points for each parameter
         data = []
         design = list(evaluations_blackbox_function_for_each_design.keys())[0]
+
+        # ToDo: should be independent of input given?
+        if evaluations_blackbox_function_for_each_design is None:
+            evaluations_blackbox_function_for_each_design = estimations_of_parameter_for_each_design
+
+        if estimations_of_parameter_for_each_design is None:
+            estimations_of_parameter_for_each_design = evaluations_blackbox_function_for_each_design
 
         number_of_parameters = len(
             self.calculate(evaluations_blackbox_function=evaluations_blackbox_function_for_each_design[design],
@@ -59,20 +68,25 @@ class Metric(ABC):
                 design
                 in evaluations_blackbox_function_for_each_design.keys()]
             if type(baseline) == np.ndarray:
-                optimal_parameter = baseline[index]
+                if len(baseline.shape) == 1:
+                    optimal_parameter = baseline[index] * np.ones(len(x_dots))
+                elif len(baseline.shape) == 2:
+                    optimal_parameter = baseline[index]
+                else:
+                    raise ValueError('The baseline needs to be an array of dimension 1 or 2')
 
             elif baseline == "min":
-                optimal_parameter = min(y_dots)
+                optimal_parameter = min(y_dots) * np.ones(len(x_dots))
 
             elif baseline == "max":
-                optimal_parameter = max(y_dots)
+                optimal_parameter = max(y_dots) * np.ones(len(x_dots))
 
-            elif baseline == "zero":
-                optimal_parameter = 0
+            else:
+                optimal_parameter = 0 * np.ones(len(x_dots))
 
             data.append(
-                line_scatter(x_lines=x_dots, y_lines=optimal_parameter * np.ones(len(x_dots)), visible=False,
-                             name_line="minimum variance"))
+                line_scatter(x_lines=x_dots, y_lines=optimal_parameter, visible=False,
+                             name_line="baseline"))
             data.append(
                 dot_scatter(x_dots=x_dots, y_dots=y_dots, visible=False, text=[round(value, 2) for value in y_dots]))
 

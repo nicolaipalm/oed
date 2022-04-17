@@ -17,6 +17,7 @@ class MinimumEntryOfCRLBDesign(DesignOfExperiment):
                  initial_theta: np.ndarray,
                  statistical_model: StatisticalModel,
                  minimizer: Minimizer):
+        print(f'Calculating the {self.name}...\n')
         np.array([upper_bounds_design for _ in range(number_designs)])
         self._design = minimizer(function=lambda x: statistical_model.calculate_cramer_rao_lower_bound(theta=initial_theta,
                                                            x0=x.reshape(number_designs, len(lower_bounds_design)))[

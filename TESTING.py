@@ -11,25 +11,27 @@ from metrics.metric_library.determinant_of_fisher_information_matrix import Dete
 from metrics.metric_library.estimation_mean_error import EstimationMeanError
 from metrics.metric_library.estimation_mean_parameter_estimations import EstimationMeanParameterEstimations
 from metrics.metric_library.estimation_variance_parameter_estimations import EstimationVarianceParameterEstimations
+from metrics.metric_library.k_fold_cross_validation import KFoldCrossValidation
 from minimizer.minimizer_library.differential_evolution import DifferentialEvolution
 from parametric_function_library.aging_model_Naumann import AgingModelNaumann
 from statistical_models.statistical_model_library.gaussian_noise_model import GaussianNoiseModel
+from minimizer.minimizer_library.slsqp import SLSQP
+
 ####
 # statistical model
-from visualization.create_dashboard import create_dashboard
 
 theta = np.array([4, 2300, 0.8])
 
-number_designs = 1
-number_of_evaluations = 1
+number_designs = 3
+number_of_evaluations = 100
 
 # real noise
 sigma = 0.029 ** 2
 
-lower_bounds_x = np.array([0.001, 279.15])
+lower_bounds_x = np.array([0.1, 279.15])
 upper_bounds_x = np.array([1, 333.15])
 
-lower_bounds_theta = np.array([0.001, 0.001, 0.001])
+lower_bounds_theta = np.array([0.1, 0.001, 0.1])
 upper_bounds_theta = np.array([10, 10000, 1])
 
 # print(random_design.design)
@@ -50,9 +52,6 @@ statistical_model = GaussianNoiseModel(function=parametric_function, lower_bound
 def blackbox_model(x):
     return statistical_model.random(theta=theta, x=x)
 
-
-estimate_error = EstimationMeanError(theta=theta, number_evaluations=100, blackbox_function=blackbox_model,
-                    statistical_model=statistical_model)
 
 LH = LatinHypercube(lower_bounds_design=lower_bounds_x, upper_bounds_design=upper_bounds_x,
                     number_designs=number_designs)
@@ -87,9 +86,11 @@ print(
 ####
 # metrics
 
-
 metrics = [DeterminantOfFisherInformationMatrix(theta=theta, statistical_model=statistical_model),
-           EstimationMeanParameterEstimations(), EstimationVarianceParameterEstimations()]
+           EstimationMeanParameterEstimations(), EstimationVarianceParameterEstimations(),
+           EstimationMeanError(number_evaluations=100, theta=theta,
+                               statistical_model=statistical_model),
+           KFoldCrossValidation(statistical_model=statistical_model, minimizer=minimizer,number_splits=2)]
 
 ####
 # benchmarking
@@ -102,30 +103,44 @@ benchmarking2 = Benchmarking(blackbox_model=blackbox_model, statistical_model=st
 
 benchmarking.evaluate_designs(number_of_evaluations=number_of_evaluations, minimizer=minimizer)
 
-benchmarking.save_to_csv()
+# benchmarking.save_to_csv()
 benchmarking2.load_from_csv()
 
-create_dashboard(benchmarking=benchmarking, metrics=metrics)
 
+k_fold_data = {}
+for design in benchmarking.evaluations_blackbox_function.keys():
+    k_fold_data[design] = benchmarking.evaluations_blackbox_function[design][0]
 #####
-input()
 
-fig = benchmarking.metrics[0].plot(
+fig = metrics[0].plot(
     evaluations_blackbox_function_for_each_design=benchmarking.evaluations_blackbox_function,
     estimations_of_parameter_for_each_design=benchmarking.maximum_likelihood_estimations,
     baseline="max",
 )
 fig.show()
 
-fig1 = benchmarking.metrics[1].plot(
+fig1 = metrics[1].plot(
     evaluations_blackbox_function_for_each_design=benchmarking.evaluations_blackbox_function,
     estimations_of_parameter_for_each_design=benchmarking.maximum_likelihood_estimations,
     baseline=theta,
 )
 fig1.show()
 
-fig2 = benchmarking.metrics[2].plot(
+fig2 = metrics[2].plot(
     evaluations_blackbox_function_for_each_design=benchmarking.evaluations_blackbox_function,
     estimations_of_parameter_for_each_design=benchmarking.maximum_likelihood_estimations
 )
 fig2.show()
+
+fig3 = metrics[3].plot(
+    evaluations_blackbox_function_for_each_design=benchmarking.evaluations_blackbox_function,
+    estimations_of_parameter_for_each_design=benchmarking.maximum_likelihood_estimations,
+    baseline="min",
+)
+fig3.show()
+
+fig4 = metrics[4].plot(
+    evaluations_blackbox_function_for_each_design=k_fold_data,
+    baseline="min",
+)
+fig4.show()

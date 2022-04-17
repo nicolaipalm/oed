@@ -2,11 +2,13 @@ from typing import List, Callable
 
 import numpy as np
 import pandas as pd
+import plotly.graph_objs as go
 from tqdm import tqdm
 
 from designs_of_experiments.interfaces.design_of_experiment import DesignOfExperiment
 from minimizer.interfaces.minimizer import Minimizer
 from statistical_models.interfaces.statistical_model import StatisticalModel
+from visualization.plotting_functions import dot_scatter, styled_figure
 
 
 class Benchmarking:
@@ -46,9 +48,8 @@ class Benchmarking:
         for doe in self._designs_of_experiments:
             evaluations = []
             estimations = []
-            print(f'\n Evaluate the {doe.name}...')
             # TODO: prevent overflow
-            for _ in tqdm(range(number_of_evaluations)):
+            for _ in tqdm(range(number_of_evaluations), desc=f'Evaluate the {doe.name}'):
                 evaluation = np.array([self._blackbox_model(x) for x in doe.design])
                 evaluations.append(evaluation)
                 estimations.append(
@@ -69,7 +70,7 @@ class Benchmarking:
         pd.DataFrame(data=data).to_csv(file_name + '.csv')
         return True
 
-    def load_from_csv(self, file_name: str = "benchmarking.csv"):
+    def load_from_csv(self, file_name: str = "benchmarking.csv") -> bool:
         t = pd.read_csv(file_name, index_col=0)
         number_parameters = len(self.statistical_model.lower_bounds_theta)
         for design in self.designs:
@@ -84,3 +85,58 @@ class Benchmarking:
             self.maximum_likelihood_estimations[design] = np.array(estimations)
 
         return True
+
+    def plot_estimations(self) -> go.Figure:
+
+        # Add the data points for each parameter
+        data = []
+
+        initial_design = list(self.maximum_likelihood_estimations.keys())[0]
+        number_of_parameters = len(self.maximum_likelihood_estimations[initial_design][0])
+        x_dots = [design.name for design in self.maximum_likelihood_estimations.keys() for _ in
+                  self.maximum_likelihood_estimations[design].T[0]]
+
+        for index in range(number_of_parameters):
+            y_dots = [point
+                      for design in self.maximum_likelihood_estimations.keys()
+                      for point in self.maximum_likelihood_estimations[design].T[index]
+                      ]
+
+            data.append(
+                dot_scatter(x_dots=x_dots, y_dots=y_dots, visible=False, fill=None))
+
+        data[0].visible = True
+        fig = styled_figure(title="Evaluations of blackbox function for each parameter", data=data)
+        # Add dropdowns
+        button_layer_1_height = 1.12
+        fig.update_layout(
+            updatemenus=[
+                dict(
+                    buttons=list([
+                        dict(label=parameter,
+                             method="update",
+                             args=[
+                                 {"visible": [
+                                     parameter == other_parameter
+                                     for other_parameter in
+                                     range(number_of_parameters)]},
+                                 {"annotations": []}]) for parameter in range(number_of_parameters)
+                    ]),
+                    type="buttons",
+                    direction="right",
+                    pad={"r": 10, "t": 10, "b": 15},
+                    showactive=True,
+                    x=0.25,
+                    xanchor="left",
+                    y=button_layer_1_height,
+                ),
+            ]
+        )
+        fig.update_layout(
+            annotations=[
+                dict(text="Parameter Index:", showarrow=False,
+                     x=0, y=1.085, yref="paper", align="left")
+            ]
+        )
+
+        return fig
