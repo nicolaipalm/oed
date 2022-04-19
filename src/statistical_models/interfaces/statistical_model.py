@@ -48,7 +48,10 @@ class StatisticalModel(ABC):
         pass
 
     def calculate_maximum_likelihood_estimation(
-        self, x0: np.ndarray, y: np.ndarray, minimizer: Minimizer,
+        self,
+        x0: np.ndarray,
+        y: np.ndarray,
+        minimizer: Minimizer,
     ) -> np.ndarray:
         return minimizer(
             function=lambda theta: -self.calculate_likelihood(theta=theta, y=y, x0=x0),

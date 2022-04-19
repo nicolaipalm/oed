@@ -77,14 +77,18 @@ header = dbc.Navbar(
     ),
     dark=True,
     color="dark",
-    sticky="top",)
+    sticky="top",
+)
 
-app.layout = html.Div([html.Header(html.P("Hello world")),
-    dcc.Dropdown(['New York City', 'Montréal', 'San Francisco'], 'Montréal', multi=True)
-])
+app.layout = html.Div(
+    [
+        html.Header(html.P("Hello world")),
+        dcc.Dropdown(
+            ["New York City", "Montréal", "San Francisco"], "Montréal", multi=True
+        ),
+    ]
+)
 
 
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run_server(debug=True)

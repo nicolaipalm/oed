@@ -5,16 +5,25 @@ from src.designs_of_experiments.design_library.d_design import DDesign
 from src.designs_of_experiments.design_library.latin_hypercube import LatinHypercube
 from src.designs_of_experiments.design_library.pi_design import PiDesign
 from src.designs_of_experiments.design_library.random import Random
+
 ####
 # Designs
-from src.metrics.metric_library.determinant_of_fisher_information_matrix import DeterminantOfFisherInformationMatrix
+from src.metrics.metric_library.determinant_of_fisher_information_matrix import (
+    DeterminantOfFisherInformationMatrix,
+)
 from src.metrics.metric_library.estimation_mean_error import EstimationMeanError
-from src.metrics.metric_library.estimation_mean_parameter_estimations import EstimationMeanParameterEstimations
-from src.metrics.metric_library.estimation_variance_parameter_estimations import EstimationVarianceParameterEstimations
+from src.metrics.metric_library.estimation_mean_parameter_estimations import (
+    EstimationMeanParameterEstimations,
+)
+from src.metrics.metric_library.estimation_variance_parameter_estimations import (
+    EstimationVarianceParameterEstimations,
+)
 from src.metrics.metric_library.k_fold_cross_validation import KFoldCrossValidation
 from src.minimizer.minimizer_library.differential_evolution import DifferentialEvolution
 from src.parametric_function_library.aging_model_Naumann import AgingModelNaumann
-from src.statistical_models.statistical_model_library.gaussian_noise_model import GaussianNoiseModel
+from src.statistical_models.statistical_model_library.gaussian_noise_model import (
+    GaussianNoiseModel,
+)
 
 ####
 # statistical model
@@ -25,7 +34,7 @@ number_designs = 3
 number_of_evaluations = 100
 
 # real noise
-sigma = 0.029 ** 2
+sigma = 0.029**2
 
 lower_bounds_x = np.array([0.1, 279.15])
 upper_bounds_x = np.array([1, 333.15])
@@ -41,9 +50,14 @@ parametric_function = AgingModelNaumann()
 # minimizer
 minimizer = DifferentialEvolution()
 
-statistical_model = GaussianNoiseModel(function=parametric_function, lower_bounds_x=lower_bounds_x,
-                                       upper_bounds_x=upper_bounds_x, lower_bounds_theta=lower_bounds_theta,
-                                       upper_bounds_theta=upper_bounds_theta, sigma=sigma)
+statistical_model = GaussianNoiseModel(
+    function=parametric_function,
+    lower_bounds_x=lower_bounds_x,
+    upper_bounds_x=upper_bounds_x,
+    lower_bounds_theta=lower_bounds_theta,
+    upper_bounds_theta=upper_bounds_theta,
+    sigma=sigma,
+)
 
 
 ####
@@ -52,26 +66,55 @@ def blackbox_model(x):
     return statistical_model.random(theta=theta, x=x)
 
 
-LH = LatinHypercube(lower_bounds_design=lower_bounds_x, upper_bounds_design=upper_bounds_x,
-                    number_designs=number_designs)
+LH = LatinHypercube(
+    lower_bounds_design=lower_bounds_x,
+    upper_bounds_design=upper_bounds_x,
+    number_designs=number_designs,
+)
 
 # print(LH.design, LH.name)
 
-random_design = Random(number_designs=number_designs, lower_bounds_design=lower_bounds_x,
-                       upper_bounds_design=upper_bounds_x)
+random_design = Random(
+    number_designs=number_designs,
+    lower_bounds_design=lower_bounds_x,
+    upper_bounds_design=upper_bounds_x,
+)
 
-min_entry = PiDesign(number_designs=number_designs, lower_bounds_design=lower_bounds_x,
-                     upper_bounds_design=upper_bounds_x, column=0, row=0, initial_theta=theta,
-                     statistical_model=statistical_model, minimizer=minimizer)
+min_entry = PiDesign(
+    number_designs=number_designs,
+    lower_bounds_design=lower_bounds_x,
+    upper_bounds_design=upper_bounds_x,
+    column=0,
+    row=0,
+    initial_theta=theta,
+    statistical_model=statistical_model,
+    minimizer=minimizer,
+)
 
-max_det = DDesign(number_designs=number_designs, lower_bounds_design=lower_bounds_x,
-                  upper_bounds_design=upper_bounds_x, initial_theta=theta,
-                  statistical_model=statistical_model, minimizer=minimizer)
+max_det = DDesign(
+    number_designs=number_designs,
+    lower_bounds_design=lower_bounds_x,
+    upper_bounds_design=upper_bounds_x,
+    initial_theta=theta,
+    statistical_model=statistical_model,
+    minimizer=minimizer,
+)
 
-print('LH: 1 entry CRLB', statistical_model.calculate_cramer_rao_lower_bound(x0=LH.design, theta=theta)[1, 1])
-print('Min entry', statistical_model.calculate_cramer_rao_lower_bound(x0=min_entry.design, theta=theta)[1, 1])
 print(
-    statistical_model.calculate_determinant_fisher_information_matrix(x0=LH.design, theta=theta))
+    "LH: 1 entry CRLB",
+    statistical_model.calculate_cramer_rao_lower_bound(x0=LH.design, theta=theta)[1, 1],
+)
+print(
+    "Min entry",
+    statistical_model.calculate_cramer_rao_lower_bound(
+        x0=min_entry.design, theta=theta
+    )[1, 1],
+)
+print(
+    statistical_model.calculate_determinant_fisher_information_matrix(
+        x0=LH.design, theta=theta
+    )
+)
 
 ####
 # MLE
@@ -85,22 +128,38 @@ print(
 ####
 # metrics
 
-metrics = [DeterminantOfFisherInformationMatrix(theta=theta, statistical_model=statistical_model),
-           EstimationMeanParameterEstimations(), EstimationVarianceParameterEstimations(),
-           EstimationMeanError(number_evaluations=100, theta=theta,
-                               statistical_model=statistical_model),
-           KFoldCrossValidation(statistical_model=statistical_model, minimizer=minimizer,number_splits=2)]
+metrics = [
+    DeterminantOfFisherInformationMatrix(
+        theta=theta, statistical_model=statistical_model
+    ),
+    EstimationMeanParameterEstimations(),
+    EstimationVarianceParameterEstimations(),
+    EstimationMeanError(
+        number_evaluations=100, theta=theta, statistical_model=statistical_model
+    ),
+    KFoldCrossValidation(
+        statistical_model=statistical_model, minimizer=minimizer, number_splits=2
+    ),
+]
 
 ####
 # benchmarking
 
-benchmarking = Benchmarking(blackbox_model=blackbox_model, statistical_model=statistical_model,
-                            designs_of_experiments=[LH, random_design, min_entry, max_det])
+benchmarking = Benchmarking(
+    blackbox_model=blackbox_model,
+    statistical_model=statistical_model,
+    designs_of_experiments=[LH, random_design, min_entry, max_det],
+)
 
-benchmarking2 = Benchmarking(blackbox_model=blackbox_model, statistical_model=statistical_model,
-                             designs_of_experiments=[LH, random_design, min_entry, max_det])
+benchmarking2 = Benchmarking(
+    blackbox_model=blackbox_model,
+    statistical_model=statistical_model,
+    designs_of_experiments=[LH, random_design, min_entry, max_det],
+)
 
-benchmarking.evaluate_designs(number_of_evaluations=number_of_evaluations, minimizer=minimizer)
+benchmarking.evaluate_designs(
+    number_of_evaluations=number_of_evaluations, minimizer=minimizer
+)
 
 # benchmarking.save_to_csv()
 benchmarking2.load_from_csv()
@@ -127,7 +186,7 @@ fig1.show()
 
 fig2 = metrics[2].plot(
     evaluations_blackbox_function_for_each_design=benchmarking.evaluations_blackbox_function,
-    estimations_of_parameter_for_each_design=benchmarking.maximum_likelihood_estimations
+    estimations_of_parameter_for_each_design=benchmarking.maximum_likelihood_estimations,
 )
 fig2.show()
 

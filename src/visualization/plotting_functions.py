@@ -139,6 +139,14 @@ def dot_scatter(
             step["args"][0]["visible"][i] = True  # Toggle i'th trace to "visible"
             steps.append(step)
 
-        sliders = [dict(active=0, pad={"t": 50}, steps=steps,)]
-        figure.update_layout(sliders=sliders,)
+        sliders = [
+            dict(
+                active=0,
+                pad={"t": 50},
+                steps=steps,
+            )
+        ]
+        figure.update_layout(
+            sliders=sliders,
+        )
         return figure

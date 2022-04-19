@@ -117,16 +117,12 @@ class Benchmarking:
             ]
 
             data.append(
-                dot_scatter(x_dots=x_dots,
-                            y_dots=y_dots,
-                            visible=False,
-                            fill=None)
+                dot_scatter(x_dots=x_dots, y_dots=y_dots, visible=False, fill=None)
             )
 
         data[0].visible = True
         fig = styled_figure(
-            title="Evaluations of blackbox function for each parameter",
-            data=data
+            title="Evaluations of blackbox function for each parameter", data=data
         )
         # Add dropdowns
         button_layer_1_height = 1.12
