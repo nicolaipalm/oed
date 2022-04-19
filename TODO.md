@@ -44,11 +44,11 @@ ToDO:
   erreor-> not needed to be implemented in this library...?
 - (pi design needs an initial design within-> otherwise determinant not invertible ...)
 
---- 
+---
 
 - statistical model-> in context of FI (assume there exists partial derivative of likelihood etc)
 - MLE on statistical model
 - we are interested how different designs of experiments perform
 
 Title:
-optimal experimental desgin for parameter individual estimators of/in parametric models with gaussian white noise 
+optimal experimental desgin for parameter individual estimators of/in parametric models with gaussian white noise

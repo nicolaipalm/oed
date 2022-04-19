@@ -97,7 +97,7 @@ Explain your code style and show how to check it.
 ## Database
 
 Explaining what database (and version) has been used. Provide download links.
-Documents your database design and schemas, relations etc... 
+Documents your database design and schemas, relations etc...
 
 ## Licensing
 
