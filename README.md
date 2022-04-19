@@ -1,54 +1,100 @@
-x: one single design x0: array of designs x y: output
+<img src="./images/logo.sample.png" alt="Logo of the project" align="right">
 
-supposed to grow
+# Name of the project &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
+> Additional information or tag line
 
----
-Write with cells the example script in here (benchmarking and dashboard)
-and give reference to notebook
+A brief description of your project, what it is used for.
 
----
-You can define your own metric (section...-> )
+## Installing / Getting started
 
----
-In dashboard: learn how to interpret the plots , email for questions, view on github -> plot also the functions
-dependant of parameters ...
----
-!!! Web application saved as html -> freeze results for paper!!!! -> this is the use of dashboard What i need:
+A quick introduction of the minimal setup you need to get a hello world up &
+running.
 
-- paper ref
-- author
-- plots
-- meta data ?
-- save data as csv
+```shell
+commands here
+```
 
----
-ToDO:
+Here you should say what actually happens when you execute the code above.
 
-- docu-> coding beispiel für jede metric: max der parameter und andere error funktion für integral -> erkläre wieso
-  metric mit max zwei plotting
-- HOW TO DIRECTORY docu neues (super scvhlechtes, und custom) design (max mit geschätzem theta...individuell...), neue metrik, daten speichern,
-- ganzen prozess implementieren (in notebook) -> erst initial dann ....
-- setup git -> also nb extensions...
-- (neues projekt mit dashboard)
-- keine problems
-- benchmark whole process
-- code coverage black flake8 etc.
-- plot with sliders the parametric function
-- why so much slower than other module?
-- (metric CRLB eintrag !!! -> overwrite plotting functions)
-- test if parameters are redundant -> in validation error we see almost no difference ... cross validation has errors in
-  it
-- -> !!! cross validation: comparing the values is difficult because the DESIGN differ (think of linear function: if
-  designs are great than error will be great...BUT: we compare different models on SAME designs... not on different
-  designs. AND: here LH has an optimal property since it allows cross validation to better estimate the integral of
-  erreor-> not needed to be implemented in this library...?
-- (pi design needs an initial design within-> otherwise determinant not invertible ...)
+## Developing
 
---- 
+### Built With
+List main libraries, frameworks used including versions (React, Angular etc...)
 
-- statistical model-> in context of FI (assume there exists partial derivative of likelihood etc)
-- MLE on statistical model
-- we are interested how different designs of experiments perform
+### Prerequisites
+What is needed to set up the dev environment. For instance, global dependencies or any other tools. include download links.
 
-Title:
-optimal experimental desgin for parameter individual estimators of/in parametric models with gaussian white noise 
+
+### Setting up Dev
+
+Here's a brief intro about what a developer must do in order to start developing
+the project further:
+
+```shell
+git clone https://github.com/your/your-project.git
+cd your-project/
+packagemanager install
+```
+
+And state what happens step-by-step. If there is any virtual environment, local server or database feeder needed, explain here.
+
+### Building
+
+If your project needs some additional steps for the developer to build the
+project after some code changes, state them here. for example:
+
+```shell
+./configure
+make
+make install
+```
+
+Here again you should state what actually happens when the code above gets
+executed.
+
+### Deploying / Publishing
+give instructions on how to build and release a new version
+In case there's some step you have to take that publishes this project to a
+server, this is the right time to state it.
+
+```shell
+packagemanager deploy your-project -s server.com -u username -p password
+```
+
+And again you'd need to tell what the previous code actually does.
+
+## Versioning
+
+We can maybe use [SemVer](http://semver.org/) for versioning. For the versions available, see the [link to tags on this repository](/tags).
+
+
+## Configuration
+
+Here you should write what are all of the configurations a user can enter when using the project.
+
+## Tests
+
+Describe and show how to run the tests with code examples.
+Explain what these tests test and why.
+
+```shell
+Give an example
+```
+
+## Style guide
+
+Explain your code style and show how to check it.
+
+## Api Reference
+
+If the api is external, link to api documentation. If not describe your api including authentication methods as well as explaining all the endpoints with their required parameters.
+
+
+## Database
+
+Explaining what database (and version) has been used. Provide download links.
+Documents your database design and schemas, relations etc... 
+
+## Licensing
+
+State what the license is and how to find the text version of the license.
