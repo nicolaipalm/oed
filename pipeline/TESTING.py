@@ -30,7 +30,7 @@ from src.statistical_models.statistical_model_library.gaussian_noise_model impor
 
 theta = np.array([4, 2300, 0.8])
 
-number_designs = 3
+number_designs = 12
 number_of_evaluations = 100
 
 # real noise
