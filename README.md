@@ -1,9 +1,17 @@
 <img src="./images/pi_design.jpeg" alt="Logo of the project" align="right" width="200">
 
-# Name of the project &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
-> Additional information or tag line
+# Optimal Design of Experimentt &middot; [![Build Status](https://img.shields.io/travis/npm/npm/latest.svg?style=flat-square)](https://travis-ci.org/npm/npm) [![npm](https://img.shields.io/npm/v/npm.svg?style=flat-square)](https://www.npmjs.com/package/npm) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/your/your-project/blob/master/LICENSE)
+> Optimal design of experiment, machine learning, Fisher information
 
 A brief description of your project, what it is used for.
+This project provides
+- convenient interfaces for designs of experiments, metrics to evaluate them, functions and statistical models
+- a library for statistical models, designs of experimentsm and metrics
+- in particular the pi-design
+- a pipeline for benchmarking and comparing different designs for different scenarios
+- jupyter notebooks to easily run and learn how to use this projects content
+
+This project is closely related to (the paper) where the background and mathematical framework used here is explained in detail.
 
 ## Installing / Getting started
 
