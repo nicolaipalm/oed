@@ -32,10 +32,7 @@ ToDO:
 - (neues projekt mit dashboard)
 - keine problems
 - benchmark whole process
-- code coverage black flake8 etc.
-- plot with sliders the parametric function
 - why so much slower than other module?
-- (metric CRLB eintrag !!! -> overwrite plotting functions)
 - test if parameters are redundant -> in validation error we see almost no difference ... cross validation has errors in
   it
 - -> !!! cross validation: comparing the values is difficult because the DESIGN differ (think of linear function: if
