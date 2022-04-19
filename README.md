@@ -19,12 +19,15 @@ Run in your terminal
 ```shell
 git clone https://github.com/nicolaipalm/ode.git
 cd ode/
+```
+In order to set up a conda environment type in your terminal
+
+```shell
 conda create -n ode
 conda activate ode
 conda install pip
 pip install -r requirements.txt
 ```
-to use conda environments and run the jupyter notebooks. 
 
 ## Getting started
 
