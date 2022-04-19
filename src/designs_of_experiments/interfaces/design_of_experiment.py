@@ -7,6 +7,7 @@ class DesignOfExperiment(ABC):
     """
     This
     """
+
     @property
     @abstractmethod
     def name(self) -> str:

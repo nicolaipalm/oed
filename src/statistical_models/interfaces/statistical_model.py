@@ -23,29 +23,38 @@ class StatisticalModel(ABC):
         pass
 
     @abstractmethod
-    def calculate_fisher_information_matrix(self, x0: np.ndarray, theta: np.ndarray) -> np.ndarray:
+    def calculate_fisher_information_matrix(
+        self, x0: np.ndarray, theta: np.ndarray
+    ) -> np.ndarray:
         pass
 
-    def calculate_cramer_rao_lower_bound(self, x0: np.ndarray, theta: np.ndarray) -> np.ndarray:
+    def calculate_cramer_rao_lower_bound(
+        self, x0: np.ndarray, theta: np.ndarray
+    ) -> np.ndarray:
         return np.linalg.inv(
-            self.calculate_fisher_information_matrix(x0=x0, theta=theta) +
-            2e-7 * np.identity(len(theta)))
+            self.calculate_fisher_information_matrix(x0=x0, theta=theta)
+            + 2e-7 * np.identity(len(theta))
+        )
 
-    def calculate_determinant_fisher_information_matrix(self, x0: np.ndarray, theta: np.ndarray) -> float:
+    def calculate_determinant_fisher_information_matrix(
+        self, x0: np.ndarray, theta: np.ndarray
+    ) -> float:
         return np.linalg.det(self.calculate_fisher_information_matrix(x0, theta))
 
     @abstractmethod
-    def calculate_likelihood(self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray) -> np.ndarray:
+    def calculate_likelihood(
+        self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray
+    ) -> np.ndarray:
         pass
 
-    def calculate_maximum_likelihood_estimation(self,
-                                                x0: np.ndarray,
-                                                y: np.ndarray,
-                                                minimizer: Minimizer,
-                                                ) -> np.ndarray:
-        return minimizer(function=lambda theta: -self.calculate_likelihood(theta=theta, y=y, x0=x0),
-                         lower_bounds=self.lower_bounds_theta,
-                         upper_bounds=self.upper_bounds_theta, )
+    def calculate_maximum_likelihood_estimation(
+        self, x0: np.ndarray, y: np.ndarray, minimizer: Minimizer,
+    ) -> np.ndarray:
+        return minimizer(
+            function=lambda theta: -self.calculate_likelihood(theta=theta, y=y, x0=x0),
+            lower_bounds=self.lower_bounds_theta,
+            upper_bounds=self.upper_bounds_theta,
+        )
 
     @property
     @abstractmethod

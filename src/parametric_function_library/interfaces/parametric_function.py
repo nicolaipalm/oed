@@ -9,19 +9,16 @@ class ParametricFunction(ABC):
     """
 
     @abstractmethod
-    def __call__(self,
-                 theta: np.ndarray,
-                 x: np.ndarray) -> float:
+    def __call__(self, theta: np.ndarray, x: np.ndarray) -> float:
         """
         :returns f_{theta}(x)
         """
         pass
 
     @abstractmethod
-    def partial_derivative(self,
-                           theta: np.ndarray,
-                           x: np.ndarray,
-                           parameter_index: int) -> float:
+    def partial_derivative(
+        self, theta: np.ndarray, x: np.ndarray, parameter_index: int
+    ) -> float:
         """
         :param theta:
         :type theta:
@@ -34,9 +31,11 @@ class ParametricFunction(ABC):
         """
         pass
 
-    def second_partial_derivative(self,
-                                  theta: np.ndarray,
-                                  x: np.ndarray,
-                                  parameter1_index: int,
-                                  parameter2_index: int) -> float:
+    def second_partial_derivative(
+        self,
+        theta: np.ndarray,
+        x: np.ndarray,
+        parameter1_index: int,
+        parameter2_index: int,
+    ) -> float:
         pass

@@ -1,16 +1,18 @@
 import numpy as np
 
-from src.designs_of_experiments.interfaces.design_of_experiment import DesignOfExperiment
+from src.designs_of_experiments.interfaces.design_of_experiment import (
+    DesignOfExperiment,
+)
 from src.metrics.interfaces.metric import Metric
 
 
 class LeaveOneOutValidation(Metric):
-
-    def calculate(self,
-                  evaluations_blackbox_function: np.ndarray,
-                  estimations_of_parameter: np.ndarray,
-                  design: DesignOfExperiment = None,
-                  ) -> float:
+    def calculate(
+        self,
+        evaluations_blackbox_function: np.ndarray,
+        estimations_of_parameter: np.ndarray,
+        design: DesignOfExperiment = None,
+    ) -> float:
         pass
 
     @property
