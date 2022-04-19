@@ -13,16 +13,30 @@ This project provides
 
 This project is closely related to (the paper) where the background and mathematical framework used here is explained in detail.
 
-## Installing / Getting started
+## Installing 
 
-A quick introduction of the minimal setup you need to get a hello world up &
-running.
+Run in your terminal
 
 ```shell
-commands here
+git clone https://github.com/nicolaipalm/ode.git
+cd ode/
+conda create -n ode
+conda activate ode
+conda install pip
+pip install -r requirements.txt
 ```
+to use conda environments and run the jupyter notebooks. 
 
-Here you should say what actually happens when you execute the code above.
+## Getting started
+
+The easiest way in order to get familiar with this projects is by checking out the notebooks.
+Type in your terminal
+
+```shell
+conda activate ode
+jupyter notebook
+```
+navigate to the notebooks sub-directory and open and run the paper.ipynb or template.ipynb notebook.
 
 ## Developing
 
