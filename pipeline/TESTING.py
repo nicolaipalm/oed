@@ -3,7 +3,7 @@ import numpy as np
 from src.benchmarking.benchmarking import Benchmarking
 from src.designs_of_experiments.design_library.d_design import DDesign
 from src.designs_of_experiments.design_library.latin_hypercube import LatinHypercube
-from src.designs_of_experiments.design_library import PiDesign
+from src.designs_of_experiments.design_library.pi_design import PiDesign
 from src.designs_of_experiments.design_library.random import Random
 ####
 # Designs
@@ -13,7 +13,7 @@ from src.metrics.metric_library.estimation_mean_parameter_estimations import Est
 from src.metrics.metric_library.estimation_variance_parameter_estimations import EstimationVarianceParameterEstimations
 from src.metrics.metric_library.k_fold_cross_validation import KFoldCrossValidation
 from src.minimizer.minimizer_library.differential_evolution import DifferentialEvolution
-from src.parametric_function_library import AgingModelNaumann
+from src.parametric_function_library.aging_model_Naumann import AgingModelNaumann
 from src.statistical_models.statistical_model_library.gaussian_noise_model import GaussianNoiseModel
 
 ####
