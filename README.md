@@ -35,13 +35,9 @@ pip install -r requirements.txt
 ## Getting started
 
 The easiest way in order to get familiar with this projects is by checking out the notebooks.
-Type in your terminal
+Navigate to the notebooks sub-directory and follow the instructions given in the README.md.
 
-```shell
-conda activate ode
-jupyter notebook
-```
-navigate to the notebooks sub-directory and open and run the paper.ipynb or template.ipynb notebook.
+Alternatively you can run the TEST.py file in the pipeline subdirectory.
 
 ## Developing
 
