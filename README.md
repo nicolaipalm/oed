@@ -40,6 +40,11 @@ The easiest way in order to get familiar with this projects is by checking out t
 Navigate to the notebooks sub-directory and follow the instructions given in the README.md.
 
 Alternatively you can run the aging_model_naumann_pipeline.py file in the pipeline subdirectory.
+Execute
+```shell
+python pipeline/aging_model_naumann_pipeline.py
+```
+in your terminal or use your favourite IDE.
 
 
 ## Versioning
