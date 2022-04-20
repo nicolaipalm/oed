@@ -1,9 +1,6 @@
 <img src="./images/pi_design.jpeg" alt="Logo of the project" align="right" width="200">
 
-# Optimal Design of Experiment &middot; 
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
-[![DOI:10.1007/978-3-319-76207-4_15](https://zenodo.org/badge/DOI/xxx.svg)](https://doi.org/)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+# Optimal Design of Experiment &middot; [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![DOI:10.1007/978-3-319-76207-4_15](https://zenodo.org/badge/DOI/xxx.svg)](https://doi.org/) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
 > Optimal design of experiment, machine learning, Fisher information
 
 This project provides
@@ -35,30 +32,22 @@ pip install -r requirements.txt
 ## Getting started
 
 The easiest way in order to get familiar with this projects is by checking out the notebooks.
-Type in your terminal
+Navigate to the notebooks sub-directory and follow the instructions given in the README.md.
 
-```shell
-conda activate ode
-jupyter notebook
-```
-navigate to the notebooks sub-directory and open and run the paper.ipynb or template.ipynb notebook.
+Alternatively you can run the aging_model_naumann_pipeline.py file in the pipeline subdirectory.
 
-## Developing
-
-### Prerequisites
-What is needed to set up the dev environment. For instance, global dependencies or any other tools. include download links.
 
 ## Versioning
-We can maybe use [SemVer](http://semver.org/) for versioning. For the versions available, see the [link to tags on this repository](/tags).
+TBA
 
 
 
 ## Tests
-```shell
-example
-```
+TBA
+
 
 
 ## Licensing
+TBA
 
 
