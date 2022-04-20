@@ -39,13 +39,9 @@ Navigate to the notebooks sub-directory and follow the instructions given in the
 
 Alternatively you can run the aging_model_naumann_pipeline.py file in the pipeline subdirectory.
 
-## Developing
-
-### Prerequisites
-What is needed to set up the dev environment. For instance, global dependencies or any other tools. include download links.
 
 ## Versioning
-We can maybe use [SemVer](http://semver.org/) for versioning. For the versions available, see the [link to tags on this repository](/tags).
+TBA
 
 
 
