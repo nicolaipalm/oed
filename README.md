@@ -37,7 +37,7 @@ pip install -r requirements.txt
 The easiest way in order to get familiar with this projects is by checking out the notebooks.
 Navigate to the notebooks sub-directory and follow the instructions given in the README.md.
 
-Alternatively you can run the TEST.py file in the pipeline subdirectory.
+Alternatively you can run the aging_model_naumann_pipeline.py file in the pipeline subdirectory.
 
 ## Developing
 
@@ -50,11 +50,11 @@ We can maybe use [SemVer](http://semver.org/) for versioning. For the versions a
 
 
 ## Tests
-```shell
-example
-```
+TBA
+
 
 
 ## Licensing
+TBA
 
 
