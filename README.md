@@ -21,7 +21,7 @@ git clone https://github.com/nicolaipalm/ode.git
 cd ode/
 ```
 
-Activate favourite virtual environment and run 
+Activate your favourite virtual environment and run 
 ```shell
 pip install -r requirements.txt
 ```
