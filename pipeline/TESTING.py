@@ -5,6 +5,7 @@ from src.designs_of_experiments.design_library.d_design import DDesign
 from src.designs_of_experiments.design_library.latin_hypercube import LatinHypercube
 from src.designs_of_experiments.design_library.pi_design import PiDesign
 from src.designs_of_experiments.design_library.random import Random
+
 ####
 # Designs
 from src.metrics.metric_library.determinant_of_fisher_information_matrix import (
@@ -33,7 +34,7 @@ number_designs = 6
 number_of_evaluations = 10
 
 # real noise
-sigma = 0.029 ** 2
+sigma = 0.029**2
 
 lower_bounds_x = np.array([0.1, 279.15])
 upper_bounds_x = np.array([1, 333.15])
@@ -193,6 +194,7 @@ fig3 = metrics[3].plot(
 fig3.show()
 
 fig4 = metrics[4].plot(
-    evaluations_blackbox_function_for_each_design=k_fold_data, baseline="min",
+    evaluations_blackbox_function_for_each_design=k_fold_data,
+    baseline="min",
 )
 fig4.show()

@@ -5,7 +5,6 @@ from src.parametric_function_library.interfaces.parametric_function import (
     ParametricFunction,
 )
 
-
 # aging model
 
 

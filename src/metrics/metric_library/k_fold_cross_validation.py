@@ -50,8 +50,10 @@ class KFoldCrossValidation(Metric):
                 evaluations_blackbox_function[train_index],
                 evaluations_blackbox_function[test_index],
             )
-            estimated_parameter = self._statistical_model.calculate_maximum_likelihood_estimation(
-                x0=design_training, y=y_training, minimizer=self._minimizer
+            estimated_parameter = (
+                self._statistical_model.calculate_maximum_likelihood_estimation(
+                    x0=design_training, y=y_training, minimizer=self._minimizer
+                )
             )
 
             error.append(

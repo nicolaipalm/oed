@@ -4,7 +4,10 @@ import plotly.graph_objects as go
 
 def update_layout_of_graph(fig: go.Figure, title: str = "Plot") -> go.Figure:
     fig.update_layout(
-        width=800, height=600, plot_bgcolor="rgba(0,0,0,0)", title=title,
+        width=800,
+        height=600,
+        plot_bgcolor="rgba(0,0,0,0)",
+        title=title,
     )
     fig.update_layout(
         plot_bgcolor="rgba(0,0,0,0)",
@@ -44,7 +47,11 @@ def styled_figure(title: str = "Plot", data: list = []) -> go.Figure:
             automargin=True,
         ),
         yaxis=dict(
-            title="", linecolor="#BCCCDC", showline=True, linewidth=1, automargin=True,
+            title="",
+            linecolor="#BCCCDC",
+            showline=True,
+            linewidth=1,
+            automargin=True,
         ),
     )
     fig = go.Figure(data=data, layout=layout)
@@ -67,7 +74,11 @@ def line_scatter(
 ) -> go.Scatter:
     # Adding the lines
     return go.Scatter(
-        visible=visible, line=dict(width=2), x=x_lines, y=y_lines, name=name_line,
+        visible=visible,
+        line=dict(width=2),
+        x=x_lines,
+        y=y_lines,
+        name=name_line,
     )
 
 
@@ -128,6 +139,14 @@ def dot_scatter(
             step["args"][0]["visible"][i] = True  # Toggle i'th trace to "visible"
             steps.append(step)
 
-        sliders = [dict(active=0, pad={"t": 50}, steps=steps,)]
-        figure.update_layout(sliders=sliders,)
+        sliders = [
+            dict(
+                active=0,
+                pad={"t": 50},
+                steps=steps,
+            )
+        ]
+        figure.update_layout(
+            sliders=sliders,
+        )
         return figure

@@ -21,7 +21,8 @@ class EstimationVarianceParameterEstimations(Metric):
                     estimations_of_parameter
                     - np.average(estimations_of_parameter, axis=0)
                 )
-                ** 2,axis=0
+                ** 2,
+                axis=0,
             )
         )
 

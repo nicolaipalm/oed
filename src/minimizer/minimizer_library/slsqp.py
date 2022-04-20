@@ -1,6 +1,6 @@
 from typing import Callable
-import flake8
 
+import flake8
 import numpy as np
 from scipy.optimize import minimize
 

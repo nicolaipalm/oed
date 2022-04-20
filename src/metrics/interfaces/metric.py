@@ -9,8 +9,8 @@ from src.designs_of_experiments.interfaces.design_of_experiment import (
 )
 from src.visualization.plotting_functions import (
     dot_scatter,
-    styled_figure,
     line_scatter,
+    styled_figure,
 )
 
 
