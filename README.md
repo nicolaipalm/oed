@@ -20,8 +20,13 @@ Run in your terminal
 git clone https://github.com/nicolaipalm/ode.git
 cd ode/
 ```
-In order to set up a conda environment type in your terminal
 
+Activate favourite virtual environment and run 
+```shell
+pip install -r requirements.txt
+```
+
+In order to set up a conda environment (recommended when working in jupyter notebooks) type in your terminal
 ```shell
 conda create -n ode
 conda activate ode
