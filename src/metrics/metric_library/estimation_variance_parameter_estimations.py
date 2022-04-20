@@ -9,14 +9,20 @@ from src.metrics.interfaces.metric import Metric
 class EstimationVarianceParameterEstimations(Metric):
     def calculate(
         self,
-        evaluations_blackbox_function: np.ndarray,
         estimations_of_parameter: np.ndarray,
+        evaluations_blackbox_function: np.ndarray = None,
         design: DesignOfExperiment = None,
     ) -> float:
-        return np.average(
-            (estimations_of_parameter - np.average(estimations_of_parameter, axis=0))
-            ** 2,
-            axis=0,
+        return (
+            1
+            / (len(estimations_of_parameter) + 1)
+            * np.sum(
+                (
+                    estimations_of_parameter
+                    - np.average(estimations_of_parameter, axis=0)
+                )
+                ** 2,axis=0
+            )
         )
 
     @property
