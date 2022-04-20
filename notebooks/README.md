@@ -1,8 +1,6 @@
-<img src="./images/pi_design.jpeg" alt="Logo of the project" align="right" width="200">
 
-# Optimal Design of Experiment &middot; 
+# Notebooks; 
 [![Made withJupyter](https://img.shields.io/badge/Made%20with-Jupyter-orange?style=for-the-badge&logo=Jupyter)](https://jupyter.org/try)
-> Notebooks
 
 ## Installing 
 
