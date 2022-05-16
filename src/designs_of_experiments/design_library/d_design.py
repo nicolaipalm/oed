@@ -17,7 +17,7 @@ class DDesign(DesignOfExperiment):
         statistical_model: StatisticalModel,
         minimizer: Minimizer,
     ):
-        print(f"Calculating the {self.name}...\n")
+        print(f"Calculating the {self.name}...")
         np.array([upper_bounds_design for _ in range(number_designs)])
         self._design = minimizer(
             function=lambda x: -statistical_model.calculate_determinant_fisher_information_matrix(
@@ -27,7 +27,7 @@ class DDesign(DesignOfExperiment):
             lower_bounds=np.array(lower_bounds_design.tolist() * number_designs),
             upper_bounds=np.array(upper_bounds_design.tolist() * number_designs),
         ).reshape(number_designs, len(lower_bounds_design))
-        print("finished!")
+        print("finished!\n")
 
     @property
     def name(self) -> str:

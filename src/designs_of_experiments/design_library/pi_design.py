@@ -20,7 +20,7 @@ class PiDesign(DesignOfExperiment):
         minimizer: Minimizer,
         previous_design: DesignOfExperiment = None,
     ):
-        print(f"Calculating the {self.name}...\n")
+        print(f"Calculating the {self.name}...")
         np.array([upper_bounds_design for _ in range(number_designs)])
         if previous_design is None:
             self._design = minimizer(
@@ -60,7 +60,7 @@ class PiDesign(DesignOfExperiment):
                 axis=0,
             )
 
-        print("finished!")
+        print("finished!\n")
 
     @property
     def name(self) -> str:

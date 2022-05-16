@@ -28,7 +28,7 @@ class DifferentialEvolution(Minimizer):
             bounds=[
                 (lower_bounds[i], upper_bounds[i]) for i in range(len(lower_bounds))
             ],
-            maxiter=10,
+            maxiter=100,
         )
 
         self.result = res

@@ -18,7 +18,7 @@ class GaussianNoiseModel(StatisticalModel):
         sigma: float = 1,
     ) -> None:
         self._function = function
-        self._sigma = sigma  # variance
+        self._var = sigma ** 2  # variance
         self._lower_bounds_theta = lower_bounds_theta
         self._upper_bounds_theta = upper_bounds_theta
         self._lower_bounds_x = lower_bounds_x
@@ -29,7 +29,7 @@ class GaussianNoiseModel(StatisticalModel):
 
     def random(self, x: np.ndarray, theta: np.ndarray) -> np.ndarray:
         return np.random.normal(
-            loc=self._function(theta=theta, x=x), scale=np.sqrt(self._sigma)
+            loc=self._function(theta=theta, x=x), scale=np.sqrt(self._var)
         )
 
     def calculate_fisher_information(
@@ -37,7 +37,7 @@ class GaussianNoiseModel(StatisticalModel):
     ):
         return (
             1
-            / self._sigma
+            / self._var
             * np.dot(
                 np.array(
                     [

@@ -1,4 +1,4 @@
-<img src="./images/pi_design.jpeg" alt="Logo of the project" align="right" width="200">
+    <img src="./images/pi_design.jpeg" alt="Logo of the project" align="right" width="200">
 
 # Optimal Design of Experiment &middot; [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![DOI:10.1007/978-3-319-76207-4_15](https://zenodo.org/badge/DOI/xxx.svg)](https://doi.org/) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)]()
 > Optimal design of experiment, machine learning, Fisher information
@@ -36,7 +36,7 @@ pip install -r requirements.txt
 
 ## Getting started
 
-The easiest way in order to get familiar with this projects is by checking out the notebooks.
+The easiest way in order to get familiar with this project is by checking out the notebooks.
 Navigate to the notebooks sub-directory and follow the instructions given in the README.md.
 
 Alternatively you can run the aging_model_naumann_pipeline.py file in the ./pipeline/aging_models subdirectory your favourite IDE.

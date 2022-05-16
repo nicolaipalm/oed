@@ -24,14 +24,15 @@ dependant of parameters ...
 ---
 ToDO:
 
+- in aging model nau werte über 10000 (bei parametern zwischen 0.001 und X) fehler?? Siehe Print in aging model
 - docu-> coding beispiel für jede metric: max der parameter und andere error funktion für integral -> erkläre wieso
   metric mit max zwei plotting
 - HOW TO DIRECTORY docu neues (super scvhlechtes, und custom) design (max mit geschätzem theta...individuell...), neue metrik, daten speichern,
-- ganzen prozess implementieren (in notebook) -> erst initial dann ....
 - setup git -> also nb extensions...
 - (neues projekt mit dashboard)
 - keine problems
 - benchmark whole process
+- designs need to be saved for benchmarking results 
 - why so much slower than other module?
 - test if parameters are redundant -> in validation error we see almost no difference ... cross validation has errors in
   it
@@ -46,6 +47,7 @@ ToDO:
 - statistical model-> in context of FI (assume there exists partial derivative of likelihood etc)
 - MLE on statistical model
 - we are interested how different designs of experiments perform
+- design where the ucertainty in the experiments has minimum effect on the parameter estimation 
 
 Title:
 optimal experimental desgin for parameter individual estimators of/in parametric models with gaussian white noise

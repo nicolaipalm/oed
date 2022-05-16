@@ -52,6 +52,7 @@ class Aging_Model_Nau:
 
         :return: Q_loss_cal
         """
+
         Q_loss_cal = (
             self.d_SoC_cal(x[0], np.array([theta[0], theta[2]]))
             * self.d_T_cal(x[1], np.array([theta[1], theta[2]]))

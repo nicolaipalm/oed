@@ -51,7 +51,6 @@ class Benchmarking:
         for doe in self._designs_of_experiments:
             evaluations = []
             estimations = []
-            # TODO: prevent overflow
             for _ in tqdm(
                 range(number_of_evaluations), desc=f"Evaluate the {doe.name}"
             ):
@@ -65,7 +64,7 @@ class Benchmarking:
             self.evaluations_blackbox_function[doe] = np.array(evaluations)
             self.maximum_likelihood_estimations[doe] = np.array(estimations)
 
-    def save_to_csv(self, file_name: str = "benchmarking") -> bool:
+    def save_to_csv(self, file_name: str = "benchmarking_evaluations") -> bool:
         data = pd.DataFrame(
             [
                 [design.name]
@@ -78,7 +77,7 @@ class Benchmarking:
         pd.DataFrame(data=data).to_csv(file_name + ".csv")
         return True
 
-    def load_from_csv(self, file_name: str = "benchmarking.csv") -> bool:
+    def load_from_csv(self, file_name: str = "benchmarking_evaluations.csv") -> bool:
         t = pd.read_csv(file_name, index_col=0)
         number_parameters = len(self.statistical_model.lower_bounds_theta)
         for design in self.designs:
@@ -122,7 +121,7 @@ class Benchmarking:
 
         data[0].visible = True
         fig = styled_figure(
-            title="Evaluations of blackbox function for each parameter", data=data
+            title="MLE estimations for each parameter", data=data
         )
         # Add dropdowns
         button_layer_1_height = 1.12
