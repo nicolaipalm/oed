@@ -24,23 +24,32 @@ class GaussianNoiseModel(StatisticalModel):
         self._lower_bounds_x = lower_bounds_x
         self._upper_bounds_x = upper_bounds_x
 
-    def __call__(self, x: np.ndarray, theta: np.ndarray) -> float:
+    def __call__(self,
+                 x: np.ndarray,
+                 theta: np.ndarray
+                 ) -> np.ndarray:
         return self._function(theta=theta, x=x)
 
-    def random(self, x: np.ndarray, theta: np.ndarray) -> np.ndarray:
+    def random(self,
+               x: np.ndarray,
+               theta: np.ndarray
+               ) -> np.ndarray:
         return np.random.normal(
             loc=self._function(theta=theta, x=x), scale=np.sqrt(self._var)
         )
 
-    def calculate_fisher_information(
-            self, theta: np.ndarray, i: int, j: int, x0: np.ndarray
-    ):
+    def calculate_fisher_information(self,
+                                     theta: np.ndarray,
+                                     i: int,
+                                     j: int,
+                                     x0: np.ndarray):
         return (1 / self._var * np.dot(np.array([self._function.partial_derivative(theta=theta, x=x_k, parameter_index=i)for x_k in x0]).T,
                                        np.array([self._function.partial_derivative(theta=theta, x=x_k, parameter_index=j) for x_k in x0])))
 
-    def calculate_fisher_information_matrix(
-            self, x0: np.ndarray, theta: np.ndarray
-    ) -> np.ndarray:
+    def calculate_fisher_information_matrix(self,
+                                            x0: np.ndarray,
+                                            theta: np.ndarray
+                                            ) -> np.ndarray:
         k = len(theta)
         return np.array(
             [

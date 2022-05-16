@@ -20,7 +20,7 @@ class Aging_Model_Nau:
             crateref: float = 1,
             C_rest_cyc: float = 0.1,
             FEC_end_ref: float = 4500,
-            t: np.ndarray = np.array([7]),
+            t: np.ndarray = np.array([7,14,21,28]),
     ):
 
         # define reference values
@@ -98,17 +98,13 @@ class Aging_Model_Nau:
 
 
 class AgingModelNaumann(ParametricFunction):
-    def __call__(self, theta: np.ndarray, x: np.ndarray) -> float:
-        return np.sum(Aging_Model_Nau().Calendar_Aging(theta=theta, x=x))
+    def __call__(self, theta: np.ndarray, x: np.ndarray) -> np.ndarray:
+        return Aging_Model_Nau().Calendar_Aging(theta=theta, x=x)
 
     def partial_derivative(
             self, theta: np.ndarray, x: np.ndarray, parameter_index: int
-    ) -> float:
-        return np.sum(
-            Aging_Model_Nau().partial_derivative_Calendar_Aging(
-                theta=theta, x=x, index=parameter_index
-            )
-        )
+    ) -> np.ndarray:
+        return Aging_Model_Nau().partial_derivative_Calendar_Aging(theta=theta, x=x, index=parameter_index,)
 
     def second_partial_derivative(
             self,
@@ -116,5 +112,5 @@ class AgingModelNaumann(ParametricFunction):
             x: np.ndarray,
             parameter1_index: int,
             parameter2_index: int,
-    ) -> float:
+    ) -> np.ndarray:
         raise NotImplementedError

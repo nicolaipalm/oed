@@ -31,10 +31,10 @@ class KFoldCrossValidation(Metric):
         estimations_of_parameter: np.ndarray = None,
     ) -> np.ndarray:
         """
-        evaluations_blackbox_function needs to be an 1 dimensional array
+        evaluations_blackbox_function needs to be a 1 or 2 dimensional array
         """
-        if len(evaluations_blackbox_function.shape) > 1:
-            raise ValueError("The evaluation array must be of dimension 1.")
+        if len(evaluations_blackbox_function.shape) > 2:
+            raise ValueError("The evaluation array must be of dimension 1 or 2.")
 
         if self.number_splits is None:
             self.number_splits = len(evaluations_blackbox_function)
