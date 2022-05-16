@@ -37,11 +37,11 @@ from src.statistical_models.statistical_model_library.gaussian_noise_model impor
 
 theta = np.array([4, 2300, 0.8])
 
-number_designs = 12
-number_of_evaluations = 10
+number_designs = 30
+number_of_evaluations = 1000
 
 # real noise
-sigma = 0.029
+sigma = 0.0029
 
 #################################
 #################################
@@ -110,14 +110,14 @@ min_entry = PiDesign(
     minimizer=minimizer,
 )
 
-max_det = DDesign(
-    number_designs=number_designs,
-    lower_bounds_design=lower_bounds_x,
-    upper_bounds_design=upper_bounds_x,
-    initial_theta=initial_theta,
-    statistical_model=statistical_model,
-    minimizer=minimizer,
-)
+# max_det = DDesign(
+#    number_designs=number_designs,
+#    lower_bounds_design=lower_bounds_x,
+#    upper_bounds_design=upper_bounds_x,
+#    initial_theta=initial_theta,
+#    statistical_model=statistical_model,
+#    minimizer=minimizer,
+# )
 
 metrics = [
     DeterminantOfFisherInformationMatrix(
@@ -144,9 +144,9 @@ benchmarking = Benchmarking(
     blackbox_model=blackbox_model,
     statistical_model=statistical_model,
     designs_of_experiments=[LH,
-                            #random_design,
+                            # random_design,
                             min_entry,
-                            #max_det
+                            # max_det
                             ],
 )
 
@@ -159,7 +159,7 @@ else:
     benchmarking.evaluate_designs(
         number_of_evaluations=number_of_evaluations, minimizer=minimizer
     )
-    #benchmarking.save_to_csv()
+    # benchmarking.save_to_csv()
 
 k_fold_data = {}
 for design in benchmarking.evaluations_blackbox_function.keys():
@@ -167,7 +167,6 @@ for design in benchmarking.evaluations_blackbox_function.keys():
 
 #####
 # saving the benchmarking results
-
 
 
 #####

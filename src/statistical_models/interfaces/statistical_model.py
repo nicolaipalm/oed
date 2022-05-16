@@ -31,6 +31,7 @@ class StatisticalModel(ABC):
     def calculate_cramer_rao_lower_bound(
             self, x0: np.ndarray, theta: np.ndarray
     ) -> np.ndarray:
+        # TODO: pinv vs. inv (use symmetric form of FI matrix)
         return np.linalg.pinv(
             self.calculate_fisher_information_matrix(x0=x0, theta=theta),
             #+ 2e-7 * np.identity(len(theta)),

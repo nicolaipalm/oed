@@ -1,3 +1,8 @@
+IMPORTANT!!! 
+Check if aging model returns the correct: q_loss or q_rest? CAUTION: the measurment error must be with respect to what we MEASURE. 
+
+
+---
 x: one single design x0: array of designs x y: output
 
 supposed to grow
