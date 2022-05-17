@@ -37,7 +37,7 @@ from src.statistical_models.statistical_model_library.gaussian_noise_model impor
 
 theta = np.array([4, 2300, 0.8])
 
-number_designs = 30
+number_designs = 10
 number_of_evaluations = 1000
 
 # real noise
@@ -110,14 +110,14 @@ min_entry = PiDesign(
     minimizer=minimizer,
 )
 
-# max_det = DDesign(
-#    number_designs=number_designs,
-#    lower_bounds_design=lower_bounds_x,
-#    upper_bounds_design=upper_bounds_x,
-#    initial_theta=initial_theta,
-#    statistical_model=statistical_model,
-#    minimizer=minimizer,
-# )
+max_det = DDesign(
+    number_designs=number_designs,
+   lower_bounds_design=lower_bounds_x,
+    upper_bounds_design=upper_bounds_x,
+    initial_theta=initial_theta,
+    statistical_model=statistical_model,
+    minimizer=minimizer,
+ )
 
 metrics = [
     DeterminantOfFisherInformationMatrix(
@@ -144,9 +144,9 @@ benchmarking = Benchmarking(
     blackbox_model=blackbox_model,
     statistical_model=statistical_model,
     designs_of_experiments=[LH,
-                            # random_design,
+                            random_design,
                             min_entry,
-                            # max_det
+                            max_det
                             ],
 )
 

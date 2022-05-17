@@ -5,7 +5,7 @@ import numpy as np
 
 class ParametricFunction(ABC):
     """
-    a class of one dimensional functions parametrized by real numbers (theta)
+    a class of multiple dimensional functions parametrized by a vector of real numbers (theta)
     """
 
     @abstractmethod
