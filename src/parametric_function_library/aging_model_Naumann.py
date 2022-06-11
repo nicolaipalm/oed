@@ -4,6 +4,7 @@ import numpy as np
 from src.parametric_function_library.interfaces.parametric_function import (
     ParametricFunction,
 )
+from src.visualization.plotting_functions import styled_figure, line_scatter
 
 
 # aging model
@@ -20,7 +21,7 @@ class Aging_Model_Nau:
             crateref: float = 1,
             C_rest_cyc: float = 0.1,
             FEC_end_ref: float = 4500,
-            t: np.ndarray = np.array([7,14,21,28]),
+            t: np.ndarray = np.array([7, 35, 63, 119, 175, 231]),
     ):
 
         # define reference values
@@ -98,13 +99,16 @@ class Aging_Model_Nau:
 
 
 class AgingModelNaumann(ParametricFunction):
+    def __init__(self):
+        self._aging_model = Aging_Model_Nau()
+
     def __call__(self, theta: np.ndarray, x: np.ndarray) -> np.ndarray:
-        return Aging_Model_Nau().Calendar_Aging(theta=theta, x=x)
+        return self._aging_model.Calendar_Aging(theta=theta, x=x)
 
     def partial_derivative(
             self, theta: np.ndarray, x: np.ndarray, parameter_index: int
     ) -> np.ndarray:
-        return Aging_Model_Nau().partial_derivative_Calendar_Aging(theta=theta, x=x, index=parameter_index,)
+        return self._aging_model.partial_derivative_Calendar_Aging(theta=theta, x=x, index=parameter_index, )
 
     def second_partial_derivative(
             self,
@@ -114,3 +118,19 @@ class AgingModelNaumann(ParametricFunction):
             parameter2_index: int,
     ) -> np.ndarray:
         raise NotImplementedError
+
+    def plot(self,
+             theta: np.ndarray,
+             x: np.ndarray, ):
+        x_lines = np.arange(1, 150, 1)
+        model = Aging_Model_Nau(t=x_lines)
+
+        y_lines = (1 - model.Calendar_Aging(theta=theta, x=x)) * 100
+
+        data = [line_scatter(x_lines=x_lines, y_lines=y_lines),
+                line_scatter(x_lines=x_lines, y_lines=0 * x_lines + 0.8)]
+        fig = styled_figure(data=data,
+                            title="Battery aging model Naumann",
+                            title_y="Capacity in percent of original capacity", title_x="Time in days")
+
+        return fig

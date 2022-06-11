@@ -2,7 +2,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 
-def update_layout_of_graph(fig: go.Figure, title: str = "Plot") -> go.Figure:
+def update_layout_of_graph(fig: go.Figure, title: str = "Plot",title_x: str = "", title_y: str = "") -> go.Figure:
     fig.update_layout(
         width=800,
         height=600,
@@ -11,17 +11,15 @@ def update_layout_of_graph(fig: go.Figure, title: str = "Plot") -> go.Figure:
     )
     fig.update_layout(
         plot_bgcolor="rgba(0,0,0,0)",
-        xaxis_title="input values",
-        yaxis_title="output values",
         legend=dict(yanchor="top", y=0.9, xanchor="right", x=0.95),
         title={"x": 0.5, "xanchor": "center"},
     )
-    fig.update_xaxes(showline=True, linewidth=1, linecolor="black")
-    fig.update_yaxes(showline=True, linewidth=1, linecolor="black")
+    fig.update_xaxes(showline=True, linewidth=1, linecolor="black", title=title_x)
+    fig.update_yaxes(showline=True, linewidth=1, linecolor="black", title=title_y)
     return fig
 
 
-def styled_figure(title: str = "Plot", data: list = []) -> go.Figure:
+def styled_figure(data: list, title: str = "Plot", title_x: str = "", title_y: str = "") -> go.Figure:
     layout = go.Layout(
         title=title,
         plot_bgcolor="#FFFFFF",
@@ -33,7 +31,7 @@ def styled_figure(title: str = "Plot", data: list = []) -> go.Figure:
         showlegend=False,
         margin=dict(l=50, r=50, b=100, t=100, pad=2),
         xaxis=dict(
-            title="",
+            title=title_x,
             linecolor="#BCCCDC",
             showspikes=False,  # Show spike line for X-axis
             # Format spike
@@ -47,7 +45,7 @@ def styled_figure(title: str = "Plot", data: list = []) -> go.Figure:
             automargin=True,
         ),
         yaxis=dict(
-            title="",
+            title=title_y,
             linecolor="#BCCCDC",
             showline=True,
             linewidth=1,
@@ -67,10 +65,10 @@ def styled_figure(title: str = "Plot", data: list = []) -> go.Figure:
 
 
 def line_scatter(
-    visible: bool = True,
-    x_lines: np.array = np.array([]),
-    y_lines: np.array = np.array([]),
-    name_line: str = "Predicted _function",
+        visible: bool = True,
+        x_lines: np.array = np.array([]),
+        y_lines: np.array = np.array([]),
+        name_line: str = "Predicted _function",
 ) -> go.Scatter:
     # Adding the lines
     return go.Scatter(
@@ -83,13 +81,13 @@ def line_scatter(
 
 
 def dot_scatter(
-    visible: bool = True,
-    x_dots: np.array = np.array([]),
-    y_dots: np.array = np.array([]),
-    name_dots: str = "Observed points",
-    fill="tonexty",
-    mode="markers+text",
-    text=None,
+        visible: bool = True,
+        x_dots: np.array = np.array([]),
+        y_dots: np.array = np.array([]),
+        name_dots: str = "Observed points",
+        fill="tonexty",
+        mode="markers+text",
+        text=None,
 ) -> go.Scatter:
     # Adding the dots
     return go.Scatter(
@@ -105,48 +103,50 @@ def dot_scatter(
         marker=dict(size=8),
     )
 
-    def uncertainty_area_scatter(
+
+def uncertainty_area_scatter(
         visible: bool = True,
         x_lines: np.array = np.array([]),
         y_upper: np.array = np.array([]),
         y_lower: np.array = np.array([]),
         name: str = "mean plus/minus standard deviation",
-    ) -> go.Scatter:
-        return go.Scatter(
-            visible=visible,
-            x=np.concatenate((x_lines, x_lines[::-1])),  # x, then x reversed
-            # upper, then lower reversed
-            y=np.concatenate((y_upper, y_lower[::-1])),
-            fill="toself",
-            fillcolor="rgba(189,195,199,0.5)",
-            line=dict(color="rgba(200,200,200,0)"),
-            hoverinfo="skip",
-            showlegend=True,
-            name=name,
+) -> go.Scatter:
+    return go.Scatter(
+        visible=visible,
+        x=np.concatenate((x_lines, x_lines[::-1])),  # x, then x reversed
+        # upper, then lower reversed
+        y=np.concatenate((y_upper, y_lower[::-1])),
+        fill="toself",
+        fillcolor="rgba(189,195,199,0.5)",
+        line=dict(color="rgba(200,200,200,0)"),
+        hoverinfo="skip",
+        showlegend=True,
+        name=name,
+    )
+
+
+def add_slider_to_function(figure: go.Figure, parameters):
+    figure.data[0].visible = True
+
+    # Create and add slider
+    steps = []
+    for i in range(len(figure.data)):
+        step = dict(
+            method="update",
+            label=f"{parameters[i]: .2f}",
+            args=[{"visible": [False] * len(figure.data)}],
         )
+        step["args"][0]["visible"][i] = True  # Toggle i'th trace to "visible"
+        steps.append(step)
 
-    def add_slider_to_function(figure: go.Figure, parameters):
-        figure.data[0].visible = True
-
-        # Create and add slider
-        steps = []
-        for i in range(len(figure.data)):
-            step = dict(
-                method="update",
-                label=f"{parameters[i]: .2f}",
-                args=[{"visible": [False] * len(figure.data)}],
-            )
-            step["args"][0]["visible"][i] = True  # Toggle i'th trace to "visible"
-            steps.append(step)
-
-        sliders = [
-            dict(
-                active=0,
-                pad={"t": 50},
-                steps=steps,
-            )
-        ]
-        figure.update_layout(
-            sliders=sliders,
+    sliders = [
+        dict(
+            active=0,
+            pad={"t": 50},
+            steps=steps,
         )
-        return figure
+    ]
+    figure.update_layout(
+        sliders=sliders,
+    )
+    return figure

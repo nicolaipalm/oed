@@ -37,11 +37,11 @@ from src.statistical_models.statistical_model_library.gaussian_noise_model impor
 
 theta = np.array([4, 2300, 0.8])
 
-number_designs = 10
-number_of_evaluations = 1000
+number_designs = 30
+number_of_evaluations = 100
 
 # real noise
-sigma = 0.0029
+sigma = 0.029
 
 #################################
 #################################
@@ -112,7 +112,7 @@ min_entry = PiDesign(
 
 max_det = DDesign(
     number_designs=number_designs,
-   lower_bounds_design=lower_bounds_x,
+    lower_bounds_design=lower_bounds_x,
     upper_bounds_design=upper_bounds_x,
     initial_theta=initial_theta,
     statistical_model=statistical_model,
