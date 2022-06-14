@@ -9,24 +9,30 @@ from src.statistical_models.interfaces.statistical_model import StatisticalModel
 
 class DDesign(DesignOfExperiment):
     def __init__(
-        self,
-        number_designs: int,
-        lower_bounds_design: np.ndarray,
-        upper_bounds_design: np.ndarray,
-        initial_theta: np.ndarray,
-        statistical_model: StatisticalModel,
-        minimizer: Minimizer,
+            self,
+            number_designs: int,
+            lower_bounds_design: np.ndarray,
+            upper_bounds_design: np.ndarray,
+            initial_theta: np.ndarray,
+            statistical_model: StatisticalModel,
+            minimizer: Minimizer,
+            previous_design: DesignOfExperiment = None,
     ):
         print(f"Calculating the {self.name}...")
         np.array([upper_bounds_design for _ in range(number_designs)])
-        self._design = minimizer(
-            function=lambda x: -statistical_model.calculate_determinant_fisher_information_matrix(
-                theta=initial_theta,
-                x0=x.reshape(number_designs, len(lower_bounds_design)),
-            ),
-            lower_bounds=np.array(lower_bounds_design.tolist() * number_designs),
-            upper_bounds=np.array(upper_bounds_design.tolist() * number_designs),
-        ).reshape(number_designs, len(lower_bounds_design))
+        self._design = \
+            np.concatenate(
+                (
+                    previous_design.design,
+                    minimizer(
+                        function=lambda x: -statistical_model.calculate_determinant_fisher_information_matrix(
+                            theta=initial_theta,
+                            x0=np.concatenate((previous_design.design,
+                                              x.reshape(number_designs, len(lower_bounds_design)))),
+                        ),
+                        lower_bounds=np.array(lower_bounds_design.tolist() * number_designs),
+                        upper_bounds=np.array(upper_bounds_design.tolist() * number_designs),
+                    ).reshape(number_designs, len(lower_bounds_design))), axis=0)
         print("finished!\n")
 
     @property
