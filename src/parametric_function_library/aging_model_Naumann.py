@@ -84,7 +84,7 @@ class Aging_Model_Nau:
 
         elif index == 2:
             return -self.Calendar_Aging(theta, x) * (
-                    np.log(self.t_end_ref * (24 * 3600)) - np.log(self.t * (24 * 3600))
+                    np.log(self.t_end * (24 * 3600)) - np.log(self.t * (24 * 3600))
             )
 
         else:
