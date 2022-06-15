@@ -19,7 +19,7 @@ class Aging_Model_Nau:
             t_end: float = 520,
             n_cal: int = 2,
             w: float = 1,
-            t: np.ndarray = np.array([7,14,21,28]),
+            t: np.ndarray = np.array([7, 35, 63, 119, 175, 231]),
     ):
 
         # define reference values
