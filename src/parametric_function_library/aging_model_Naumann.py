@@ -13,33 +13,29 @@ from src.visualization.plotting_functions import styled_figure, line_scatter
 class Aging_Model_Nau:
     def __init__(
             self,
-            Tref: float = 297.15,
             SoCref: float = 0.5,
-            C_rest_cal: float = 0.1,
-            t_end_ref: float = 520,
-            DoDref: float = 0.8,
-            crateref: float = 1,
-            C_rest_cyc: float = 0.1,
-            FEC_end_ref: float = 4500,
-            t: np.ndarray = np.array([7, 35, 63, 119, 175, 231]),
+            Tref: float = 296.15,
+            EOL_C: float = 0.8,
+            t_end: float = 520,
+            n_cal: int = 2,
+            w: float = 1,
+            t: np.ndarray = np.array([7,14,21,28]),
     ):
 
         # define reference values
-        self.Tref = Tref  # in K
         self.SoCref = SoCref  # in p.u.
-        self.C_rest_cal = C_rest_cal  # in p.u.
-        self.t_end_ref = t_end_ref  # in days
+        self.Tref = Tref  # in K
+        self.EOL_C = EOL_C  # in p.u.
+        self.n_cal = n_cal
+        self.w = w
+        self.t_end = t_end  # in days
 
-        self.DoDref = DoDref  # in p.u.
-        self.crateref = crateref  # in p.u.
-        self.C_rest_cyc = C_rest_cyc  # in p.u.
-        self.FEC_end_ref = FEC_end_ref
         self.t = t
 
     # Calendar Aging model
 
     def x_ref_cal(self, param: float) -> float:
-        return np.sqrt(self.C_rest_cal / ((self.t_end_ref * (24 * 3600)) ** param))
+        return (self.w * (1 - self.EOL_C) / ((self.t_end * (24 * 3600)) ** param)) ** (1/self.n_cal)
 
     def d_SoC_cal(self, SoC: float, param: np.ndarray) -> float:
         return self.x_ref_cal(param[1]) * ((SoC / self.SoCref) ** (1 / param[0]))
