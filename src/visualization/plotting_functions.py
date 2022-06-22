@@ -73,7 +73,7 @@ def styled_figure_latex(data: list, title: str = None, title_x: str = "", title_
         width=400,
         height=369.6969,
         showlegend=showlegend,
-        font=dict(family="Serif", size=14),
+        font=dict(family="Serif", size=14, color="#000000"),
         margin=dict(l=50, r=50, b=50, t=50, pad=0),
         xaxis=dict(
             title=title_x,
