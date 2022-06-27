@@ -6,14 +6,14 @@ from src.designs_of_experiments.interfaces.design_of_experiment import (
 from src.metrics.interfaces.metric import Metric
 
 
-class EstimationVarianceParameterEstimations(Metric):
+class StdParameterEstimations(Metric):
     def calculate(
         self,
         estimations_of_parameter: np.ndarray,
         evaluations_blackbox_function: np.ndarray = None,
         design: DesignOfExperiment = None,
     ) -> float:
-        return (
+        return (np.sqrt(
             1
             / (len(estimations_of_parameter) - 1)
             * np.sum(
@@ -23,7 +23,7 @@ class EstimationVarianceParameterEstimations(Metric):
                 )
                 ** 2,
                 axis=0,
-            )
+            ))
         )
 
     @property

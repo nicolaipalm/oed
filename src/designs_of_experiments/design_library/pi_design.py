@@ -9,16 +9,16 @@ from src.statistical_models.interfaces.statistical_model import StatisticalModel
 
 class PiDesign(DesignOfExperiment):
     def __init__(
-        self,
-        number_designs: int,
-        lower_bounds_design: np.ndarray,
-        upper_bounds_design: np.ndarray,
-        column: int,
-        row: int,
-        initial_theta: np.ndarray,
-        statistical_model: StatisticalModel,
-        minimizer: Minimizer,
-        previous_design: DesignOfExperiment = None,
+            self,
+            number_designs: int,
+            lower_bounds_design: np.ndarray,
+            upper_bounds_design: np.ndarray,
+            column: int,
+            row: int,
+            initial_theta: np.ndarray,
+            statistical_model: StatisticalModel,
+            minimizer: Minimizer,
+            previous_design: DesignOfExperiment = None,
     ):
         print(f"Calculating the {self.name}...")
         np.array([upper_bounds_design for _ in range(number_designs)])

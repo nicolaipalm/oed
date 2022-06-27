@@ -24,11 +24,11 @@ class DifferentialEvolution(Minimizer):
             func=function,
             x0=t_initial,
             disp=self.display,
-            tol=1e-6,
+            tol=1e-5,
             bounds=[
                 (lower_bounds[i], upper_bounds[i]) for i in range(len(lower_bounds))
             ],
-            maxiter=10000,
+            maxiter=1000,
         )
 
         self.result = res
