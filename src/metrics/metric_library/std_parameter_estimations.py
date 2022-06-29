@@ -28,4 +28,4 @@ class StdParameterEstimations(Metric):
 
     @property
     def name(self) -> str:
-        return "Estimated variance of parameter estimations"
+        return "Estimated standard deviation of parameter estimations"
