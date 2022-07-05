@@ -45,7 +45,7 @@
 │       └── slsqp.py
 ├── parametric_function_library
 │   ├── __init__.py
-│   ├── aging_model_Naumann.py
+│   ├── aging_model.py
 │   ├── interfaces
 │   │   ├── __init__.py
 │   │   └── parametric_function.py

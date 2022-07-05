@@ -23,7 +23,7 @@ from src.metrics.metric_library.estimation_variance_parameter_estimations import
 )
 from src.metrics.metric_library.k_fold_cross_validation import KFoldCrossValidation
 from src.minimizer.minimizer_library.differential_evolution import DifferentialEvolution
-from src.parametric_function_library.aging_model_Naumann import AgingModelNaumann
+from src.parametric_function_library.aging_model import AgingModel
 from src.statistical_models.statistical_model_library.gaussian_noise_model import (
     GaussianNoiseModel,
 )
@@ -55,7 +55,7 @@ upper_bounds_x = np.array([1, 333.15])
 lower_bounds_theta = np.array([0.1, 0.1, 0.1])
 upper_bounds_theta = np.array([10, 10000, 1])
 
-parametric_function = AgingModelNaumann()
+parametric_function = AgingModel()
 
 ####
 # minimizer

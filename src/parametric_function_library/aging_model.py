@@ -10,7 +10,7 @@ from src.visualization.plotting_functions import styled_figure, line_scatter
 # aging model
 
 
-class Aging_Model_Nau:
+class Aging_Model:
     def __init__(
             self,
             SoCref: float = 0.5,
@@ -90,9 +90,9 @@ class Aging_Model_Nau:
 #############################
 
 
-class AgingModelNaumann(ParametricFunction):
+class AgingModel(ParametricFunction):
     def __init__(self):
-        self._aging_model = Aging_Model_Nau()
+        self._aging_model = Aging_Model()
 
     def __call__(self, theta: np.ndarray, x: np.ndarray) -> np.ndarray:
         return self._aging_model.Calendar_Aging(theta=theta, x=x)
@@ -115,7 +115,7 @@ class AgingModelNaumann(ParametricFunction):
              theta: np.ndarray,
              x: np.ndarray, ):
         x_lines = np.arange(1, 150, 1)
-        model = Aging_Model_Nau(t=x_lines)
+        model = Aging_Model(t=x_lines)
 
         y_lines = (1 - model.Calendar_Aging(theta=theta, x=x)) * 100
 
