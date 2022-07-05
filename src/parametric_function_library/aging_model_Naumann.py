@@ -15,7 +15,7 @@ class Aging_Model_Nau:
             self,
             SoCref: float = 0.5,
             Tref: float = 296.15,
-            EOL_C: float = 0.8,
+            EOL_C: float = 0.9,
             t_end: float = 520,
             n_cal: int = 2,
             w: float = 1,
