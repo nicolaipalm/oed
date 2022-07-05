@@ -17,8 +17,7 @@ class Aging_Model_Nau:
             Tref: float = 296.15,
             EOL_C: float = 0.9,
             t_end: float = 520,
-            n_cal: int = 2,
-            w: float = 1,
+
             t: np.ndarray = np.array([7, 35, 63, 119, 175, 231]),
     ):
 
@@ -26,8 +25,6 @@ class Aging_Model_Nau:
         self.SoCref = SoCref  # in p.u.
         self.Tref = Tref  # in K
         self.EOL_C = EOL_C  # in p.u.
-        self.n_cal = n_cal
-        self.w = w
         self.t_end = t_end  # in days
 
         self.t = t
@@ -35,15 +32,13 @@ class Aging_Model_Nau:
     # Calendar Aging model
 
     def x_ref_cal(self, param: float) -> float:
-        return (self.w * (1 - self.EOL_C) / ((self.t_end * (24 * 3600)) ** param)) ** (1/self.n_cal)
+        return (1 - self.EOL_C) / ((self.t_end * (24 * 3600)) ** param)
 
     def d_SoC_cal(self, SoC: float, param: np.ndarray) -> float:
-        return self.x_ref_cal(param[1]) * ((SoC / self.SoCref) ** (1 / param[0]))
+        return (SoC / self.SoCref) ** (1 / param[0])
 
     def d_T_cal(self, T: float, param: np.ndarray) -> float:
-        return self.x_ref_cal(param[1]) * np.exp(
-            -param[0] * ((1 / T) - (1 / self.Tref))
-        )
+        return np.exp(-param[0] * ((1 / T) - (1 / self.Tref)))
 
     def Calendar_Aging(self, theta: np.ndarray, x: np.ndarray) -> np.ndarray:
         """
@@ -54,8 +49,9 @@ class Aging_Model_Nau:
         """
 
         Q_loss_cal = (
-                self.d_SoC_cal(x[0], np.array([theta[0], theta[2]]))
-                * self.d_T_cal(x[1], np.array([theta[1], theta[2]]))
+                self.x_ref_cal(theta[2])
+                * self.d_SoC_cal(x[0], np.array([theta[0]]))
+                * self.d_T_cal(x[1], np.array([theta[1]]))
                 * (self.t * (24 * 3600)) ** (theta[2])
         )
 
@@ -126,7 +122,7 @@ class AgingModelNaumann(ParametricFunction):
         data = [line_scatter(x_lines=x_lines, y_lines=y_lines),
                 line_scatter(x_lines=x_lines, y_lines=0 * x_lines + 0.8)]
         fig = styled_figure(data=data,
-                            title="Battery aging model Naumann",
+                            title="Battery aging model",
                             title_y="Capacity in percent of original capacity", title_x="Time in days")
 
         return fig
