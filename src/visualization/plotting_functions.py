@@ -2,7 +2,7 @@ import numpy as np
 import plotly.graph_objects as go
 
 
-def update_layout_of_graph(fig: go.Figure, title: str = "Plot",title_x: str = "", title_y: str = "") -> go.Figure:
+def update_layout_of_graph(fig: go.Figure, title: str = "Plot", title_x: str = "", title_y: str = "") -> go.Figure:
     fig.update_layout(
         width=800,
         height=600,
@@ -64,6 +64,46 @@ def styled_figure(data: list, title: str = "Plot", title_x: str = "", title_y: s
     return fig
 
 
+def styled_figure_latex(data: list, title: str = None, title_x: str = "", title_y: str = "",
+                        showlegend: bool = True) -> go.Figure:
+    layout = go.Layout(
+        title=None,
+        plot_bgcolor="#FFFFFF",
+        hovermode=False,
+        width=400,
+        height=369.6969,
+        showlegend=showlegend,
+        font=dict(family="Serif", size=14, color="#000000"),
+        margin=dict(l=50, r=50, b=50, t=50, pad=0),
+        xaxis=dict(
+            title=title_x,
+            linecolor="#000000",
+            showspikes=False,
+            showline=True,
+            linewidth=1,
+            automargin=True,
+            ticks="outside",
+            tickwidth=1,
+        ),
+        yaxis=dict(
+            title=title_y,
+            linecolor="#000000",
+            showline=True,
+            linewidth=1,
+            automargin=True,
+            ticks="outside",
+            tickwidth=1,
+            rangemode="tozero",
+        ),
+    )
+    fig = go.Figure(data=data, layout=layout)
+    fig.update_layout(
+        legend=dict(yanchor="top", y=1, xanchor="right", x=1),
+    )
+
+    return fig
+
+
 def line_scatter(
         visible: bool = True,
         x_lines: np.array = np.array([]),
@@ -101,6 +141,22 @@ def dot_scatter(
         fill=fill,
         fillcolor="rgba(100, 100, 100, 0.2)",
         marker=dict(size=8),
+    )
+
+
+def normal_distribution(
+        visible: bool = True,
+        x_range: np.array = np.arange(-2, 2, 0.01),
+        mu: float = 0,
+        sigma: float = 1,
+        name_dist: str = "Gaussian PDF"
+) -> go.Scatter:
+    return go.Scatter(
+        x=x_range,
+        visible=visible,
+        y=np.exp(-((x_range - mu) ** 2) / (2 * sigma ** 2)) / (sigma * np.sqrt(2 * np.pi)),
+        name=name_dist,
+        line=dict(width=2),
     )
 
 
