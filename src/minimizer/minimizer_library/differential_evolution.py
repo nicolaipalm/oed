@@ -11,12 +11,12 @@ class DifferentialEvolution(Minimizer):
     ...for harder to minimize functions. Needs more maximum_likelihood_estimations though.
     """
 
-    def __init__(self, display=False):
+    def __init__(self, display=False, maxiter: int = 1000):
         self.display = display
         self._number_evaluations_last_call = None
 
     def __call__(
-        self, function: Callable, upper_bounds: np.ndarray, lower_bounds: np.ndarray
+            self, function: Callable, upper_bounds: np.ndarray, lower_bounds: np.ndarray, maxiter: int = 1000
     ) -> np.ndarray:
         t_initial = (upper_bounds + lower_bounds) / 2
 
@@ -28,7 +28,7 @@ class DifferentialEvolution(Minimizer):
             bounds=[
                 (lower_bounds[i], upper_bounds[i]) for i in range(len(lower_bounds))
             ],
-            maxiter=1000,
+            maxiter=maxiter,
         )
 
         self.result = res
