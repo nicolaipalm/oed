@@ -26,7 +26,7 @@ class Random(DesignOfExperiment):
 
     @property
     def name(self) -> str:
-        return "Random design"
+        return "Random"
 
     @property
     def design(self) -> np.ndarray:

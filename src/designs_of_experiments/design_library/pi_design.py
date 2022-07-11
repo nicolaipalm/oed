@@ -64,7 +64,7 @@ class PiDesign(DesignOfExperiment):
 
     @property
     def name(self) -> str:
-        return "Parameter individual design"
+        return "pi"
 
     @property
     def design(self) -> np.ndarray:

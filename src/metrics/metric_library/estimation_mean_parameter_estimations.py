@@ -9,8 +9,8 @@ from src.metrics.interfaces.metric import Metric
 class EstimationMeanParameterEstimations(Metric):
     def calculate(
         self,
-        evaluations_blackbox_function: np.ndarray,
         estimations_of_parameter: np.ndarray,
+        evaluations_blackbox_function: np.ndarray = None,
         design: DesignOfExperiment = None,
     ) -> np.ndarray:
         return np.average(estimations_of_parameter, axis=0)

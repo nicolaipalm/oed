@@ -37,7 +37,7 @@ class DDesign(DesignOfExperiment):
 
     @property
     def name(self) -> str:
-        return "Maximum determinant design"
+        return "D-opt"
 
     @property
     def design(self) -> np.ndarray:

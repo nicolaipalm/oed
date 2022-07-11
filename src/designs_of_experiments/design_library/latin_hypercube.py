@@ -21,7 +21,7 @@ class LatinHypercube(DesignOfExperiment):
 
     @property
     def name(self) -> str:
-        return "Latin Hypercube design"
+        return "LH"
 
     @property
     def design(self) -> np.ndarray:
