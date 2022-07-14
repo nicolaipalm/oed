@@ -10,7 +10,7 @@ It is preferable to work with conda when working with jupyter notebooks
 Run in your terminal
 
 ```shell
-conda activate ode
+conda activate oed
 conda install jupyter
 ```
 
@@ -28,7 +28,7 @@ jupyter nbextensions_configurator enable --user
 Type in your terminal
 
 ```shell
-conda activate ode
+conda activate oed
 jupyter notebook
 ```
 navigate to the notebooks sub-directory and open and run the paper.ipynb or template.ipynb notebook.
