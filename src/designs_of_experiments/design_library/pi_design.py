@@ -13,8 +13,7 @@ class PiDesign(DesignOfExperiment):
             number_designs: int,
             lower_bounds_design: np.ndarray,
             upper_bounds_design: np.ndarray,
-            column: int,
-            row: int,
+            index: int,
             initial_theta: np.ndarray,
             statistical_model: StatisticalModel,
             minimizer: Minimizer,
@@ -27,7 +26,7 @@ class PiDesign(DesignOfExperiment):
                 function=lambda x: statistical_model.calculate_cramer_rao_lower_bound(
                     theta=initial_theta,
                     x0=x.reshape(number_designs, len(lower_bounds_design)),
-                )[column, row],
+                )[index, index],
                 lower_bounds=np.array(lower_bounds_design.tolist() * number_designs),
                 upper_bounds=np.array(upper_bounds_design.tolist() * number_designs),
             ).reshape(number_designs, len(lower_bounds_design))
@@ -47,7 +46,7 @@ class PiDesign(DesignOfExperiment):
                                 axis=0,
                             ),
                         )[
-                            column, row
+                            index, index
                         ],
                         lower_bounds=np.array(
                             lower_bounds_design.tolist() * number_designs

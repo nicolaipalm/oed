@@ -1,6 +1,6 @@
 ####
 # Importing modules
-import os
+import random
 
 import numpy as np
 
@@ -18,12 +18,10 @@ from src.metrics.metric_library.estimation_mean_error import EstimationMeanError
 from src.metrics.metric_library.estimation_mean_parameter_estimations import (
     EstimationMeanParameterEstimations,
 )
-from src.metrics.metric_library.estimation_variance_parameter_estimations import (
-    EstimationVarianceParameterEstimations,
-)
 from src.metrics.metric_library.k_fold_cross_validation import KFoldCrossValidation
+from src.metrics.metric_library.std_parameter_estimations import StdParameterEstimations
 from src.minimizer.minimizer_library.differential_evolution import DifferentialEvolution
-from src.parametric_function_library.aging_model import AgingModel
+from src.parametric_function_library.interfaces.parametric_function import ParametricFunction
 from src.statistical_models.statistical_model_library.gaussian_noise_model import (
     GaussianNoiseModel,
 )
@@ -35,13 +33,13 @@ from src.statistical_models.statistical_model_library.gaussian_noise_model impor
 ####
 # statistical model
 
-theta = np.array([4, 2300, 0.8])
+theta = np.array([random.random() for _ in range(5)])
 
-number_designs = 30
-number_of_evaluations = 100
+number_designs = 5
+number_of_evaluations = 10
 
 # real noise
-sigma = 0.029
+sigma = 10
 
 #################################
 #################################
@@ -49,13 +47,39 @@ sigma = 0.029
 
 ####
 # bounds
-lower_bounds_x = np.array([0.01, 279.15])
-upper_bounds_x = np.array([1, 333.15])
+lower_bounds_x = np.array([-1000])
+upper_bounds_x = np.array([1000])
 
-lower_bounds_theta = np.array([0.1, 0.1, 0.1])
-upper_bounds_theta = np.array([10, 10000, 1])
+lower_bounds_theta = np.zeros(5)
+upper_bounds_theta = np.ones(5)
 
-parametric_function = AgingModel()
+
+# Setup a parametric function family
+
+
+class PolynomialFunction(ParametricFunction):
+    def __call__(self, theta: np.ndarray, x: float) -> float:
+        return np.sum(theta[1:] * (x ** np.arange(1, len(theta)))) + theta[0]
+
+    def partial_derivative(
+            self, theta: np.ndarray, x: np.ndarray, parameter_index: int
+    ) -> float:
+        if parameter_index == 0:
+            return 1
+        else:
+            return x ** parameter_index
+
+    def second_partial_derivative(
+            self,
+            theta: np.ndarray,
+            x: np.ndarray,
+            parameter1_index: int,
+            parameter2_index: int,
+    ) -> float:
+        return 0
+
+
+parametric_function = PolynomialFunction()
 
 ####
 # minimizer
@@ -80,30 +104,30 @@ def blackbox_model(x):
 LH = LatinHypercube(
     lower_bounds_design=lower_bounds_x,
     upper_bounds_design=upper_bounds_x,
-    number_designs=number_designs,
+    number_designs=2 * number_designs,
 )
 
 # print(LH.design, LH.name)
 
 random_design = Random(
-    number_designs=number_designs,
+    number_designs=2 * number_designs,
     lower_bounds_design=lower_bounds_x,
     upper_bounds_design=upper_bounds_x,
 )
 
 # We split the number of experiments in half and perform first a latin hypercube
-LH_half = LatinHypercube(lower_bounds_design=lower_bounds_x, upper_bounds_design=upper_bounds_x,
-                         number_designs=int(number_designs / 2))
+LH_half = LatinHypercube(lower_bounds_design=lower_bounds_x,
+                         upper_bounds_design=upper_bounds_x,
+                         number_designs=number_designs)
 
 initial_theta = statistical_model.calculate_maximum_likelihood_estimation(
     x0=LH_half.design, y=np.array([blackbox_model(x) for x in LH_half.design]), minimizer=minimizer)
 
 min_entry = PiDesign(
-    number_designs=number_designs - int(number_designs / 2),
+    number_designs=number_designs,
     lower_bounds_design=lower_bounds_x,
     upper_bounds_design=upper_bounds_x,
-    column=0,
-    row=0,
+    index=1,
     initial_theta=initial_theta,
     previous_design=LH_half,
     statistical_model=statistical_model,
@@ -117,7 +141,8 @@ max_det = DDesign(
     initial_theta=initial_theta,
     statistical_model=statistical_model,
     minimizer=minimizer,
- )
+    previous_design=LH_half,
+)
 
 metrics = [
     DeterminantOfFisherInformationMatrix(
@@ -125,7 +150,7 @@ metrics = [
         statistical_model=statistical_model
     ),
     EstimationMeanParameterEstimations(),
-    EstimationVarianceParameterEstimations(),
+    StdParameterEstimations(),
     EstimationMeanError(
         number_evaluations=1000,
         theta=theta,
@@ -150,16 +175,9 @@ benchmarking = Benchmarking(
                             ],
 )
 
-os.chdir("pipeline/aging_models/")
-if os.path.exists("benchmarking_evaluations.csv"):
-    print("Using existing benchmarking file...\n")
-    benchmarking.load_from_csv()
-
-else:
-    benchmarking.evaluate_designs(
-        number_of_evaluations=number_of_evaluations, minimizer=minimizer
-    )
-    # benchmarking.save_to_csv()
+benchmarking.evaluate_designs(
+    number_of_evaluations=number_of_evaluations, minimizer=minimizer
+)
 
 k_fold_data = {}
 for design in benchmarking.evaluations_blackbox_function.keys():
@@ -172,8 +190,8 @@ for design in benchmarking.evaluations_blackbox_function.keys():
 #####
 # plotting
 
-baseline = np.array([statistical_model.calculate_cramer_rao_lower_bound(
-    x0=design.design, theta=theta).diagonal() for design in benchmarking.designs]).T
+baseline = np.sqrt(np.array([statistical_model.calculate_cramer_rao_lower_bound(
+    x0=design.design, theta=theta).diagonal() for design in benchmarking.designs]).T)
 
 fig2 = metrics[2].plot(
     evaluations_blackbox_function_for_each_design=benchmarking.evaluations_blackbox_function,
