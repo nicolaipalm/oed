@@ -12,7 +12,7 @@ This project provides
 
 This project is closely related to the "Parameter Individual Optimal
 Experimental Design and Calibration of
-Parametric Models" paper where the background and mathematical framework used here is explained in detail.
+Parametric Models" paper (DOI:10.1007/978-3-319-76207-4_15 Maintenance) where the background and mathematical framework used here is explained in detail.
 It also contains the notebook and its html used for the simulations in the paper. 
 
 ## Installing 
