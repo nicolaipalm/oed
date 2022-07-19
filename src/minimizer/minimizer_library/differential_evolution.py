@@ -14,9 +14,10 @@ class DifferentialEvolution(Minimizer):
     def __init__(self, display=False, maxiter: int = 1000):
         self.display = display
         self._number_evaluations_last_call = None
+        self._maxiter = maxiter
 
     def __call__(
-            self, function: Callable, upper_bounds: np.ndarray, lower_bounds: np.ndarray, maxiter: int = 1000
+            self, function: Callable, upper_bounds: np.ndarray, lower_bounds: np.ndarray,
     ) -> np.ndarray:
         t_initial = (upper_bounds + lower_bounds) / 2
 
@@ -28,7 +29,7 @@ class DifferentialEvolution(Minimizer):
             bounds=[
                 (lower_bounds[i], upper_bounds[i]) for i in range(len(lower_bounds))
             ],
-            maxiter=maxiter,
+            maxiter=self._maxiter,
         )
 
         self.result = res

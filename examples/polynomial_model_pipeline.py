@@ -1,6 +1,5 @@
 ####
 # Importing modules
-import random
 
 import numpy as np
 
@@ -26,6 +25,7 @@ from src.statistical_models.statistical_model_library.gaussian_noise_model impor
     GaussianNoiseModel,
 )
 
+
 #################################
 #################################
 # SETUP
@@ -33,37 +33,18 @@ from src.statistical_models.statistical_model_library.gaussian_noise_model impor
 ####
 # statistical model
 
-theta = np.array([random.random() for _ in range(5)])
-
-number_designs = 5
-number_of_evaluations = 10
-
-# real noise
-sigma = 10
-
-#################################
-#################################
-# Pipeline
-
-####
-# bounds
-lower_bounds_x = np.array([-1000])
-upper_bounds_x = np.array([1000])
-
-lower_bounds_theta = np.zeros(5)
-upper_bounds_theta = np.ones(5)
-
-
-# Setup a parametric function family
-
-
+# f(x) = theta_0+theta_1*x+theta_2*x**2+...
 class PolynomialFunction(ParametricFunction):
-    def __call__(self, theta: np.ndarray, x: float) -> float:
+    def __call__(
+            self,
+            theta: np.ndarray,
+            x: float) -> float:
         return np.sum(theta[1:] * (x ** np.arange(1, len(theta)))) + theta[0]
 
     def partial_derivative(
-            self, theta: np.ndarray, x: np.ndarray, parameter_index: int
-    ) -> float:
+            self,
+            theta: np.ndarray, x: np.ndarray,
+            parameter_index: int) -> float:
         if parameter_index == 0:
             return 1
         else:
@@ -79,11 +60,35 @@ class PolynomialFunction(ParametricFunction):
         return 0
 
 
+# highest grade of polynomial
+grade = 2
+
+theta = np.array([0.01 for _ in range(grade + 1)])
+
+number_designs = 5
+number_of_evaluations_in_benchmarking = 100
+
+# real noise
+sigma = 1
+
+#################################
+#################################
+# Pipeline
+
+####
+# bounds
+lower_bounds_x = np.array([-10])
+upper_bounds_x = np.array([10])
+
+lower_bounds_theta = -2*np.ones(grade + 1)
+upper_bounds_theta = 2 * np.ones(grade + 1)
+
+# Setup a parametric function family
 parametric_function = PolynomialFunction()
 
 ####
 # minimizer
-minimizer = DifferentialEvolution()
+minimizer = DifferentialEvolution(maxiter=100)
 
 statistical_model = GaussianNoiseModel(
     function=parametric_function,
@@ -123,16 +128,20 @@ LH_half = LatinHypercube(lower_bounds_design=lower_bounds_x,
 initial_theta = statistical_model.calculate_maximum_likelihood_estimation(
     x0=LH_half.design, y=np.array([blackbox_model(x) for x in LH_half.design]), minimizer=minimizer)
 
+print(initial_theta)
+
 min_entry = PiDesign(
     number_designs=number_designs,
     lower_bounds_design=lower_bounds_x,
     upper_bounds_design=upper_bounds_x,
-    index=1,
+    index=0,
     initial_theta=initial_theta,
     previous_design=LH_half,
     statistical_model=statistical_model,
     minimizer=minimizer,
 )
+
+print(min_entry.design)
 
 max_det = DDesign(
     number_designs=number_designs,
@@ -176,7 +185,7 @@ benchmarking = Benchmarking(
 )
 
 benchmarking.evaluate_designs(
-    number_of_evaluations=number_of_evaluations, minimizer=minimizer
+    number_of_evaluations=number_of_evaluations_in_benchmarking, minimizer=minimizer
 )
 
 k_fold_data = {}
