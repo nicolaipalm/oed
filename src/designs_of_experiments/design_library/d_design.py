@@ -8,6 +8,9 @@ from src.statistical_models.interfaces.statistical_model import StatisticalModel
 
 
 class DDesign(DesignOfExperiment):
+    """
+
+    """
     def __init__(
             self,
             number_designs: int,

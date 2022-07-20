@@ -8,6 +8,16 @@ from src.statistical_models.interfaces.statistical_model import StatisticalModel
 
 
 class GaussianNoiseModel(StatisticalModel):
+    """Implementation of the statistical model induced by a function with white Gaussian noise
+    ...within the StatisticalModel interface
+
+    We specify a function f and a variance standard deviation sigma. The statistical model at some experimental design x
+    is then given by the normal distribution N(f(x),sigma^2).
+    Accordingly, given an experiment x0 consisting of experimental designs x_1,...,x_n, the corresponding
+    statistical model is then given by the multivariate normal distribution with mean vector (f(x))_{x \in x0}
+    and covariance matrix diagonal matrix with all diagonal entries equal to sigma**2.
+    """
+
     def __init__(
             self,
             function: ParametricFunction,
@@ -17,8 +27,16 @@ class GaussianNoiseModel(StatisticalModel):
             upper_bounds_x: np.ndarray,
             sigma: float = 1,
     ) -> None:
+        """
+        Parameters
+        ----------
+        function : ParametricFunction
+            Parametric function parametrized by theta.
+        sigma : float
+            Standard deviation of the underlying white noise in each component (default is 1)
+        """
         self._function = function
-        self._var = sigma ** 2  # variance
+        self._var = sigma ** 2
         self._lower_bounds_theta = lower_bounds_theta
         self._upper_bounds_theta = upper_bounds_theta
         self._lower_bounds_x = lower_bounds_x
@@ -35,8 +53,11 @@ class GaussianNoiseModel(StatisticalModel):
     def calculate_fisher_information(
             self, theta: np.ndarray, i: int, j: int, x0: np.ndarray
     ):
-        return (1 / self._var * np.dot(np.array([self._function.partial_derivative(theta=theta, x=x_k, parameter_index=i)for x_k in x0]).flatten().T,
-                                       np.array([self._function.partial_derivative(theta=theta, x=x_k, parameter_index=j) for x_k in x0]).flatten()))
+        return (1 / self._var * np.dot(np.array(
+            [self._function.partial_derivative(theta=theta, x=x_k, parameter_index=i) for x_k in x0]).flatten().T,
+                                       np.array(
+                                           [self._function.partial_derivative(theta=theta, x=x_k, parameter_index=j) for
+                                            x_k in x0]).flatten()))
 
     def calculate_fisher_information_matrix(
             self, x0: np.ndarray, theta: np.ndarray
@@ -52,18 +73,17 @@ class GaussianNoiseModel(StatisticalModel):
             ]
         )
 
-    def calculate_likelihood(
-            self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray
-    ) -> np.ndarray:
-        # TODO: implement correctly plus use derivative known in minimizer
-        pass
-
     def calculate_log_likelihood(
             self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray
-    ) -> np.ndarray:
+    ) -> float:
         return -np.sum(
             (y - np.array([self._function(theta=theta, x=x) for x in x0])) ** 2
         )
+
+    def calculate_likelihood(
+            self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray
+    ) -> float:
+        return np.exp(self.calculate_log_likelihood(x0=x0, y=y, theta=theta))
 
     def calculate_partial_derivative_log_likelihood(
             self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray, parameter_index: int

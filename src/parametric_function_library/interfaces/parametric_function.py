@@ -4,38 +4,77 @@ import numpy as np
 
 
 class ParametricFunction(ABC):
-    """
-    a class of multiple dimensional functions parametrized by a vector of real numbers (theta)
+    """Interface used to represent a parametric function f_{theta}(x) indexed by theta and evaluated at x
+
+    Methods
+    -------
+    __call__
+
     """
 
     @abstractmethod
     def __call__(self, theta: np.ndarray, x: np.ndarray) -> np.ndarray:
-        """
-        :returns f_{theta}(x)
+        """Evaluate the function f_{-} at theta and x
+
+        Parameters
+        ----------
+        theta : np.ndarray
+            Parameter of the parametric model
+        x : np.ndarray
+            Point on which function should be evaluated
+
+        Returns
+        -------
+        np.ndarray
+            Parametric function f_theta(x) evaluated at theta and x
         """
         pass
 
     @abstractmethod
     def partial_derivative(
-        self, theta: np.ndarray, x: np.ndarray, parameter_index: int
+            self, theta: np.ndarray, x: np.ndarray, parameter_index: int
     ) -> np.ndarray:
-        """
-        :param theta:
-        :type theta:
-        :param x:
-        :type x:
-        :param parameter_index:
-        :type parameter_index:
-        :return: partial derivative at theta_{parameter_index}
-        :rtype: float
+        """ Partial derivative at theta_{parameter_index} of the function f_{-}(x)
+        Parameters
+        ----------
+        theta : np.ndarray
+            Parameter of the parametric model
+        x : np.ndarray
+            Point on which function should be evaluated
+        parameter_index : ind
+            index (of theta) on which the partial derivative is taken
+
+        Returns
+        -------
+        np.ndarray
+            Partial derivative at theta_{parameter_index} evaluated at theta and x
         """
         pass
 
+    @abstractmethod
     def second_partial_derivative(
-        self,
-        theta: np.ndarray,
-        x: np.ndarray,
-        parameter1_index: int,
-        parameter2_index: int,
+            self,
+            theta: np.ndarray,
+            x: np.ndarray,
+            parameter1_index: int,
+            parameter2_index: int,
     ) -> np.ndarray:
+        """ Second Partial derivative at theta_{parameter1_index} and theta_{parameter2_index} of the function f_{-}(x)
+        Parameters
+        ----------
+        theta : np.ndarray
+            Parameter of the parametric model
+        x : np.ndarray
+            Point on which function should be evaluated
+        parameter1_index : ind
+            index (of theta) on which the first partial derivative is taken
+
+        parameter2_index : ind
+            index (of theta) on which the second partial derivative is taken
+
+        Returns
+        -------
+        np.ndarray
+            Partial derivative at theta_{parameter1_index} and theta_{parameter2_index} evaluated at theta and x
+        """
         pass

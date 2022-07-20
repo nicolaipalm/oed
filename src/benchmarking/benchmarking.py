@@ -14,11 +14,6 @@ from src.visualization.plotting_functions import dot_scatter, styled_figure
 
 
 class Benchmarking:
-    """
-    This class provides an easy way to evaluate different designs
-    (i.e. calculate the maximum likelihood parameter estimation) and to store and load the data.
-    """
-
     def __init__(
         self,
         blackbox_model: Callable,

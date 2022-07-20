@@ -20,6 +20,15 @@ class Aging_Model:
 
             t: np.ndarray = np.array([7, 35, 63, 119, 175, 231]),
     ):
+        """
+        Parameters
+        ----------
+        SoCref :
+        Tref :
+        EOL_C :
+        t_end :
+        t :
+        """
 
         # define reference values
         self.SoCref = SoCref  # in p.u.
