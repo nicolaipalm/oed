@@ -1,0 +1,592 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>src.statistical_models.interfaces package &#8212; oed 0.0.1 documentation</title>
+<script>
+  document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+  document.documentElement.dataset.theme = localStorage.getItem("theme") || "light"
+</script>
+
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=92025949c220c2e29695" rel="stylesheet">
+
+
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.statistical_models.statistical_model_library package" href="src.statistical_models.statistical_model_library.html" />
+    <link rel="prev" title="src.statistical_models package" href="src.statistical_models.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+    <div class="bd-header-announcement container-fluid" id="banner">
+      
+
+    </div>
+
+    
+    <nav class="bd-header navbar navbar-light navbar-expand-lg bg-light fixed-top bd-navbar" id="navbar-main"><div class="bd-header__inner container-xl">
+
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">oed 0.0.1 documentation</p>
+  
+</a>
+    
+  </div>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapsible" aria-controls="navbar-collapsible" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="fas fa-bars"></span>
+  </button>
+
+  
+  <div id="navbar-collapsible" class="col-lg-9 collapse navbar-collapse">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <ul id="navbar-main-elements" class="navbar-nav">
+    <li class="toctree-l1 current active nav-item">
+ <a class="reference internal nav-link" href="modules.html">
+  src
+ </a>
+</li>
+
+    
+</ul>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+      <div class="navbar-end-item">
+        <span id="theme-switch" class="btn btn-sm btn-outline-primary navbar-btn rounded-circle">
+    <a class="theme-switch" data-mode="light"><i class="fas fa-sun"></i></a>
+    <a class="theme-switch" data-mode="dark"><i class="far fa-moon"></i></a>
+    <a class="theme-switch" data-mode="auto"><i class="fas fa-adjust"></i></a>
+</span>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    </nav>
+    
+
+    <div class="bd-container container-xl">
+      <div class="bd-container__inner row">
+          
+
+<!-- Only show if we have sidebars configured, else just a small margin  -->
+<div class="bd-sidebar-primary col-12 col-md-3 bd-sidebar">
+  <div class="sidebar-start-items"><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <div class="bd-toc-item active">
+    <ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="src.html">
+   src package
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="src.benchmarking.html">
+     src.benchmarking package
+    </a>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="src.experiments.html">
+     src.experiments package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+    <label for="toctree-checkbox-2">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="src.experiments.experiment_library.html">
+       src.experiments.experiment_library package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="src.experiments.interfaces.html">
+       src.experiments.interfaces package
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="src.metrics.html">
+     src.metrics package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+    <label for="toctree-checkbox-3">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="src.metrics.error_functions.html">
+       src.metrics.error_functions package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="src.metrics.interfaces.html">
+       src.metrics.interfaces package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="src.metrics.metric_library.html">
+       src.metrics.metric_library package
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="src.minimizer.html">
+     src.minimizer package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+    <label for="toctree-checkbox-4">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="src.minimizer.interfaces.html">
+       src.minimizer.interfaces package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="src.minimizer.minimizer_library.html">
+       src.minimizer.minimizer_library package
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 has-children">
+    <a class="reference internal" href="src.parametric_function_library.html">
+     src.parametric_function_library package
+    </a>
+    <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+    <label for="toctree-checkbox-5">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul>
+     <li class="toctree-l3">
+      <a class="reference internal" href="src.parametric_function_library.interfaces.html">
+       src.parametric_function_library.interfaces package
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2 current active has-children">
+    <a class="reference internal" href="src.statistical_models.html">
+     src.statistical_models package
+    </a>
+    <input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+    <label for="toctree-checkbox-6">
+     <i class="fas fa-chevron-down">
+     </i>
+    </label>
+    <ul class="current">
+     <li class="toctree-l3 current active">
+      <a class="current reference internal" href="#">
+       src.statistical_models.interfaces package
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="src.statistical_models.statistical_model_library.html">
+       src.statistical_models.statistical_model_library package
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="src.visualization.html">
+     src.visualization package
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+  </div>
+</nav>
+  </div>
+  <div class="sidebar-end-items">
+  </div>
+</div>
+
+
+          
+
+
+<div class="bd-sidebar-secondary d-none d-xl-block col-xl-2 bd-toc">
+  
+    
+    <div class="toc-item">
+      
+<div class="tocsection onthispage mt-5 pt-1 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#submodules">
+   Submodules
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-src.statistical_models.interfaces.statistical_model">
+   src.statistical_models.interfaces.statistical_model module
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-src.statistical_models.interfaces">
+   Module contents
+  </a>
+ </li>
+</ul>
+
+</nav>
+    </div>
+    
+    <div class="toc-item">
+      
+    </div>
+    
+  
+</div>
+
+
+          
+          
+          <div class="bd-content col-12 col-md-9 col-xl-7">
+              
+              <article class="bd-article" role="main">
+                
+  <section id="src-statistical-models-interfaces-package">
+<h1>src.statistical_models.interfaces package<a class="headerlink" href="#src-statistical-models-interfaces-package" title="Permalink to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="module-src.statistical_models.interfaces.statistical_model">
+<span id="src-statistical-models-interfaces-statistical-model-module"></span><h2>src.statistical_models.interfaces.statistical_model module<a class="headerlink" href="#module-src.statistical_models.interfaces.statistical_model" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.statistical_models.interfaces.statistical_model.StatisticalModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.statistical_models.interfaces.statistical_model.</span></span><span class="sig-name descname"><span class="pre">StatisticalModel</span></span><a class="reference internal" href="_modules/src/statistical_models/interfaces/statistical_model.html#StatisticalModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.statistical_models.interfaces.statistical_model.StatisticalModel" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Interface for a statistical model with additional index/experimental experiment option</p>
+<p>Notation:
+x: experimental experiment
+x0: experiment consisting of experimental experiment x_0,…,x_N
+theta: parameter
+P_theta(x0): probability measure corresponding to the parameter theta and experiment x0</p>
+<p>The specification of an experiment (i.e., a numpy array x0) leads to a statistical model parameterized by theta.
+That is, given theta and x0, we obtain a probability measure denoted P_theta(x0).
+This class contains all the necessary computations required to
+work with a statistical model with respect to the experiment of experiment.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.statistical_models.interfaces.statistical_model.StatisticalModel.calculate_cramer_rao_lower_bound">
+<span class="sig-name descname"><span class="pre">calculate_cramer_rao_lower_bound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/src/statistical_models/interfaces/statistical_model.html#StatisticalModel.calculate_cramer_rao_lower_bound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.statistical_models.interfaces.statistical_model.StatisticalModel.calculate_cramer_rao_lower_bound" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the Cramer-Rao lower bound of the statistical model corresponding to x at the parameter theta</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x0</strong> (<em>np.ndarray</em>) – experiment, i.e. finite number of experimental experiment</p></li>
+<li><p><strong>theta</strong> (<em>np.ndarray</em>) – parameter of the statistical model corresponding to x</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Cramer-Rao lower bound of the statistical model corresponding to x at the parameter theta</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.statistical_models.interfaces.statistical_model.StatisticalModel.calculate_determinant_fisher_information_matrix">
+<span class="sig-name descname"><span class="pre">calculate_determinant_fisher_information_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/src/statistical_models/interfaces/statistical_model.html#StatisticalModel.calculate_determinant_fisher_information_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.statistical_models.interfaces.statistical_model.StatisticalModel.calculate_determinant_fisher_information_matrix" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the determinant of the Fisher information matrix
+…of the statistical model corresponding to x at the parameter theta</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x0</strong> (<em>np.ndarray</em>) – experiment, i.e. finite number of experimental experiment</p></li>
+<li><p><strong>theta</strong> (<em>np.ndarray</em>) – parameter of the statistical model corresponding to x</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>determinant of the Fisher information matrix of the statistical
+model corresponding to x at the parameter theta</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.statistical_models.interfaces.statistical_model.StatisticalModel.calculate_fisher_information_matrix">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_fisher_information_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/src/statistical_models/interfaces/statistical_model.html#StatisticalModel.calculate_fisher_information_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.statistical_models.interfaces.statistical_model.StatisticalModel.calculate_fisher_information_matrix" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the Fisher information matrix of the statistical model corresponding to x at the parameter theta</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x0</strong> (<em>np.ndarray</em>) – Experiment, i.e. finite number of experimental experiment</p></li>
+<li><p><strong>theta</strong> (<em>np.ndarray</em>) – Parameter of the statistical model corresponding to x</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Fisher information matrix of the statistical model corresponding to x at the parameter theta</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.statistical_models.interfaces.statistical_model.StatisticalModel.calculate_likelihood">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/src/statistical_models/interfaces/statistical_model.html#StatisticalModel.calculate_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.statistical_models.interfaces.statistical_model.StatisticalModel.calculate_likelihood" title="Permalink to this definition">#</a></dt>
+<dd><p>Evaluate the likelihood function of P_theta(x) at y</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x0</strong> (<em>np.ndarray</em>) – experiment, i.e. finite number of experimental experiment</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – Element of sample space of the probability measure P_theta(x)</p></li>
+<li><p><strong>theta</strong> (<em>np.ndarray</em>) – parameter of the statistical model corresponding to x</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the likelihood function p_theta(x)(y) of P_theta(x) at y</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.statistical_models.interfaces.statistical_model.StatisticalModel.calculate_maximum_likelihood_estimation">
+<span class="sig-name descname"><span class="pre">calculate_maximum_likelihood_estimation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="src.minimizer.interfaces.html#src.minimizer.interfaces.minimizer.Minimizer" title="src.minimizer.interfaces.minimizer.Minimizer"><span class="pre">Minimizer</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/src/statistical_models/interfaces/statistical_model.html#StatisticalModel.calculate_maximum_likelihood_estimation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.statistical_models.interfaces.statistical_model.StatisticalModel.calculate_maximum_likelihood_estimation" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculate the maximum likelihood estimate of the statistical model corresponding to the experiment x0 at y</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x0</strong> (<em>np.ndarray</em>) – experiment, i.e. finite number of experimental experiment</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em>) – Element of sample space of the probability measure P_theta(x)</p></li>
+<li><p><strong>minimizer</strong> (<a class="reference internal" href="src.minimizer.interfaces.html#src.minimizer.interfaces.minimizer.Minimizer" title="src.minimizer.interfaces.minimizer.Minimizer"><em>Minimizer</em></a>) – Minimizer used to maximize the likelihood function at y</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the found maximum likelihood parameter estimate for the parameter theta</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.statistical_models.interfaces.statistical_model.StatisticalModel.lower_bounds_theta">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lower_bounds_theta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#src.statistical_models.interfaces.statistical_model.StatisticalModel.lower_bounds_theta" title="Permalink to this definition">#</a></dt>
+<dd><p>Lower bound for parameter theta
+:returns: Lower bounds for the parameter theta with each entry representing</p>
+<blockquote>
+<div><p>the lower bound for the respective entry of theta</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.statistical_models.interfaces.statistical_model.StatisticalModel.lower_bounds_x">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lower_bounds_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#src.statistical_models.interfaces.statistical_model.StatisticalModel.lower_bounds_x" title="Permalink to this definition">#</a></dt>
+<dd><p>Lower bounds for experimental experiment
+:returns: Lower bounds for an experimental experiment x with each entry representing</p>
+<blockquote>
+<div><p>the lower bound of the respective entry of x</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.statistical_models.interfaces.statistical_model.StatisticalModel.name">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.statistical_models.interfaces.statistical_model.StatisticalModel.name" title="Permalink to this definition">#</a></dt>
+<dd><p>Name of the statistical model
+:returns: Name of the statistical model
+:rtype: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.statistical_models.interfaces.statistical_model.StatisticalModel.random">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">random</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/src/statistical_models/interfaces/statistical_model.html#StatisticalModel.random"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.statistical_models.interfaces.statistical_model.StatisticalModel.random" title="Permalink to this definition">#</a></dt>
+<dd><p>Draw a random sample of the measurement space corresponding to the measurement P_theta(x0)
+…where x0 consists of the single experimental experiment x</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>np.ndarray</em>) – experimental design</p></li>
+<li><p><strong>theta</strong> (<em>np.ndarray</em>) – parameter of the statistical model corresponding to x</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>random drawing from the probability measure P_theta(x)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.statistical_models.interfaces.statistical_model.StatisticalModel.upper_bounds_theta">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">upper_bounds_theta</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#src.statistical_models.interfaces.statistical_model.StatisticalModel.upper_bounds_theta" title="Permalink to this definition">#</a></dt>
+<dd><p>Upper bound for parameter theta
+:returns: Upper bounds for the parameter theta with each entry representing</p>
+<blockquote>
+<div><p>the upper bound of the respective entry of theta</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.statistical_models.interfaces.statistical_model.StatisticalModel.upper_bounds_x">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">upper_bounds_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#src.statistical_models.interfaces.statistical_model.StatisticalModel.upper_bounds_x" title="Permalink to this definition">#</a></dt>
+<dd><p>Upper bounds for experimental experiment
+:returns: Upper bounds for an experimental experiment x with each entry representing</p>
+<blockquote>
+<div><p>the upper bound of the respective entry of x</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.statistical_models.interfaces">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.statistical_models.interfaces" title="Permalink to this heading">#</a></h2>
+</section>
+</section>
+
+
+              </article>
+              
+
+              
+              <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="src.statistical_models.html" title="previous page">
+      <i class="fas fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">src.statistical_models package</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="src.statistical_models.statistical_model_library.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">src.statistical_models.statistical_model_library package</p>
+  </div>
+  <i class="fas fa-angle-right"></i>
+  </a>
+</div>
+              </footer>
+              
+          </div>
+          
+      </div>
+    </div>
+
+  
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=92025949c220c2e29695"></script>
+
+<footer class="bd-footer"><div class="bd-footer__inner container">
+  
+  <div class="footer-item">
+    <p class="copyright">
+    &copy; Copyright 2022, Nicolai Palm.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    <p class="sphinx-version">
+Created using <a href="http://sphinx-doc.org/">Sphinx</a> 5.0.2.<br>
+</p>
+  </div>
+  
+</div>
+</footer>
+  </body>
+</html>
