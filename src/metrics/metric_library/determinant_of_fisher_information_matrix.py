@@ -19,10 +19,10 @@ class DeterminantOfFisherInformationMatrix(Metric):
         estimations_of_parameter: np.ndarray = None,
     ) -> np.ndarray:
         self._statistical_model.calculate_determinant_fisher_information_matrix(
-            x0=design.design, theta=self.theta
+            x0=design.designs, theta=self.theta
         ) * np.ones(1)
         return self._statistical_model.calculate_determinant_fisher_information_matrix(
-            x0=design.design, theta=self.theta
+            x0=design.designs, theta=self.theta
         ) * np.ones(1)
 
     @property

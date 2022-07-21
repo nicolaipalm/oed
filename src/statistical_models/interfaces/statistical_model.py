@@ -6,10 +6,10 @@ from src.minimizer.interfaces.minimizer import Minimizer
 
 
 class StatisticalModel(ABC):
-    """Interface for a statistical model with additional index/experimental design option
+    """Interface for a statistical model with additional index/experimental designs option
 
     Notation:
-    x: experimental design
+    x: experimental designs
     x0: experiment consisting of experimental designs x
     theta: parameter
     P_theta(x0): probability measure corresponding to the parameter theta and experiment x0
@@ -18,18 +18,18 @@ class StatisticalModel(ABC):
     The specification of an experiment (i.e., a numpy array x0) leads to a statistical model parameterized by theta.
     That is, given theta and x0, we obtain a probability measure denoted P_theta(x0).
     This class contains all the necessary computations required to
-    work with a statistical model with respect to the design of experiments.
+    work with a statistical model with respect to the designs of experiments.
     """
 
     @abstractmethod
     def random(self, x: np.ndarray, theta: np.ndarray) -> np.ndarray:
         """Draw a random sample of the measurement space corresponding to the measurement P_theta(x0)
-        ...where x0 consists of the single experimental design x
+        ...where x0 consists of the single experimental designs x
 
         Parameters
         ----------
         x : np.ndarray
-            experimental design
+            experimental designs
         theta : np.ndarray
             parameter of the statistical model corresponding to x
 
@@ -188,7 +188,7 @@ class StatisticalModel(ABC):
         Returns
         -------
         np.ndarray
-            Lower bounds for an experimental design x with each entry representing
+            Lower bounds for an experimental designs x with each entry representing
             the lower bound of the respective entry of x
         """
         pass
@@ -200,7 +200,7 @@ class StatisticalModel(ABC):
         Returns
         -------
         np.ndarray
-            Upper bounds for an experimental design x with each entry representing
+            Upper bounds for an experimental designs x with each entry representing
             the upper bound of the respective entry of x
         """
         pass

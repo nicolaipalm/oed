@@ -1,6 +1,6 @@
 import numpy as np
 
-from src.designs_of_experiments.design_library.latin_hypercube import LatinHypercube
+from src.designs_of_experiments.experiment_library.latin_hypercube import LatinHypercube
 from src.designs_of_experiments.interfaces.design_of_experiment import (
     DesignOfExperiment,
 )
@@ -42,11 +42,11 @@ class EstimationMeanError(Metric):
         )
         error = []
         output_data = np.array(
-            [self._statistical_model(theta=self._theta, x=x) for x in lh.design]
+            [self._statistical_model(theta=self._theta, x=x) for x in lh.designs]
         )
         for parameter in estimations_of_parameter:
             output_model = np.array(
-                [self._statistical_model(theta=parameter, x=x) for x in lh.design]
+                [self._statistical_model(theta=parameter, x=x) for x in lh.designs]
             )
             error.append(self._error_function(output_data, output_model))
 

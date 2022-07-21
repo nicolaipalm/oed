@@ -4,10 +4,10 @@
 import numpy as np
 
 from src.benchmarking.benchmarking import Benchmarking
-from src.designs_of_experiments.design_library.d_design import DDesign
-from src.designs_of_experiments.design_library.latin_hypercube import LatinHypercube
-from src.designs_of_experiments.design_library.pi_design import PiDesign
-from src.designs_of_experiments.design_library.random import Random
+from src.designs_of_experiments.experiment_library.d_design import DDesign
+from src.designs_of_experiments.experiment_library.latin_hypercube import LatinHypercube
+from src.designs_of_experiments.experiment_library.pi_design import PiDesign
+from src.designs_of_experiments.experiment_library.random import Random
 ####
 # Designs
 from src.metrics.metric_library.determinant_of_fisher_information_matrix import (
@@ -112,7 +112,7 @@ LH = LatinHypercube(
     number_designs=2 * number_designs,
 )
 
-# print(LH.design, LH.name)
+# print(LH.designs, LH.name)
 
 random_design = Random(
     number_designs=2 * number_designs,
@@ -126,7 +126,7 @@ LH_half = LatinHypercube(lower_bounds_design=lower_bounds_x,
                          number_designs=number_designs)
 
 initial_theta = statistical_model.calculate_maximum_likelihood_estimation(
-    x0=LH_half.design, y=np.array([blackbox_model(x) for x in LH_half.design]), minimizer=minimizer)
+    x0=LH_half.designs, y=np.array([blackbox_model(x) for x in LH_half.designs]), minimizer=minimizer)
 
 print(initial_theta)
 
@@ -141,7 +141,7 @@ min_entry = PiDesign(
     minimizer=minimizer,
 )
 
-print(min_entry.design)
+print(min_entry.designs)
 
 max_det = DDesign(
     number_designs=number_designs,
@@ -200,7 +200,7 @@ for design in benchmarking.evaluations_blackbox_function.keys():
 # plotting
 
 baseline = np.sqrt(np.array([statistical_model.calculate_cramer_rao_lower_bound(
-    x0=design.design, theta=theta).diagonal() for design in benchmarking.designs]).T)
+    x0=design.designs, theta=theta).diagonal() for design in benchmarking.designs]).T)
 
 fig2 = metrics[2].plot(
     evaluations_blackbox_function_for_each_design=benchmarking.evaluations_blackbox_function,

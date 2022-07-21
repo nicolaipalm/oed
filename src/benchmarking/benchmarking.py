@@ -49,11 +49,11 @@ class Benchmarking:
             for _ in tqdm(
                 range(number_of_evaluations), desc=f"Evaluate the {doe.name}"
             ):
-                evaluation = np.array([self._blackbox_model(x) for x in doe.design])
+                evaluation = np.array([self._blackbox_model(x) for x in doe.designs])
                 evaluations.append(evaluation)
                 estimations.append(
                     self._statistical_model.calculate_maximum_likelihood_estimation(
-                        x0=doe.design, y=evaluation, minimizer=minimizer
+                        x0=doe.designs, y=evaluation, minimizer=minimizer
                     )
                 )
             self.evaluations_blackbox_function[doe] = np.array(evaluations)

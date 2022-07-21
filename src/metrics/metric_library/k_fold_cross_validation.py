@@ -43,8 +43,8 @@ class KFoldCrossValidation(Metric):
         error = []
         for train_index, test_index in k_fold.split(evaluations_blackbox_function):
             design_training, design_test = (
-                design.design[train_index],
-                design.design[test_index],
+                design.designs[train_index],
+                design.designs[test_index],
             )
             y_training, y_test = (
                 evaluations_blackbox_function[train_index],
