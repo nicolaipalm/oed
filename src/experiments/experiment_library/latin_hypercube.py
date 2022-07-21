@@ -22,14 +22,14 @@ class LatinHypercube(Experiment):
         Parameters
         ----------
         number_designs : int
-            The number of experimental experiments over which the maximization is taken
+            The number of experimental experiment over which the maximization is taken
 
         lower_bounds_design : np.ndarray
-            Lower bounds for an experimental experiments x
+            Lower bounds for an experimental experiment x
             with each entry representing the lower bound of the respective entry of x
 
         upper_bounds_design :  np.ndarray
-            Lower bounds for an experimental experiments x
+            Lower bounds for an experimental experiment x
             with each entry representing the lower bound of the respective entry of x
         """
         self._design = qmc.scale(
@@ -43,5 +43,5 @@ class LatinHypercube(Experiment):
         return "LH"
 
     @property
-    def designs(self) -> np.ndarray:
+    def experiment(self) -> np.ndarray:
         return self._design

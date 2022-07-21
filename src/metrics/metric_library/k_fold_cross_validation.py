@@ -23,6 +23,15 @@ class KFoldCrossValidation(Metric):
         error_function: ErrorFunction = AverageError(),
         number_splits: int = None,
     ):
+        """TBA
+
+        Parameters
+        ----------
+        statistical_model :
+        minimizer :
+        error_function :
+        number_splits :
+        """
         self.number_splits = number_splits
         self._error_function = error_function
         self._statistical_model = statistical_model
@@ -31,11 +40,20 @@ class KFoldCrossValidation(Metric):
     def calculate(
         self,
         evaluations_blackbox_function: np.ndarray,
-        design: Experiment,
+        experiment: Experiment,
         estimations_of_parameter: np.ndarray = None,
     ) -> np.ndarray:
-        """
-        evaluations_blackbox_function needs to be a 1 or 2 dimensional array
+        """TBA
+
+        Parameters
+        ----------
+        evaluations_blackbox_function :
+        experiment :
+        estimations_of_parameter :
+
+        Returns
+        -------
+
         """
         if len(evaluations_blackbox_function.shape) > 2:
             raise ValueError("The evaluation array must be of dimension 1 or 2.")
@@ -47,8 +65,8 @@ class KFoldCrossValidation(Metric):
         error = []
         for train_index, test_index in k_fold.split(evaluations_blackbox_function):
             design_training, design_test = (
-                design.designs[train_index],
-                design.designs[test_index],
+                experiment.experiment[train_index],
+                experiment.experiment[test_index],
             )
             y_training, y_test = (
                 evaluations_blackbox_function[train_index],

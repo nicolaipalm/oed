@@ -11,15 +11,30 @@ class StdParameterEstimations(Metric):
 
     ... estimated according to https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation.
     """
-    def calculate(self, evaluations_blackbox_function: np.ndarray, estimations_of_parameter: np.ndarray,
-                  experiment: Experiment) -> float:
+
+    def calculate(self,
+                  estimations_of_parameter: np.ndarray,
+                  evaluations_blackbox_function: np.ndarray = None,
+                  experiment: Experiment = None) -> float:
+        """TBA
+
+        Parameters
+        ----------
+        estimations_of_parameter :
+        evaluations_blackbox_function :
+        experiment :
+
+        Returns
+        -------
+
+        """
         return (np.sqrt(
             1
             / (len(estimations_of_parameter) - 1)
             * np.sum(
                 (
-                    estimations_of_parameter
-                    - np.average(estimations_of_parameter, axis=0)
+                        estimations_of_parameter
+                        - np.average(estimations_of_parameter, axis=0)
                 )
                 ** 2,
                 axis=0,

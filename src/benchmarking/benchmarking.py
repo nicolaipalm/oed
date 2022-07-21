@@ -14,7 +14,7 @@ from src.visualization.plotting_functions import dot_scatter, styled_figure
 
 
 class Benchmarking:
-    """Benchmarking class in order to compare different experiments against selected metrics
+    """Benchmarking class in order to compare different experiment against selected metrics
 
     ...based on statistical models and their maximum likelihood estimations.
     """
@@ -23,44 +23,44 @@ class Benchmarking:
             self,
             blackbox_model: Callable,
             statistical_model: StatisticalModel,
-            designs_of_experiments: List[Experiment],
+            experiments: List[Experiment],
     ):
         """
 
         Parameters
         ----------
         blackbox_model : Callable
-            underlying black box function from which the results of the experiments are obtained
+            underlying black box function from which the results of the experiment are obtained
         statistical_model : StatisticalModel
             underlying statistical model
         designs_of_experiments : List[Experiment]
-            list of experiments for benchmarking
+            list of experiment for benchmarking
         """
         self._blackbox_model = blackbox_model
         self._statistical_model = statistical_model
-        self._designs_of_experiments = designs_of_experiments
-        self.evaluations_blackbox_function = {}
-        self.maximum_likelihood_estimations = {}
+        self._designs_of_experiments = experiments
+        self._evaluations_blackbox_function = {}
+        self._maximum_likelihood_estimations = {}
 
     @property
-    def evaluations_blackbox_function(self) -> Dict[Experiment:np.ndarray]:
+    def evaluations_blackbox_function(self) -> Dict[Experiment, np.ndarray]:
         """
         Returns
         -------
         Dict[Experiment:np.ndarray]
             evaluations of blackbox function corresponding to the respective experiment
         """
-        return self.evaluations_blackbox_function
+        return self._evaluations_blackbox_function
 
     @property
-    def maximum_likelihood_estimations(self) -> Dict[Experiment:np.ndarray]:
+    def maximum_likelihood_estimations(self) -> Dict[Experiment, np.ndarray]:
         """
         Returns
         -------
         Dict[Experiment:np.ndarray]
             maximum likelihood estimations corresponding to the respective evaluation of the blackbox function
         """
-        return self.maximum_likelihood_estimations
+        return self._maximum_likelihood_estimations
 
     @property
     def experiments_names(self) -> List[str]:
@@ -68,7 +68,7 @@ class Benchmarking:
         Returns
         -------
         List[str]
-            names of the underlying experiments in the same order as the list of experiments.
+            names of the underlying experiment in the same order as the list of experiment.
         """
         return [doe.name for doe in self._designs_of_experiments]
 
@@ -78,7 +78,7 @@ class Benchmarking:
         Returns
         -------
         List[Experiment]
-            underlying experiments used in benchmarking
+            underlying experiment used in benchmarking
         """
         return self._designs_of_experiments
 
@@ -103,7 +103,7 @@ class Benchmarking:
         return self._blackbox_model
 
     def evaluate_experiments(self, number_of_evaluations: int, minimizer: Minimizer):
-        """Evaluate the experiments, i.e. repeat conducting the experiments several times
+        """Evaluate the experiment, i.e. repeat conducting the experiment several times
         ... calculate their maximum likelihood estimate and store in the respective variable.
 
         Parameters
@@ -120,11 +120,11 @@ class Benchmarking:
             for _ in tqdm(
                     range(number_of_evaluations), desc=f"Evaluate the {doe.name}"
             ):
-                evaluation = np.array([self._blackbox_model(x) for x in doe.designs])
+                evaluation = np.array([self._blackbox_model(x) for x in doe.experiment])
                 evaluations.append(evaluation)
                 estimations.append(
                     self._statistical_model.calculate_maximum_likelihood_estimation(
-                        x0=doe.designs, y=evaluation, minimizer=minimizer
+                        x0=doe.experiment, y=evaluation, minimizer=minimizer
                     )
                 )
             self.evaluations_blackbox_function[doe] = np.array(evaluations)

@@ -15,8 +15,20 @@ class EstimationMeanParameterEstimations(Metric):
         self,
         estimations_of_parameter: np.ndarray,
         evaluations_blackbox_function: np.ndarray = None,
-        design: Experiment = None,
+        experiment: Experiment = None,
     ) -> np.ndarray:
+        """TBA
+
+        Parameters
+        ----------
+        estimations_of_parameter :
+        evaluations_blackbox_function :
+        experiment :
+
+        Returns
+        -------
+
+        """
         return np.average(estimations_of_parameter, axis=0)
 
     @property

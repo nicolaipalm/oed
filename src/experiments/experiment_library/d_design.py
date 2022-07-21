@@ -11,7 +11,7 @@ class DDesign(Experiment):
     """D-optimal design implementation within the experiment interface
 
     The D-optimal design is calculated by maximizing the determinant of the Fisher information matrix
-    by changing experimental experiments.
+    by changing experimental experiment.
     """
 
     def __init__(
@@ -28,14 +28,14 @@ class DDesign(Experiment):
         Parameters
         ----------
         number_designs : int
-            The number of experimental experiments over which the maximization is taken
+            The number of experimental experiment over which the maximization is taken
 
         lower_bounds_design : np.ndarray
-            Lower bounds for an experimental experiments x
+            Lower bounds for an experimental experiment x
             with each entry representing the lower bound of the respective entry of x
 
         upper_bounds_design :  np.ndarray
-            Lower bounds for an experimental experiments x
+            Lower bounds for an experimental experiment x
             with each entry representing the lower bound of the respective entry of x
 
         initial_theta : np.ndarray
@@ -48,7 +48,7 @@ class DDesign(Experiment):
             Minimizer used to maximize the Fisher information matrix
 
         previous_experiment : Experiment
-            Joint previously conducted experiments used within the maximization
+            Joint previously conducted experiment used within the maximization
             of the determinant of the Fisher information matrix
 
         """
@@ -57,11 +57,11 @@ class DDesign(Experiment):
         self._design = \
             np.concatenate(
                 (
-                    previous_experiment.designs,
+                    previous_experiment.experiment,
                     minimizer(
                         function=lambda x: -statistical_model.calculate_determinant_fisher_information_matrix(
                             theta=initial_theta,
-                            x0=np.concatenate((previous_experiment.designs,
+                            x0=np.concatenate((previous_experiment.experiment,
                                                x.reshape(number_designs, len(lower_bounds_design)))),
                         ),
                         lower_bounds=np.array(lower_bounds_design.tolist() * number_designs),
@@ -74,5 +74,5 @@ class DDesign(Experiment):
         return "D-opt"
 
     @property
-    def designs(self) -> np.ndarray:
+    def experiment(self) -> np.ndarray:
         return self._design

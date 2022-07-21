@@ -7,12 +7,27 @@ from src.metrics.interfaces.metric import Metric
 
 
 class LeaveOneOutValidation(Metric):
+    """TBA
+
+    """
     def calculate(
         self,
         evaluations_blackbox_function: np.ndarray,
         estimations_of_parameter: np.ndarray,
-        design: Experiment = None,
+        experiment: Experiment = None,
     ) -> float:
+        """TBA
+
+        Parameters
+        ----------
+        evaluations_blackbox_function :
+        estimations_of_parameter :
+        experiment :
+
+        Returns
+        -------
+
+        """
         pass
 
     @property

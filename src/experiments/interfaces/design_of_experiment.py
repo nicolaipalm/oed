@@ -6,7 +6,7 @@ import numpy as np
 class Experiment(ABC):
     """Interface for an experiment
 
-    We refer to an experiment as vector of experimental experiments.
+    We refer to an experiment as vector of experimental experiment.
     We store an experiment as a numpy array with each entry representing an experimental design.
     """
 
@@ -23,15 +23,15 @@ class Experiment(ABC):
 
     @property
     @abstractmethod
-    def designs(self) -> np.ndarray:
-        """Experimental experiments within the experiment
+    def experiment(self) -> np.ndarray:
+        """Experiment consisting of experimental designs
 
-        We refer to an experiment as vector of experimental experiments.
+        We refer to an experiment as vector of experimental experiment.
         We store an experiment as a numpy array with each entry representing an experimental design.
 
         Returns
         -------
         np.ndarray
-            the experimental experiments of the experiment
+            experiment
         """
         pass

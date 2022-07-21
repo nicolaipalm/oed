@@ -29,6 +29,15 @@ class EstimationMeanError(Metric):
         number_evaluations: int = 100,
         error_function: ErrorFunction = AverageError(),
     ):
+        """TBA
+
+        Parameters
+        ----------
+        theta :
+        statistical_model :
+        number_evaluations :
+        error_function :
+        """
         self._theta = theta
         self._statistical_model = statistical_model
         self._number_evaluations = number_evaluations
@@ -38,8 +47,20 @@ class EstimationMeanError(Metric):
         self,
         estimations_of_parameter: np.ndarray,
         evaluations_blackbox_function: np.ndarray = None,
-        design: Experiment = None,
+        experiment: Experiment = None,
     ) -> np.ndarray:
+        """TBA
+
+        Parameters
+        ----------
+        estimations_of_parameter :
+        evaluations_blackbox_function :
+        experiment :
+
+        Returns
+        -------
+
+        """
         lh = LatinHypercube(
             number_designs=self._number_evaluations,
             lower_bounds_design=self._statistical_model.lower_bounds_x,
@@ -47,11 +68,11 @@ class EstimationMeanError(Metric):
         )
         error = []
         output_data = np.array(
-            [self._statistical_model(theta=self._theta, x=x) for x in lh.designs]
+            [self._statistical_model(theta=self._theta, x=x) for x in lh.experiment]
         )
         for parameter in estimations_of_parameter:
             output_model = np.array(
-                [self._statistical_model(theta=parameter, x=x) for x in lh.designs]
+                [self._statistical_model(theta=parameter, x=x) for x in lh.experiment]
             )
             error.append(self._error_function(output_data, output_model))
 

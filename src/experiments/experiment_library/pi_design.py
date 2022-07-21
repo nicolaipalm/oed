@@ -10,7 +10,7 @@ from src.statistical_models.interfaces.statistical_model import StatisticalModel
 class PiDesign(Experiment):
     """parameter-individual experiment implemented within the experiment interface
 
-    This experiment is calculated by minimizing a diagonal entry of the CRLB by changing experimental experiments.
+    This experiment is calculated by minimizing a diagonal entry of the CRLB by changing experimental experiment.
     """
     def __init__(
             self,
@@ -28,14 +28,14 @@ class PiDesign(Experiment):
         Parameters
         ----------
         number_designs : int
-            The number of experimental experiments over which the maximization is taken
+            The number of experimental experiment over which the maximization is taken
 
         lower_bounds_design : np.ndarray
-            Lower bounds for an experimental experiments x
+            Lower bounds for an experimental experiment x
             with each entry representing the lower bound of the respective entry of x
 
         upper_bounds_design :  np.ndarray
-            Lower bounds for an experimental experiments x
+            Lower bounds for an experimental experiment x
             with each entry representing the lower bound of the respective entry of x
         index : int
             Index, i.e. diagonal entry, which should be minimized. Starts at zero.
@@ -50,7 +50,7 @@ class PiDesign(Experiment):
             Minimizer used to maximize the Fisher information matrix
 
         previous_experiment : Experiment
-            Joint previously conducted experiments used within the maximization
+            Joint previously conducted experiment used within the maximization
             of the determinant of the Fisher information matrix
         """
         print(f"Calculating the {self.name}...")
@@ -65,16 +65,16 @@ class PiDesign(Experiment):
                 upper_bounds=np.array(upper_bounds_design.tolist() * number_designs),
             ).reshape(number_designs, len(lower_bounds_design))
         else:
-            # If we want to consider an initial experiments within our calculation of the CRLB.
+            # If we want to consider an initial experiment within our calculation of the CRLB.
             self._design = np.concatenate(
                 (
-                    previous_experiment.designs,
+                    previous_experiment.experiment,
                     minimizer(
                         function=lambda x: statistical_model.calculate_cramer_rao_lower_bound(
                             theta=initial_theta,
                             x0=np.concatenate(
                                 (
-                                    previous_experiment.designs,
+                                    previous_experiment.experiment,
                                     x.reshape(number_designs, len(lower_bounds_design)),
                                 ),
                                 axis=0,
@@ -100,5 +100,5 @@ class PiDesign(Experiment):
         return "pi"
 
     @property
-    def designs(self) -> np.ndarray:
+    def experiment(self) -> np.ndarray:
         return self._design

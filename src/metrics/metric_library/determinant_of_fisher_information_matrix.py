@@ -12,6 +12,13 @@ class DeterminantOfFisherInformationMatrix(Metric):
 
     """
     def __init__(self, statistical_model: StatisticalModel, theta: np.ndarray):
+        """TBA
+
+        Parameters
+        ----------
+        statistical_model :
+        theta :
+        """
         self._statistical_model = statistical_model
         self.theta = theta
 
@@ -21,8 +28,20 @@ class DeterminantOfFisherInformationMatrix(Metric):
         evaluations_blackbox_function: np.ndarray = None,
         estimations_of_parameter: np.ndarray = None,
     ) -> np.ndarray:
+        """TBA
+
+        Parameters
+        ----------
+        experiment :
+        evaluations_blackbox_function :
+        estimations_of_parameter :
+
+        Returns
+        -------
+
+        """
         return self._statistical_model.calculate_determinant_fisher_information_matrix(
-            x0=experiment.designs, theta=self.theta
+            x0=experiment.experiment, theta=self.theta
         ) * np.ones(1)
 
     @property

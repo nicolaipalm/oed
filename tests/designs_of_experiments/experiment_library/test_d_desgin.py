@@ -49,16 +49,16 @@ class TestDDesign(unittest.TestCase):
         self.assertEqual("D-opt", experiment.name)  # add assertion here
 
     def test_if_experiment_is_calculated_correctly(self):
-        # Test if random experiments have higher determinant
+        # Test if random experiment have higher determinant
         all_smaller = True
-        det_d = statistical_model.calculate_determinant_fisher_information_matrix(experiment.designs, theta=theta)
+        det_d = statistical_model.calculate_determinant_fisher_information_matrix(experiment.experiment, theta=theta)
 
         for _ in range(100):
             test_experiment = LatinHypercube(number_designs=2 * number_designs,
                                              lower_bounds_design=lower_bounds_x,
                                              upper_bounds_design=upper_bounds_x)
 
-            det_test = statistical_model.calculate_determinant_fisher_information_matrix(test_experiment.designs,
+            det_test = statistical_model.calculate_determinant_fisher_information_matrix(test_experiment.experiment,
                                                                                          theta=theta)
             if det_test > det_d:
                 all_smaller = False

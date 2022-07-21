@@ -71,7 +71,7 @@ class Metric(ABC):
         ]] = None,
         baseline: Union[str, np.ndarray] = "min",
     ) -> go.Figure:
-        """Plot the results of the metric applied to multiple experiments and its evaluations
+        """Plot the results of the metric applied to multiple experiment and its evaluations
 
         Parameters
         ----------
@@ -82,11 +82,11 @@ class Metric(ABC):
              Each entry represents a single parameter estimation.
         baseline : Union[str, np.ndarray]
              Line which should be plotted in addition to the evaluations of the metric.
-             The dimension needs to be Line[parameter dimension][number of experiments]
+             The dimension needs to be Line[parameter dimension][number of experiment]
              Current options are:
              - "min" (default; i.e. the minimum of all evaluated metrics)
              - "max" (i.e. the maximum of all evaluated metrics)
-             - self defined line in form of numpy array with consisting of entries corresponding to the experiments
+             - self defined line in form of numpy array with consisting of entries corresponding to the experiment
              - None which results in a zero baseline
 
 

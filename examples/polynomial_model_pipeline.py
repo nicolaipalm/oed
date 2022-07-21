@@ -1,13 +1,24 @@
+"""Aging model pipeline script
+
+This script allows the user to execute an example workflow for designing and evaluating an experiment,
+specifically the pi experiment.
+Being more precisely, we
+* implement a new parametric function (polynomial function) within the parametric function interface
+* use as statistical model the white Gaussian noise model with that parametric function
+* benchmark various experiments against each other and
+* plot several metrics
+"""
+
 ####
 # Importing modules
 
 import numpy as np
 
 from src.benchmarking.benchmarking import Benchmarking
-from src.designs_of_experiments.experiment_library.d_design import DDesign
-from src.designs_of_experiments.experiment_library.latin_hypercube import LatinHypercube
-from src.designs_of_experiments.experiment_library.pi_design import PiDesign
-from src.designs_of_experiments.experiment_library.random import Random
+from src.experiments.experiment_library.d_design import DDesign
+from src.experiments.experiment_library.latin_hypercube import LatinHypercube
+from src.experiments.experiment_library.pi_design import PiDesign
+from src.experiments.experiment_library.random import Random
 ####
 # Designs
 from src.metrics.metric_library.determinant_of_fisher_information_matrix import (
@@ -80,7 +91,7 @@ sigma = 1
 lower_bounds_x = np.array([-10])
 upper_bounds_x = np.array([10])
 
-lower_bounds_theta = -2*np.ones(grade + 1)
+lower_bounds_theta = -2 * np.ones(grade + 1)
 upper_bounds_theta = 2 * np.ones(grade + 1)
 
 # Setup a parametric function family
@@ -112,7 +123,7 @@ LH = LatinHypercube(
     number_designs=2 * number_designs,
 )
 
-# print(LH.experiments, LH.name)
+# print(LH.experiment, LH.name)
 
 random_design = Random(
     number_designs=2 * number_designs,
@@ -120,13 +131,13 @@ random_design = Random(
     upper_bounds_design=upper_bounds_x,
 )
 
-# We split the number of experiments in half and perform first a latin hypercube
+# We split the number of experiment in half and perform first a latin hypercube
 LH_half = LatinHypercube(lower_bounds_design=lower_bounds_x,
                          upper_bounds_design=upper_bounds_x,
                          number_designs=number_designs)
 
 initial_theta = statistical_model.calculate_maximum_likelihood_estimation(
-    x0=LH_half.experiments, y=np.array([blackbox_model(x) for x in LH_half.experiments]), minimizer=minimizer)
+    x0=LH_half.experiment, y=np.array([blackbox_model(x) for x in LH_half.experiment]), minimizer=minimizer)
 
 print(initial_theta)
 
@@ -136,12 +147,12 @@ min_entry = PiDesign(
     upper_bounds_design=upper_bounds_x,
     index=0,
     initial_theta=initial_theta,
-    previous_design=LH_half,
+    previous_experiment=LH_half,
     statistical_model=statistical_model,
     minimizer=minimizer,
 )
 
-print(min_entry.experiments)
+print(min_entry.experiment)
 
 max_det = DDesign(
     number_designs=number_designs,
@@ -150,7 +161,7 @@ max_det = DDesign(
     initial_theta=initial_theta,
     statistical_model=statistical_model,
     minimizer=minimizer,
-    previous_design=LH_half,
+    previous_experiment=LH_half,
 )
 
 metrics = [
@@ -177,11 +188,11 @@ metrics = [
 benchmarking = Benchmarking(
     blackbox_model=blackbox_model,
     statistical_model=statistical_model,
-    designs_of_experiments=[LH,
-                            random_design,
-                            min_entry,
-                            max_det
-                            ],
+    experiments=[LH,
+                 random_design,
+                 min_entry,
+                 max_det
+                 ],
 )
 
 benchmarking.evaluate_experiments(number_of_evaluations=number_of_evaluations_in_benchmarking, minimizer=minimizer)
@@ -198,7 +209,7 @@ for design in benchmarking.evaluations_blackbox_function.keys():
 # plotting
 
 baseline = np.sqrt(np.array([statistical_model.calculate_cramer_rao_lower_bound(
-    x0=design.designs, theta=theta).diagonal() for design in benchmarking.experiments]).T)
+    x0=design.experiment, theta=theta).diagonal() for design in benchmarking.experiments]).T)
 
 fig2 = metrics[2].plot(evaluations_blackbox_function_for_each_experiment=benchmarking.evaluations_blackbox_function,
                        estimations_of_parameter_for_each_experiment=benchmarking.maximum_likelihood_estimations,

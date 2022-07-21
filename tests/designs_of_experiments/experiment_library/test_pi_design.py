@@ -51,9 +51,9 @@ class TestDDesign(unittest.TestCase):
         self.assertEqual("pi", experiment.name)  # add assertion here
 
     def test_if_experiment_is_calculated_correctly(self):
-        # Test if random experiments have higher determinant
+        # Test if random experiment have higher determinant
         all_smaller = True
-        index_pi = statistical_model.calculate_cramer_rao_lower_bound(x0=experiment.designs, theta=theta).diagonal()[
+        index_pi = statistical_model.calculate_cramer_rao_lower_bound(x0=experiment.experiment, theta=theta).diagonal()[
             index]
 
         for _ in range(100):
@@ -61,7 +61,7 @@ class TestDDesign(unittest.TestCase):
                                              lower_bounds_design=lower_bounds_x,
                                              upper_bounds_design=upper_bounds_x)
 
-            index_test = statistical_model.calculate_cramer_rao_lower_bound(x0=test_experiment.designs,
+            index_test = statistical_model.calculate_cramer_rao_lower_bound(x0=test_experiment.experiment,
                                                                             theta=theta).diagonal()[index]
 
             if index_test < index_pi:
