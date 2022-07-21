@@ -1,7 +1,7 @@
 import numpy as np
 
-from src.designs_of_experiments.interfaces.design_of_experiment import (
-    DesignOfExperiment,
+from src.experiments.interfaces.design_of_experiment import (
+    Experiment,
 )
 from src.metrics.interfaces.metric import Metric
 
@@ -11,7 +11,7 @@ class LeaveOneOutValidation(Metric):
         self,
         evaluations_blackbox_function: np.ndarray,
         estimations_of_parameter: np.ndarray,
-        design: DesignOfExperiment = None,
+        design: Experiment = None,
     ) -> float:
         pass
 

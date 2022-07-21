@@ -1,17 +1,21 @@
 import numpy as np
 
-from src.designs_of_experiments.interfaces.design_of_experiment import (
-    DesignOfExperiment,
+from src.experiments.interfaces.design_of_experiment import (
+    Experiment,
 )
 from src.metrics.interfaces.metric import Metric
 
 
 class EstimationMeanParameterEstimations(Metric):
+    """Mean of parameter estimations implemented within the metric interface
+
+    ...estimated by the arithmetic mean also known as sample mean.
+    """
     def calculate(
         self,
         estimations_of_parameter: np.ndarray,
         evaluations_blackbox_function: np.ndarray = None,
-        design: DesignOfExperiment = None,
+        design: Experiment = None,
     ) -> np.ndarray:
         return np.average(estimations_of_parameter, axis=0)
 

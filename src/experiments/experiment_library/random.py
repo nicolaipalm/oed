@@ -23,14 +23,14 @@ class Random(Experiment):
         Parameters
         ----------
         number_designs : int
-            The number of experimental designs over which the maximization is taken
+            The number of experimental experiments over which the maximization is taken
 
         lower_bounds_design : np.ndarray
-            Lower bounds for an experimental designs x
+            Lower bounds for an experimental experiments x
             with each entry representing the lower bound of the respective entry of x
 
         upper_bounds_design :  np.ndarray
-            Lower bounds for an experimental designs x
+            Lower bounds for an experimental experiments x
             with each entry representing the lower bound of the respective entry of x
         """
         self._design = np.array(

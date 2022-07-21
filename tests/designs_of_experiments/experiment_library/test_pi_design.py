@@ -18,8 +18,8 @@ index = 0
 lower_bounds_theta = 0 * np.ones(dimension + 1)
 upper_bounds_theta = 3 * np.ones(dimension + 1)
 
-lower_bounds_x = 0 * np.ones(dimension + 1)
-upper_bounds_x = 10 * np.ones(dimension + 1)
+lower_bounds_x = 0 * np.ones(dimension)
+upper_bounds_x = 10 * np.ones(dimension)
 
 minimizer = DifferentialEvolution()
 

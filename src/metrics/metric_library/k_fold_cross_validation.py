@@ -1,8 +1,8 @@
 import numpy as np
 from sklearn.model_selection import KFold
 
-from src.designs_of_experiments.interfaces.design_of_experiment import (
-    DesignOfExperiment,
+from src.experiments.interfaces.design_of_experiment import (
+    Experiment,
 )
 from src.metrics.error_functions.average_error import AverageError
 from src.metrics.interfaces.error_function import ErrorFunction
@@ -12,6 +12,10 @@ from src.statistical_models.interfaces.statistical_model import StatisticalModel
 
 
 class KFoldCrossValidation(Metric):
+    """K-fold cross validation metric implemented within the metric interface
+
+
+    """
     def __init__(
         self,
         statistical_model: StatisticalModel,
@@ -27,7 +31,7 @@ class KFoldCrossValidation(Metric):
     def calculate(
         self,
         evaluations_blackbox_function: np.ndarray,
-        design: DesignOfExperiment,
+        design: Experiment,
         estimations_of_parameter: np.ndarray = None,
     ) -> np.ndarray:
         """

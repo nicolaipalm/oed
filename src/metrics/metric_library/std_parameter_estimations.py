@@ -1,18 +1,18 @@
 import numpy as np
 
-from src.designs_of_experiments.interfaces.design_of_experiment import (
-    DesignOfExperiment,
+from src.experiments.interfaces.design_of_experiment import (
+    Experiment,
 )
 from src.metrics.interfaces.metric import Metric
 
 
 class StdParameterEstimations(Metric):
-    def calculate(
-        self,
-        estimations_of_parameter: np.ndarray,
-        evaluations_blackbox_function: np.ndarray = None,
-        design: DesignOfExperiment = None,
-    ) -> float:
+    """Standard deviation of parameter estimations implemented within the metric interface
+
+    ... estimated according to https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation.
+    """
+    def calculate(self, evaluations_blackbox_function: np.ndarray, estimations_of_parameter: np.ndarray,
+                  experiment: Experiment) -> float:
         return (np.sqrt(
             1
             / (len(estimations_of_parameter) - 1)

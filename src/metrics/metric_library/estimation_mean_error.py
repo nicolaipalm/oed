@@ -1,8 +1,8 @@
 import numpy as np
 
-from src.designs_of_experiments.experiment_library.latin_hypercube import LatinHypercube
-from src.designs_of_experiments.interfaces.design_of_experiment import (
-    DesignOfExperiment,
+from src.experiments.experiment_library.latin_hypercube import LatinHypercube
+from src.experiments.interfaces.design_of_experiment import (
+    Experiment,
 )
 from src.metrics.error_functions.average_error import AverageError
 from src.metrics.interfaces.error_function import ErrorFunction
@@ -11,10 +11,15 @@ from src.statistical_models.interfaces.statistical_model import StatisticalModel
 
 
 class EstimationMeanError(Metric):
-    """
-    This takes the mean over the estimations of the integral over the error function over the estimated parameters, i.e.
-    error_function(real_function,model)
-    -> better docu and how this is related to cross validation error
+    # TODO: correct?
+    """Mean error estimation implemented within the metric interface
+
+
+    Requires statistical model with underlying parametric function f which is called by calling the statistical model
+    and the true parameter theta of the parametric function.
+    Given an error function e, we approximate the integral of e applied to the underlying function f_theta
+    and the estimated function f_estimated_theta for each estimated theta.
+    Calculating the metric results in the mean taken over the above (approximated) integrals.
     """
 
     def __init__(
@@ -33,7 +38,7 @@ class EstimationMeanError(Metric):
         self,
         estimations_of_parameter: np.ndarray,
         evaluations_blackbox_function: np.ndarray = None,
-        design: DesignOfExperiment = None,
+        design: Experiment = None,
     ) -> np.ndarray:
         lh = LatinHypercube(
             number_designs=self._number_evaluations,

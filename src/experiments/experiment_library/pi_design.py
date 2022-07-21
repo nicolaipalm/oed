@@ -10,7 +10,7 @@ from src.statistical_models.interfaces.statistical_model import StatisticalModel
 class PiDesign(Experiment):
     """parameter-individual experiment implemented within the experiment interface
 
-    This experiment is calculated by minimizing a diagonal entry of the CRLB by changing experimental designs.
+    This experiment is calculated by minimizing a diagonal entry of the CRLB by changing experimental experiments.
     """
     def __init__(
             self,
@@ -28,14 +28,14 @@ class PiDesign(Experiment):
         Parameters
         ----------
         number_designs : int
-            The number of experimental designs over which the maximization is taken
+            The number of experimental experiments over which the maximization is taken
 
         lower_bounds_design : np.ndarray
-            Lower bounds for an experimental designs x
+            Lower bounds for an experimental experiments x
             with each entry representing the lower bound of the respective entry of x
 
         upper_bounds_design :  np.ndarray
-            Lower bounds for an experimental designs x
+            Lower bounds for an experimental experiments x
             with each entry representing the lower bound of the respective entry of x
         index : int
             Index, i.e. diagonal entry, which should be minimized. Starts at zero.
@@ -65,7 +65,7 @@ class PiDesign(Experiment):
                 upper_bounds=np.array(upper_bounds_design.tolist() * number_designs),
             ).reshape(number_designs, len(lower_bounds_design))
         else:
-            # If we want to consider an initial designs within our calculation of the CRLB.
+            # If we want to consider an initial experiments within our calculation of the CRLB.
             self._design = np.concatenate(
                 (
                     previous_experiment.designs,

@@ -1,12 +1,12 @@
-from typing import Callable, List
+from typing import Callable, List, Dict
 
 import numpy as np
 import pandas as pd
 import plotly.graph_objs as go
 from tqdm import tqdm
 
-from src.designs_of_experiments.interfaces.design_of_experiment import (
-    DesignOfExperiment,
+from src.experiments.interfaces.design_of_experiment import (
+    Experiment,
 )
 from src.minimizer.interfaces.minimizer import Minimizer
 from src.statistical_models.interfaces.statistical_model import StatisticalModel
@@ -14,12 +14,28 @@ from src.visualization.plotting_functions import dot_scatter, styled_figure
 
 
 class Benchmarking:
+    """Benchmarking class in order to compare different experiments against selected metrics
+
+    ...based on statistical models and their maximum likelihood estimations.
+    """
+
     def __init__(
-        self,
-        blackbox_model: Callable,
-        statistical_model: StatisticalModel,
-        designs_of_experiments: List[DesignOfExperiment],
+            self,
+            blackbox_model: Callable,
+            statistical_model: StatisticalModel,
+            designs_of_experiments: List[Experiment],
     ):
+        """
+
+        Parameters
+        ----------
+        blackbox_model : Callable
+            underlying black box function from which the results of the experiments are obtained
+        statistical_model : StatisticalModel
+            underlying statistical model
+        designs_of_experiments : List[Experiment]
+            list of experiments for benchmarking
+        """
         self._blackbox_model = blackbox_model
         self._statistical_model = statistical_model
         self._designs_of_experiments = designs_of_experiments
@@ -27,27 +43,82 @@ class Benchmarking:
         self.maximum_likelihood_estimations = {}
 
     @property
-    def design_names(self) -> List[str]:
+    def evaluations_blackbox_function(self) -> Dict[Experiment:np.ndarray]:
+        """
+        Returns
+        -------
+        Dict[Experiment:np.ndarray]
+            evaluations of blackbox function corresponding to the respective experiment
+        """
+        return self.evaluations_blackbox_function
+
+    @property
+    def maximum_likelihood_estimations(self) -> Dict[Experiment:np.ndarray]:
+        """
+        Returns
+        -------
+        Dict[Experiment:np.ndarray]
+            maximum likelihood estimations corresponding to the respective evaluation of the blackbox function
+        """
+        return self.maximum_likelihood_estimations
+
+    @property
+    def experiments_names(self) -> List[str]:
+        """
+        Returns
+        -------
+        List[str]
+            names of the underlying experiments in the same order as the list of experiments.
+        """
         return [doe.name for doe in self._designs_of_experiments]
 
     @property
-    def designs(self) -> List[DesignOfExperiment]:
+    def experiments(self) -> List[Experiment]:
+        """
+        Returns
+        -------
+        List[Experiment]
+            underlying experiments used in benchmarking
+        """
         return self._designs_of_experiments
 
     @property
     def statistical_model(self) -> StatisticalModel:
+        """
+        Returns
+        -------
+        StatisticalModel
+            underlying statistical model
+        """
         return self._statistical_model
 
     @property
     def blackbox_model(self) -> Callable:
+        """
+        Returns
+        -------
+        StatisticalModel
+            underlying blackbox function
+        """
         return self._blackbox_model
 
-    def evaluate_designs(self, number_of_evaluations: int, minimizer: Minimizer):
+    def evaluate_experiments(self, number_of_evaluations: int, minimizer: Minimizer):
+        """Evaluate the experiments, i.e. repeat conducting the experiments several times
+        ... calculate their maximum likelihood estimate and store in the respective variable.
+
+        Parameters
+        ----------
+        number_of_evaluations : int
+            number of repetitions of each experiment
+        minimizer : Minimizer
+            minimizer used in the calculations of the maximum likelihood estimations
+
+        """
         for doe in self._designs_of_experiments:
             evaluations = []
             estimations = []
             for _ in tqdm(
-                range(number_of_evaluations), desc=f"Evaluate the {doe.name}"
+                    range(number_of_evaluations), desc=f"Evaluate the {doe.name}"
             ):
                 evaluation = np.array([self._blackbox_model(x) for x in doe.designs])
                 evaluations.append(evaluation)
@@ -60,12 +131,22 @@ class Benchmarking:
             self.maximum_likelihood_estimations[doe] = np.array(estimations)
 
     def save_to_csv(self, file_name: str = "benchmarking_evaluations") -> bool:
+        """TBA
+
+        Parameters
+        ----------
+        file_name :
+
+        Returns
+        -------
+
+        """
         data = pd.DataFrame(
             [
                 [design.name]
                 + self.evaluations_blackbox_function[design][index].tolist()
                 + self.maximum_likelihood_estimations[design][index].tolist()
-                for design in self.designs
+                for design in self.experiments
                 for index in range(len(self.evaluations_blackbox_function[design]))
             ]
         )
@@ -73,9 +154,19 @@ class Benchmarking:
         return True
 
     def load_from_csv(self, file_name: str = "benchmarking_evaluations.csv") -> bool:
+        """TBA
+
+        Parameters
+        ----------
+        file_name :
+
+        Returns
+        -------
+
+        """
         t = pd.read_csv(file_name, index_col=0)
         number_parameters = len(self.statistical_model.lower_bounds_theta)
-        for design in self.designs:
+        for design in self.experiments:
             evaluations = []
             estimations = []
             for row in t.T:
@@ -89,8 +180,9 @@ class Benchmarking:
         return True
 
     def plot_estimations(self) -> go.Figure:
+        """Plot the maximum likelihood estimations
 
-        # Add the data points for each parameter
+        """
         data = []
 
         initial_design = list(self.maximum_likelihood_estimations.keys())[0]

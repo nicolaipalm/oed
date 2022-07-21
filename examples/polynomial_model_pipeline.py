@@ -112,7 +112,7 @@ LH = LatinHypercube(
     number_designs=2 * number_designs,
 )
 
-# print(LH.designs, LH.name)
+# print(LH.experiments, LH.name)
 
 random_design = Random(
     number_designs=2 * number_designs,
@@ -126,7 +126,7 @@ LH_half = LatinHypercube(lower_bounds_design=lower_bounds_x,
                          number_designs=number_designs)
 
 initial_theta = statistical_model.calculate_maximum_likelihood_estimation(
-    x0=LH_half.designs, y=np.array([blackbox_model(x) for x in LH_half.designs]), minimizer=minimizer)
+    x0=LH_half.experiments, y=np.array([blackbox_model(x) for x in LH_half.experiments]), minimizer=minimizer)
 
 print(initial_theta)
 
@@ -141,7 +141,7 @@ min_entry = PiDesign(
     minimizer=minimizer,
 )
 
-print(min_entry.designs)
+print(min_entry.experiments)
 
 max_det = DDesign(
     number_designs=number_designs,
@@ -184,9 +184,7 @@ benchmarking = Benchmarking(
                             ],
 )
 
-benchmarking.evaluate_designs(
-    number_of_evaluations=number_of_evaluations_in_benchmarking, minimizer=minimizer
-)
+benchmarking.evaluate_experiments(number_of_evaluations=number_of_evaluations_in_benchmarking, minimizer=minimizer)
 
 k_fold_data = {}
 for design in benchmarking.evaluations_blackbox_function.keys():
@@ -200,40 +198,29 @@ for design in benchmarking.evaluations_blackbox_function.keys():
 # plotting
 
 baseline = np.sqrt(np.array([statistical_model.calculate_cramer_rao_lower_bound(
-    x0=design.designs, theta=theta).diagonal() for design in benchmarking.designs]).T)
+    x0=design.designs, theta=theta).diagonal() for design in benchmarking.experiments]).T)
 
-fig2 = metrics[2].plot(
-    evaluations_blackbox_function_for_each_design=benchmarking.evaluations_blackbox_function,
-    estimations_of_parameter_for_each_design=benchmarking.maximum_likelihood_estimations,
-    baseline=baseline,
-)
+fig2 = metrics[2].plot(evaluations_blackbox_function_for_each_experiment=benchmarking.evaluations_blackbox_function,
+                       estimations_of_parameter_for_each_experiment=benchmarking.maximum_likelihood_estimations,
+                       baseline=baseline)
 fig2.show()
 
-fig0 = metrics[0].plot(
-    evaluations_blackbox_function_for_each_design=benchmarking.evaluations_blackbox_function,
-    estimations_of_parameter_for_each_design=benchmarking.maximum_likelihood_estimations,
-    baseline="max",
-)
+fig0 = metrics[0].plot(evaluations_blackbox_function_for_each_experiment=benchmarking.evaluations_blackbox_function,
+                       estimations_of_parameter_for_each_experiment=benchmarking.maximum_likelihood_estimations,
+                       baseline="max")
 fig0.show()
 
-fig1 = metrics[1].plot(
-    evaluations_blackbox_function_for_each_design=benchmarking.evaluations_blackbox_function,
-    estimations_of_parameter_for_each_design=benchmarking.maximum_likelihood_estimations,
-    baseline=theta,
-)
+fig1 = metrics[1].plot(evaluations_blackbox_function_for_each_experiment=benchmarking.evaluations_blackbox_function,
+                       estimations_of_parameter_for_each_experiment=benchmarking.maximum_likelihood_estimations,
+                       baseline=theta)
 fig1.show()
 
-fig3 = metrics[3].plot(
-    evaluations_blackbox_function_for_each_design=benchmarking.evaluations_blackbox_function,
-    estimations_of_parameter_for_each_design=benchmarking.maximum_likelihood_estimations,
-    baseline="min",
-)
+fig3 = metrics[3].plot(evaluations_blackbox_function_for_each_experiment=benchmarking.evaluations_blackbox_function,
+                       estimations_of_parameter_for_each_experiment=benchmarking.maximum_likelihood_estimations,
+                       baseline="min")
 fig3.show()
 
-fig4 = metrics[4].plot(
-    evaluations_blackbox_function_for_each_design=k_fold_data,
-    baseline="min",
-)
+fig4 = metrics[4].plot(evaluations_blackbox_function_for_each_experiment=k_fold_data, baseline="min")
 fig4.show()
 
 fig = benchmarking.plot_estimations()

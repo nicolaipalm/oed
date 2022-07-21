@@ -1,28 +1,28 @@
 import numpy as np
 
-from src.designs_of_experiments.interfaces.design_of_experiment import (
-    DesignOfExperiment,
+from src.experiments.interfaces.design_of_experiment import (
+    Experiment,
 )
 from src.metrics.interfaces.metric import Metric
 from src.statistical_models.interfaces.statistical_model import StatisticalModel
 
 
 class DeterminantOfFisherInformationMatrix(Metric):
+    """Determinant of Fisher information matrix implemented within the metric interface
+
+    """
     def __init__(self, statistical_model: StatisticalModel, theta: np.ndarray):
         self._statistical_model = statistical_model
         self.theta = theta
 
     def calculate(
         self,
-        design: DesignOfExperiment,
+        experiment: Experiment,
         evaluations_blackbox_function: np.ndarray = None,
         estimations_of_parameter: np.ndarray = None,
     ) -> np.ndarray:
-        self._statistical_model.calculate_determinant_fisher_information_matrix(
-            x0=design.designs, theta=self.theta
-        ) * np.ones(1)
         return self._statistical_model.calculate_determinant_fisher_information_matrix(
-            x0=design.designs, theta=self.theta
+            x0=experiment.designs, theta=self.theta
         ) * np.ones(1)
 
     @property

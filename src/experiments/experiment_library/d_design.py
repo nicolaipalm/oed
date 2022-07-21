@@ -11,7 +11,7 @@ class DDesign(Experiment):
     """D-optimal design implementation within the experiment interface
 
     The D-optimal design is calculated by maximizing the determinant of the Fisher information matrix
-    by changing experimental designs.
+    by changing experimental experiments.
     """
 
     def __init__(
@@ -28,14 +28,14 @@ class DDesign(Experiment):
         Parameters
         ----------
         number_designs : int
-            The number of experimental designs over which the maximization is taken
+            The number of experimental experiments over which the maximization is taken
 
         lower_bounds_design : np.ndarray
-            Lower bounds for an experimental designs x
+            Lower bounds for an experimental experiments x
             with each entry representing the lower bound of the respective entry of x
 
         upper_bounds_design :  np.ndarray
-            Lower bounds for an experimental designs x
+            Lower bounds for an experimental experiments x
             with each entry representing the lower bound of the respective entry of x
 
         initial_theta : np.ndarray

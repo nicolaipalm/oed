@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Union
+from typing import Dict, Union, Optional
 
 import numpy as np
 import plotly.graph_objects as go
 
-from src.designs_of_experiments.interfaces.design_of_experiment import (
-    DesignOfExperiment,
+from src.experiments.interfaces.design_of_experiment import (
+    Experiment,
 )
 from src.visualization.plotting_functions import (
     dot_scatter,
@@ -15,90 +15,121 @@ from src.visualization.plotting_functions import (
 
 
 class Metric(ABC):
+    """Interface for metrics applied to the benchmarking results
+
+    Implementing the calculate method, you can plot the results without further code.
+    """
     @abstractmethod
     def calculate(
         self,
-        evaluations_blackbox_function: np.ndarray,
-        estimations_of_parameter: np.ndarray,
-        design: DesignOfExperiment,
+        evaluations_blackbox_function: Optional[np.ndarray],
+        estimations_of_parameter: Optional[np.ndarray],
+        experiment: Experiment,
     ) -> np.ndarray:
-        """
-        Either one, evaluations of blackbox OR estimations of parameter may be no
-        :return Numpy array of dimension 1.
+        """Evaluate the metric
+
+        Either one of evaluations or estimations must be a numpy array.
+
+        Parameters
+        ----------
+        evaluations_blackbox_function : np.ndarray ,optional
+            Evaluations of the blackbox function. Each entry represents a single evaluation.
+
+        estimations_of_parameter : np.ndarray ,optional
+            Parameter estimations corresponding to the blackbox evaluations.
+            Each entry represents a single parameter estimation.
+
+        experiment : Experiment
+            The underlying experiment on which the metric is applied.
+
+        Returns
+        -------
+        np.ndarray
+            Evaluation of the metric.
+
         """
         pass
 
     @property
     @abstractmethod
     def name(self) -> str:
+        """The name of the metric
+        Returns
+        -------
+        str
+            the name of the metric
+        """
         pass
 
     def plot(
         self,
-        evaluations_blackbox_function_for_each_design: Dict[
-            DesignOfExperiment, np.ndarray
-        ] = None,
-        estimations_of_parameter_for_each_design: Dict[
-            DesignOfExperiment, np.ndarray
-        ] = None,
+        evaluations_blackbox_function_for_each_experiment: Optional[Dict[
+            Experiment, np.ndarray
+        ]] = None,
+        estimations_of_parameter_for_each_experiment: Optional[Dict[
+            Experiment, np.ndarray
+        ]] = None,
         baseline: Union[str, np.ndarray] = "min",
     ) -> go.Figure:
-        """
-        :param evaluations_blackbox_function_for_each_design:
-        :type evaluations_blackbox_function_for_each_design:
-        :param estimations_of_parameter_for_each_design:
-        :type estimations_of_parameter_for_each_design:
-        :param baseline:
-        :type baseline:
-        min,max,zero or a default parameter stored in a numpy array of length equal the length of parameters;
-        by default min
-        :return:
-        :rtype:
+        """Plot the results of the metric applied to multiple experiments and its evaluations
+
+        Parameters
+        ----------
+        evaluations_blackbox_function_for_each_experiment : Dict[Experiment, np.ndarray], optional
+             Evaluations of the blackbox function for each experiment . Each entry represents a single evaluation.
+        estimations_of_parameter_for_each_experiment : Dict[Experiment, np.ndarray], optional
+             Parameter estimations for each experiment corresponding to the blackbox evaluations.
+             Each entry represents a single parameter estimation.
+        baseline : Union[str, np.ndarray]
+             Line which should be plotted in addition to the evaluations of the metric.
+             The dimension needs to be Line[parameter dimension][number of experiments]
+             Current options are:
+             - "min" (default; i.e. the minimum of all evaluated metrics)
+             - "max" (i.e. the maximum of all evaluated metrics)
+             - self defined line in form of numpy array with consisting of entries corresponding to the experiments
+             - None which results in a zero baseline
+
+
+        Returns
+        -------
+
         """
 
         # Add the data points for each parameter
         data = []
-        design = list(evaluations_blackbox_function_for_each_design.keys())[0]
+        design = list(evaluations_blackbox_function_for_each_experiment.keys())[0]
 
-        # ToDo: should be independent of input given?
-        if evaluations_blackbox_function_for_each_design is None:
-            evaluations_blackbox_function_for_each_design = (
-                estimations_of_parameter_for_each_design
+        # TODO: should be independent of input given?
+        if evaluations_blackbox_function_for_each_experiment is None:
+            evaluations_blackbox_function_for_each_experiment = (
+                estimations_of_parameter_for_each_experiment
             )
 
-        if estimations_of_parameter_for_each_design is None:
-            estimations_of_parameter_for_each_design = (
-                evaluations_blackbox_function_for_each_design
+        if estimations_of_parameter_for_each_experiment is None:
+            estimations_of_parameter_for_each_experiment = (
+                evaluations_blackbox_function_for_each_experiment
             )
 
         number_of_parameters = len(
-            self.calculate(
-                evaluations_blackbox_function=evaluations_blackbox_function_for_each_design[
-                    design
-                ],
-                estimations_of_parameter=estimations_of_parameter_for_each_design[
-                    design
-                ],
-                design=design,
-            )
+            self.calculate(evaluations_blackbox_function=evaluations_blackbox_function_for_each_experiment[
+                design
+            ], estimations_of_parameter=estimations_of_parameter_for_each_experiment[
+                design
+            ], experiment=design)
         )
         x_dots = [
             design.name
-            for design in evaluations_blackbox_function_for_each_design.keys()
+            for design in evaluations_blackbox_function_for_each_experiment.keys()
         ]
 
         for index in range(number_of_parameters):
             y_dots = [
-                self.calculate(
-                    evaluations_blackbox_function=evaluations_blackbox_function_for_each_design[
-                        design
-                    ],
-                    estimations_of_parameter=estimations_of_parameter_for_each_design[
-                        design
-                    ],
-                    design=design,
-                )[index]
-                for design in evaluations_blackbox_function_for_each_design.keys()
+                self.calculate(evaluations_blackbox_function=evaluations_blackbox_function_for_each_experiment[
+                    design
+                ], estimations_of_parameter=estimations_of_parameter_for_each_experiment[
+                    design
+                ], experiment=design)[index]
+                for design in evaluations_blackbox_function_for_each_experiment.keys()
             ]
             if type(baseline) == np.ndarray:
                 if len(baseline.shape) == 1:

@@ -6,11 +6,11 @@ from src.minimizer.interfaces.minimizer import Minimizer
 
 
 class StatisticalModel(ABC):
-    """Interface for a statistical model with additional index/experimental designs option
+    """Interface for a statistical model with additional index/experimental experiments option
 
     Notation:
-    x: experimental designs
-    x0: experiment consisting of experimental designs x
+    x: experimental experiments
+    x0: experiment consisting of experimental experiments x_0,...,x_N
     theta: parameter
     P_theta(x0): probability measure corresponding to the parameter theta and experiment x0
 
@@ -18,18 +18,18 @@ class StatisticalModel(ABC):
     The specification of an experiment (i.e., a numpy array x0) leads to a statistical model parameterized by theta.
     That is, given theta and x0, we obtain a probability measure denoted P_theta(x0).
     This class contains all the necessary computations required to
-    work with a statistical model with respect to the designs of experiments.
+    work with a statistical model with respect to the experiments of experiments.
     """
 
     @abstractmethod
     def random(self, x: np.ndarray, theta: np.ndarray) -> np.ndarray:
         """Draw a random sample of the measurement space corresponding to the measurement P_theta(x0)
-        ...where x0 consists of the single experimental designs x
+        ...where x0 consists of the single experimental experiments x
 
         Parameters
         ----------
         x : np.ndarray
-            experimental designs
+            experimental design
         theta : np.ndarray
             parameter of the statistical model corresponding to x
 
@@ -44,16 +44,16 @@ class StatisticalModel(ABC):
     def calculate_fisher_information_matrix(
             self, x0: np.ndarray, theta: np.ndarray
     ) -> np.ndarray:
-        # FIXME: need to generalize to experiments not just experimental designs.
+        # FIXME: need to generalize to experiments not just experimental experiments.
 
         """Calculate the Fisher information matrix of the statistical model corresponding to x at the parameter theta
 
         Parameters
         ----------
         x0 : np.ndarray
-            experiment, i.e. finite number of experimental designs
+            Experiment, i.e. finite number of experimental experiments
         theta : np.ndarray
-            parameter of the statistical model corresponding to x
+            Parameter of the statistical model corresponding to x
 
         Returns
         -------
@@ -70,7 +70,7 @@ class StatisticalModel(ABC):
         Parameters
         ----------
         x0 : np.ndarray
-            experiment, i.e. finite number of experimental designs
+            experiment, i.e. finite number of experimental experiments
         theta : np.ndarray
             parameter of the statistical model corresponding to x
 
@@ -94,7 +94,7 @@ class StatisticalModel(ABC):
         Parameters
         ----------
         x0 : np.ndarray
-            experiment, i.e. finite number of experimental designs
+            experiment, i.e. finite number of experimental experiments
         theta : np.ndarray
             parameter of the statistical model corresponding to x
 
@@ -115,7 +115,7 @@ class StatisticalModel(ABC):
         Parameters
         ----------
         x0 : np.ndarray
-            experiment, i.e. finite number of experimental designs
+            experiment, i.e. finite number of experimental experiments
         y: np.ndarray
             Element of sample space of the probability measure P_theta(x)
         theta : np.ndarray
@@ -139,7 +139,7 @@ class StatisticalModel(ABC):
         Parameters
         ----------
         x0 : np.ndarray
-            experiment, i.e. finite number of experimental designs
+            experiment, i.e. finite number of experimental experiments
         y: np.ndarray
             Element of sample space of the probability measure P_theta(x)
         minimizer : Minimizer
@@ -184,11 +184,11 @@ class StatisticalModel(ABC):
     @property
     @abstractmethod
     def lower_bounds_x(self) -> np.ndarray:
-        """Lower bounds for experimental designs
+        """Lower bounds for experimental experiments
         Returns
         -------
         np.ndarray
-            Lower bounds for an experimental designs x with each entry representing
+            Lower bounds for an experimental experiments x with each entry representing
             the lower bound of the respective entry of x
         """
         pass
@@ -196,11 +196,11 @@ class StatisticalModel(ABC):
     @property
     @abstractmethod
     def upper_bounds_x(self) -> np.ndarray:
-        """Upper bounds for experimental designs
+        """Upper bounds for experimental experiments
         Returns
         -------
         np.ndarray
-            Upper bounds for an experimental designs x with each entry representing
+            Upper bounds for an experimental experiments x with each entry representing
             the upper bound of the respective entry of x
         """
         pass
