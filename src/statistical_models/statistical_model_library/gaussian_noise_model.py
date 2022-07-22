@@ -9,9 +9,10 @@ from src.statistical_models.interfaces.statistical_model import StatisticalModel
 
 class GaussianNoiseModel(StatisticalModel):
     """Implementation of the statistical model induced by a function with white Gaussian noise
-    ...within the StatisticalModel interface
+    within the StatisticalModel interface
 
-    We specify a function f and a variance standard deviation sigma. The statistical model at some experimental experiment x
+    We specify a function f and a variance standard deviation sigma.
+    The statistical model at some experimental experiment x
     is then given by the normal distribution N(f(x),sigma^2).
     Accordingly, given an experiment x0 consisting of experimental experiment x_1,...,x_n, the corresponding
     statistical model is then given by the multivariate normal distribution with mean vector (f(x))_{x \in x0}
@@ -28,6 +29,7 @@ class GaussianNoiseModel(StatisticalModel):
             sigma: float = 1,
     ) -> None:
         """
+
         Parameters
         ----------
         function : ParametricFunction
