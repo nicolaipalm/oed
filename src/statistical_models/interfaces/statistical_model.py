@@ -9,10 +9,10 @@ class StatisticalModel(ABC):
     """Interface for a statistical model with additional index/experimental design option
 
     Notation:
-    x: experimental design
-    x0: experiment consisting of experimental design x_0,...,x_N
-    theta: parameter
-    P_theta(x0): probability measure corresponding to the parameter theta and experiment x0
+    * x: experimental design
+    * x0: experiment consisting of experimental design x_0,...,x_N
+    * theta: parameter
+    * P_theta(x0): probability measure corresponding to the parameter theta and experiment x0
 
 
     The specification of an experiment (i.e., a numpy array x0) leads to a statistical model parameterized by theta.
@@ -38,11 +38,11 @@ class StatisticalModel(ABC):
         np.ndarray
             random drawing from the probability measure P_theta(x)
         """
-        raise NotImplementedError
+        pass
 
     @abstractmethod
     def calculate_fisher_information_matrix(
-            self, x0: np.ndarray, theta: np.ndarray
+        self, x0: np.ndarray, theta: np.ndarray
     ) -> np.ndarray:
         # FIXME: need to generalize to experiment not just experimental design.
 
@@ -63,7 +63,7 @@ class StatisticalModel(ABC):
         pass
 
     def calculate_cramer_rao_lower_bound(
-            self, x0: np.ndarray, theta: np.ndarray
+        self, x0: np.ndarray, theta: np.ndarray
     ) -> np.ndarray:
         """Calculate the Cramer-Rao lower bound of the statistical model corresponding to x at the parameter theta
 
@@ -82,11 +82,11 @@ class StatisticalModel(ABC):
         return np.linalg.pinv(
             self.calculate_fisher_information_matrix(x0=x0, theta=theta),
             # + 2e-7 * np.identity(len(theta)),
-            hermitian=True
+            hermitian=True,
         )
 
     def calculate_determinant_fisher_information_matrix(
-            self, x0: np.ndarray, theta: np.ndarray
+        self, x0: np.ndarray, theta: np.ndarray
     ) -> float:
         """Calculate the determinant of the Fisher information matrix
         of the statistical model corresponding to x at the parameter theta
@@ -108,7 +108,7 @@ class StatisticalModel(ABC):
 
     @abstractmethod
     def calculate_likelihood(
-            self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray
+        self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray
     ) -> float:
         """Evaluate the likelihood function of P_theta(x) at y
 
@@ -129,10 +129,10 @@ class StatisticalModel(ABC):
         pass
 
     def calculate_maximum_likelihood_estimation(
-            self,
-            x0: np.ndarray,
-            y: np.ndarray,
-            minimizer: Minimizer,
+        self,
+        x0: np.ndarray,
+        y: np.ndarray,
+        minimizer: Minimizer,
     ) -> np.ndarray:
         """Calculate the maximum likelihood estimate of the statistical model corresponding to the experiment x0 at y
 
@@ -161,7 +161,7 @@ class StatisticalModel(ABC):
     @abstractmethod
     def lower_bounds_theta(self) -> np.ndarray:
         """Lower bound for parameter theta
-        
+
         Returns
         -------
         np.ndarray
@@ -174,7 +174,7 @@ class StatisticalModel(ABC):
     @abstractmethod
     def upper_bounds_theta(self) -> np.ndarray:
         """Upper bound for parameter theta
-        
+
         Returns
         -------
         np.ndarray
@@ -187,7 +187,7 @@ class StatisticalModel(ABC):
     @abstractmethod
     def lower_bounds_x(self) -> np.ndarray:
         """Lower bounds for experimental designs
-        
+
         Returns
         -------
         np.ndarray
@@ -200,7 +200,7 @@ class StatisticalModel(ABC):
     @abstractmethod
     def upper_bounds_x(self) -> np.ndarray:
         """Upper bounds for experimental designs
-        
+
         Returns
         -------
         np.ndarray
@@ -213,7 +213,7 @@ class StatisticalModel(ABC):
     @abstractmethod
     def name(self) -> str:
         """Name of the statistical model
-        
+
         Returns
         -------
         str
