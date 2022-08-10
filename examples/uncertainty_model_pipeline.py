@@ -14,16 +14,17 @@ Being more precisely, we
 
 import numpy as np
 
-from src.experiments.experiment_library.d_design import DDesign
+import plotly.graph_objects as go
+
 from src.experiments.experiment_library.latin_hypercube import LatinHypercube
-from src.experiments.experiment_library.pi_design import PiDesign
-from src.experiments.experiment_library.random import Random
 
 ####
 # Designs
 
 from src.minimizer.minimizer_library.differential_evolution import DifferentialEvolution
-from src.parametric_function_library.aging_model import AgingModel
+from src.parametric_function_library.interfaces.parametric_function import (
+    ParametricFunction,
+)
 from src.statistical_models.statistical_model_library.gaussian_noise_model import (
     GaussianNoiseModel,
 )
@@ -34,20 +35,25 @@ from src.statistical_models.statistical_model_library.gaussian_noise_model impor
 
 ####
 # statistical model
-from src.uncertainty_quantification.parametric_function_with_std import (
-    ParametricFunctionWithStd,
+from src.uncertainty_quantification.parametric_function_with_uncertainty import (
+    ParametricFunctionWithUncertainty,
 )
 from src.uncertainty_quantification.probability_measures.multivariate_gaussian import (
     MultivariateGaussian,
 )
+from src.visualization.plotting_functions import (
+    line_scatter,
+    styled_figure,
+    uncertainty_area_scatter,
+    dot_scatter,
+)
 
-theta = np.array([1.8, 402, 0.13])
+theta = np.array([1, 2, 0.1])
 
-number_designs = 5
-number_of_evaluations = 100
+number_designs = 10
 
 # real noise
-sigma = 0.002
+sigma = 0.3
 
 #################################
 #################################
@@ -55,18 +61,43 @@ sigma = 0.002
 
 ####
 # bounds
-lower_bounds_x = np.array([0.05, 279.15])
-upper_bounds_x = np.array([1, 333.15])
+lower_bounds_x = np.array([-10])
+upper_bounds_x = np.array([10])
 
-lower_bounds_theta = np.array([0.01, 0, 0])
-upper_bounds_theta = np.array([10, 10000, 1])
+lower_bounds_theta = np.array([0, 0, -10])
+upper_bounds_theta = np.array([np.pi, np.pi, 10])
+
 
 # Setup a parametric function family
-parametric_function = AgingModel()
+class TestFunction(ParametricFunction):
+    def __call__(self, theta: np.ndarray, x: float) -> float:
+        return np.sin(theta[0] * x + theta[1]) + theta[2]
+
+    def partial_derivative(
+        self, theta: np.ndarray, x: np.ndarray, parameter_index: int
+    ) -> float:
+        if parameter_index == 0:
+            return np.sin(theta[0] * x + theta[1]) * x
+        if parameter_index == 1:
+            return np.sin(theta[0] * x + theta[1])
+        if parameter_index == 2:
+            return 1
+
+    def second_partial_derivative(
+        self,
+        theta: np.ndarray,
+        x: np.ndarray,
+        parameter1_index: int,
+        parameter2_index: int,
+    ) -> float:
+        pass
+
+
+parametric_function = TestFunction()
 
 ####
 # minimizer
-minimizer = DifferentialEvolution()
+minimizer = DifferentialEvolution(maxiter=10000)
 
 statistical_model = GaussianNoiseModel(
     function=parametric_function,
@@ -87,7 +118,7 @@ def blackbox_model(x):
 LH = LatinHypercube(
     lower_bounds_design=lower_bounds_x,
     upper_bounds_design=upper_bounds_x,
-    number_designs=2 * number_designs,
+    number_designs=number_designs,
 )
 
 #######
@@ -96,70 +127,69 @@ experiment = LH
 
 evaluations = np.array([blackbox_model(x) for x in experiment.experiment])
 
-theta = statistical_model.calculate_maximum_likelihood_estimation(
+estimated_theta = statistical_model.calculate_maximum_likelihood_estimation(
     x0=experiment.experiment, y=evaluations, minimizer=minimizer
 )
 
-probability_measure_on_parameter_space = MultivariateGaussian(
-    mean=theta,
-    covariance_matrix=statistical_model.calculate_cramer_rao_lower_bound(
-        x0=experiment.experiment, theta=theta
-    ),
+print(estimated_theta)
+
+covariance_matrix = statistical_model.calculate_cramer_rao_lower_bound(
+    x0=experiment.experiment, theta=estimated_theta
 )
 
-parametric_function_with_std = ParametricFunctionWithStd(
+det_of_FI = statistical_model.calculate_determinant_fisher_information_matrix(
+    x0=experiment.experiment, theta=estimated_theta
+)
+
+probability_measure_on_parameter_space = MultivariateGaussian(
+    mean=estimated_theta, covariance_matrix=covariance_matrix
+)
+
+parametric_function_with_uncertainty = ParametricFunctionWithUncertainty(
     parametric_function=parametric_function,
     probability_measure_on_parameter_space=probability_measure_on_parameter_space,
+    sample_size_parameters=1000,
 )
 
-x = experiment.experiment[0]
-print(
-    parametric_function_with_std(x=x),
-    parametric_function_with_std.calculate_uncertainty(x=x),
-)
+print(covariance_matrix, det_of_FI)
 
-input()
 #######
 
+# Plotting the results
+x_lines = np.arange(-10, 10, 0.1)
 
-# print(LH.experiment, LH.name)
+y_lines = np.array(
+    [parametric_function(theta=estimated_theta, x=x) for x in x_lines]
+).flatten()
 
-random_design = Random(
-    number_designs=2 * number_designs,
-    lower_bounds_design=lower_bounds_x,
-    upper_bounds_design=upper_bounds_x,
-)
+y_lines_true = np.array(
+    [parametric_function(theta=theta, x=x) for x in x_lines]
+).flatten()
 
-# We split the number of experiment in half and perform first a latin hypercube
-LH_half = LatinHypercube(
-    lower_bounds_design=lower_bounds_x,
-    upper_bounds_design=upper_bounds_x,
-    number_designs=number_designs,
-)
+alpha = 0.9
+y_confidence_upper = np.array(
+    [
+        parametric_function_with_uncertainty.calculate_quantile(x=x, alpha=alpha)
+        for x in x_lines
+    ]
+).flatten()
+y_confidence_lower = np.array(
+    [
+        parametric_function_with_uncertainty.calculate_quantile(x=x, alpha=1 - alpha)
+        for x in x_lines
+    ]
+).flatten()
 
-initial_theta = statistical_model.calculate_maximum_likelihood_estimation(
-    x0=LH_half.experiment,
-    y=np.array([blackbox_model(x) for x in LH_half.experiment]),
-    minimizer=minimizer,
-)
+data = [
+    go.Scatter(
+        x=experiment.experiment.flatten(), y=evaluations.flatten(), mode="markers"
+    ),
+    line_scatter(x_lines=x_lines, y_lines=y_lines_true),
+    line_scatter(x_lines=x_lines, y_lines=y_lines),
+    uncertainty_area_scatter(
+        x_lines=x_lines, y_upper=y_confidence_upper, y_lower=y_confidence_lower
+    ),
+]
+fig = styled_figure(data=data, title="", title_y="", title_x="")
 
-min_entry = PiDesign(
-    number_designs=number_designs,
-    lower_bounds_design=lower_bounds_x,
-    upper_bounds_design=upper_bounds_x,
-    index=1,
-    initial_theta=initial_theta,
-    previous_experiment=LH_half,
-    statistical_model=statistical_model,
-    minimizer=minimizer,
-)
-
-max_det = DDesign(
-    number_designs=number_designs,
-    lower_bounds_design=lower_bounds_x,
-    upper_bounds_design=upper_bounds_x,
-    initial_theta=initial_theta,
-    statistical_model=statistical_model,
-    minimizer=minimizer,
-    previous_experiment=LH_half,
-)
+fig.show()
