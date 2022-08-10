@@ -6,6 +6,10 @@ from src.uncertainty_quantification.interfaces.probability_measure import (
     ProbabilityMeasure,
 )
 
+import plotly.graph_objects as go
+
+from src.visualization.plotting_functions import styled_figure
+
 
 class ParametricFunctionWithUncertainty:
     def __init__(
@@ -44,6 +48,23 @@ class ParametricFunctionWithUncertainty:
     def probability_measure_on_parameter_space(self) -> ProbabilityMeasure:
         return self._probability_measure_on_parameter_space
 
+    def histo(self, x: np.ndarray):
+        data = [
+            go.Histogram(
+                x=np.array(
+                    [
+                        self.parametric_function(theta=theta, x=x)[i]
+                        for theta in self.sampled_parameters
+                    ]
+                ).flatten()
+            )
+            for i, _ in enumerate(
+                self.parametric_function(theta=self.sampled_parameters[0], x=x)
+            )
+        ]
+        fig = styled_figure(data=data, title=f"Histogram of predictions at x={x}")
+        fig.show()
+
     def calculate_mean(
         self,
         x: np.ndarray,
@@ -60,6 +81,8 @@ class ParametricFunctionWithUncertainty:
         self,
         x: np.ndarray,
     ) -> np.ndarray:
+        # In many cases random variables preserve the normal distribution.
+        # -> main class of (non-linear) functions preserving normal distribution
         evaluations = np.array(
             [
                 self.parametric_function(x=x, theta=parameter)

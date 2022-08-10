@@ -73,18 +73,18 @@ upper_bounds_theta = np.array([np.pi, np.pi, 10])
 
 # Setup a parametric function family
 class TestFunction(ParametricFunction):
-    def __call__(self, theta: np.ndarray, x: float) -> float:
-        return theta[0] * np.sin(x + theta[1]) + theta[2]
+    def __call__(self, theta: np.ndarray, x: float) -> np.ndarray:
+        return np.array([theta[0] * np.sin(x + theta[1]) + theta[2]])
 
     def partial_derivative(
         self, theta: np.ndarray, x: np.ndarray, parameter_index: int
-    ) -> float:
+    ) -> np.ndarray:
         if parameter_index == 0:
-            return np.sin(x + theta[1])
+            return np.array([np.sin(x + theta[1])])
         if parameter_index == 1:
-            return theta[0] * np.sin(x + theta[1])
+            return np.array([theta[0] * np.sin(x + theta[1])])
         if parameter_index == 2:
-            return 1
+            return np.array([1])
 
     def second_partial_derivative(
         self,
@@ -157,6 +157,8 @@ parametric_function_with_uncertainty = ParametricFunctionWithUncertainty(
 print(covariance_matrix, det_of_FI)
 
 #######
+
+parametric_function_with_uncertainty.histo(x=np.array(3))
 
 # Plotting the results
 x_lines = np.arange(-10, 10, 0.1)

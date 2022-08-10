@@ -145,6 +145,8 @@ upper_quantile = parametric_function_with_uncertainty.calculate_quantile(
     x=x, alpha=alpha
 )
 
+parametric_function_with_uncertainty.histo(x)
+
 print(
     f"the upper quantile at design {x} with estimated outcome {parametric_function(theta=initial_theta,x=x)} is \n {upper_quantile}"
 )
@@ -156,6 +158,7 @@ new_design = PointPredictionDesign(
     parametric_function_with_uncertainty=parametric_function_with_uncertainty,
     alpha=0.95,
 )
+
 
 input(new_design.experiment)
 
