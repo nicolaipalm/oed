@@ -20,6 +20,9 @@ from src.experiments.experiment_library.latin_hypercube import LatinHypercube
 
 ####
 # Designs
+from src.experiments.experiment_library.point_prediction_design import (
+    PointPredictionDesign,
+)
 
 from src.minimizer.minimizer_library.differential_evolution import DifferentialEvolution
 from src.parametric_function_library.interfaces.parametric_function import (
@@ -71,15 +74,15 @@ upper_bounds_theta = np.array([np.pi, np.pi, 10])
 # Setup a parametric function family
 class TestFunction(ParametricFunction):
     def __call__(self, theta: np.ndarray, x: float) -> float:
-        return np.sin(theta[0] * x + theta[1]) + theta[2]
+        return theta[0] * np.sin(x + theta[1]) + theta[2]
 
     def partial_derivative(
         self, theta: np.ndarray, x: np.ndarray, parameter_index: int
     ) -> float:
         if parameter_index == 0:
-            return np.sin(theta[0] * x + theta[1]) * x
+            return np.sin(x + theta[1])
         if parameter_index == 1:
-            return np.sin(theta[0] * x + theta[1])
+            return theta[0] * np.sin(x + theta[1])
         if parameter_index == 2:
             return 1
 
@@ -193,3 +196,13 @@ data = [
 fig = styled_figure(data=data, title="", title_y="", title_x="")
 
 fig.show()
+
+new_design = PointPredictionDesign(
+    lower_bounds_design=lower_bounds_x,
+    upper_bounds_design=upper_bounds_x,
+    minimizer=minimizer,
+    parametric_function_with_uncertainty=parametric_function_with_uncertainty,
+    alpha=0.95,
+)
+
+print(new_design.experiment)
