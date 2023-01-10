@@ -4,6 +4,7 @@ import numpy as np
 from scipy.optimize import differential_evolution
 
 from piOED.minimizer.interfaces.minimizer import Minimizer
+from scipy.optimize import LinearConstraint, NonlinearConstraint
 
 
 class DifferentialEvolution(Minimizer):
@@ -34,7 +35,12 @@ class DifferentialEvolution(Minimizer):
         self.workers = workers
 
     def __call__(
-            self, function: Callable, fcn_args: tuple, upper_bounds: np.ndarray, lower_bounds: np.ndarray,
+            self,
+            function: Callable,
+            fcn_args: tuple,
+            upper_bounds: np.ndarray,
+            lower_bounds: np.ndarray,
+            constraints: {LinearConstraint, NonlinearConstraint}=None,
     ) -> np.ndarray:
         t_initial = (upper_bounds + lower_bounds) / 2
 
@@ -48,8 +54,10 @@ class DifferentialEvolution(Minimizer):
                 (lower_bounds[i], upper_bounds[i]) for i in range(len(lower_bounds))
             ],
             maxiter=self._maxiter,
+            updating='deferred',
             init=self.init_sampling,
             workers=self.workers,
+            constraints=constraints,
         )
 
         self.result = res

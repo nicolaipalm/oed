@@ -5,6 +5,7 @@ from piOED.experiments.interfaces.design_of_experiment import (
 )
 from piOED.minimizer.interfaces.minimizer import Minimizer
 from piOED.statistical_models.interfaces.statistical_model import StatisticalModel
+from scipy.optimize import LinearConstraint, NonlinearConstraint
 
 
 class DDesign(Experiment):
@@ -22,6 +23,7 @@ class DDesign(Experiment):
             initial_theta: np.ndarray,
             statistical_model: StatisticalModel,
             minimizer: Minimizer,
+            constraints: {LinearConstraint, NonlinearConstraint}=None,
             previous_experiment: Experiment = None,
     ):
         """
@@ -47,6 +49,9 @@ class DDesign(Experiment):
         minimizer : Minimizer
             Minimizer used to maximize the Fisher information matrix
 
+        constraints : {LinearConstraint, NonlinearConstraint}
+            Constraints used within the minimization
+
         previous_experiment : Experiment
             Joint previously conducted experiment used within the maximization
             of the determinant of the Fisher information matrix
@@ -54,20 +59,30 @@ class DDesign(Experiment):
         """
         print(f"Calculating the {self.name}...")
         np.array([upper_bounds_design for _ in range(number_designs)])
-        self._design = \
-            np.concatenate(
+
+        if previous_experiment is None:
+            self._design = minimizer(
+                function=statistical_model.optimize_determinant_fisher_information_matrix,
+                fcn_args=(previous_experiment, initial_theta, number_designs, len(lower_bounds_design)),
+                lower_bounds=np.array(lower_bounds_design.tolist() * number_designs),
+                upper_bounds=np.array(upper_bounds_design.tolist() * number_designs),
+                constraints=constraints,
+            ).reshape(number_designs, len(lower_bounds_design))
+        else:
+            # If we want to consider an initial experiment within our calculation of the CRLB.
+            self._design = np.concatenate(
                 (
                     previous_experiment.experiment,
                     minimizer(
-                        function=lambda x: -statistical_model.calculate_determinant_fisher_information_matrix(
-                            theta=initial_theta,
-                            x0=np.concatenate((previous_experiment.experiment,
-                                               x.reshape(number_designs, len(lower_bounds_design)))),
-                        ),
+                        function=statistical_model.optimize_determinant_fisher_information_matrix,
+                        fcn_args=(previous_experiment, initial_theta, number_designs, len(lower_bounds_design)),
                         lower_bounds=np.array(lower_bounds_design.tolist() * number_designs),
                         upper_bounds=np.array(upper_bounds_design.tolist() * number_designs),
-                    ).reshape(number_designs, len(lower_bounds_design))), axis=0)
-        print("finished!\n")
+                        constraints=constraints,
+                    ).reshape(number_designs, len(lower_bounds_design)),
+                ),
+                axis=0,
+            )
 
     @property
     def name(self) -> str:

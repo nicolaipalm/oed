@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Callable
 
 import numpy as np
+from scipy.optimize import LinearConstraint, NonlinearConstraint
 
 
 class Minimizer(ABC):
@@ -10,7 +11,12 @@ class Minimizer(ABC):
     """
     @abstractmethod
     def __call__(
-        self, function: Callable, fcn_args: tuple, upper_bounds: np.ndarray, lower_bounds: np.ndarray
+            self,
+            function: Callable,
+            fcn_args: tuple,
+            upper_bounds: np.ndarray,
+            lower_bounds: np.ndarray,
+            constraints: {LinearConstraint, NonlinearConstraint},
     ) -> np.ndarray:
         # TODO: write interface for function: input ndarray and output float
         """Calculate the minimium of function within the boundaries provided

@@ -152,6 +152,45 @@ class StatisticalModel(ABC):
         """
         return np.linalg.det(self.calculate_fisher_information_matrix(x0, theta))
 
+    def optimize_determinant_fisher_information_matrix(
+            self, x: np.ndarray, previous_experiment: Experiment, theta: np.ndarray, number_designs: int, length: int
+    ) -> float:
+        """Calculate the determinant of the Fisher information matrix
+        ...of the statistical model corresponding to x at the parameter theta
+
+        Parameters
+        ----------
+        x : np.ndarray
+            new experiment, i.e. argument of optimization problem
+        previous_experiment: Experiment
+            experiment of prior iterations
+        theta : np.ndarray
+            parameter of the statistical model corresponding to x
+        number_designs: int
+            The number of experimental experiment over which the maximization is taken
+        length: int
+            The number of independent variables of the design
+
+        Returns
+        -------
+        float
+            determinant of the Fisher information matrix of the statistical
+            model corresponding to x at the parameter theta
+        """
+        if previous_experiment is None:
+            x0 = x.reshape(number_designs, length)
+        else:
+            # If we want to consider an initial experiment within our calculation of the CRLB.
+            x0 = np.concatenate(
+                (
+                    previous_experiment.experiment,
+                    x.reshape(number_designs, length),
+                ),
+                axis=0,
+            )
+
+        return -np.linalg.det(self.calculate_fisher_information_matrix(x0, theta))
+
     @abstractmethod
     def calculate_likelihood(
             self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray

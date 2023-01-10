@@ -5,6 +5,7 @@ from piOED.experiments.interfaces.design_of_experiment import (
 )
 from piOED.minimizer.interfaces.minimizer import Minimizer
 from piOED.statistical_models.interfaces.statistical_model import StatisticalModel
+from scipy.optimize import LinearConstraint, NonlinearConstraint
 
 
 class PiDesign(Experiment):
@@ -21,6 +22,7 @@ class PiDesign(Experiment):
             initial_theta: np.ndarray,
             statistical_model: StatisticalModel,
             minimizer: Minimizer,
+            constraints: {LinearConstraint, NonlinearConstraint} = None,
             previous_experiment: Experiment = None,
     ):
         """
@@ -49,6 +51,9 @@ class PiDesign(Experiment):
         minimizer : Minimizer
             Minimizer used to maximize the Fisher information matrix
 
+        constraints : {LinearConstraint, NonlinearConstraint}
+            Constraints used within the minimization
+
         previous_experiment : Experiment
             Joint previously conducted experiment used within the maximization
             of the determinant of the Fisher information matrix
@@ -61,6 +66,7 @@ class PiDesign(Experiment):
                 fcn_args=(previous_experiment, initial_theta, number_designs, len(lower_bounds_design), index),
                 lower_bounds=np.array(lower_bounds_design.tolist() * number_designs),
                 upper_bounds=np.array(upper_bounds_design.tolist() * number_designs),
+                constraints=constraints,
             ).reshape(number_designs, len(lower_bounds_design))
         else:
             # If we want to consider an initial experiment within our calculation of the CRLB.
@@ -72,6 +78,7 @@ class PiDesign(Experiment):
                         fcn_args=(previous_experiment, initial_theta, number_designs, len(lower_bounds_design), index),
                         lower_bounds=np.array(lower_bounds_design.tolist() * number_designs),
                         upper_bounds=np.array(upper_bounds_design.tolist() * number_designs),
+                        constraints=constraints,
                     ).reshape(number_designs, len(lower_bounds_design)),
                 ),
                 axis=0,
