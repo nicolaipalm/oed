@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from src.experiments.experiment_library.latin_hypercube import LatinHypercube
+from piOED.experiments.experiment_library.latin_hypercube import LatinHypercube
 
 lower_bounds_design = np.zeros(5)
 upper_bounds_design = np.ones(5)

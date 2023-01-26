@@ -5,7 +5,7 @@ import pandas as pd
 import plotly.graph_objs as go
 from tqdm import tqdm
 
-from src.experiments.interfaces.design_of_experiment import (
+from piOED.experiments.interfaces.design_of_experiment import (
     Experiment,
 )
 from piOED.minimizer.interfaces.minimizer import Minimizer
@@ -203,7 +203,7 @@ class Benchmarking:
             ]
 
             data.append(
-                dot_scatter(x_dots=x_dots, y_dots=y_dots, visible=False, fill=None)
+                dot_scatter(x_dots=np.array([x_dots]), y_dots=np.array([y_dots]), visible=False, fill=None)
             )
 
         data[0].visible = True

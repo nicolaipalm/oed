@@ -15,7 +15,7 @@ class DifferentialEvolution(Minimizer):
     for more details of the underlying algorithm.
     """
 
-    def __init__(self, display: bool = False, maxiter: int = 1000, workers=-1, init_sampling: str = 'latinhypercube'):
+    def __init__(self, display: bool = False, maxiter: int = 1000, workers=1, init_sampling: str = 'latinhypercube'):
         """
         Parameters
         ----------
@@ -40,7 +40,7 @@ class DifferentialEvolution(Minimizer):
             fcn_args: tuple,
             upper_bounds: np.ndarray,
             lower_bounds: np.ndarray,
-            constraints: {LinearConstraint, NonlinearConstraint}=None,
+            constraints: {LinearConstraint, NonlinearConstraint}=(),
     ) -> np.ndarray:
         t_initial = (upper_bounds + lower_bounds) / 2
 

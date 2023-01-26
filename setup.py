@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="piOED",
-    version="0.1.0",
+    version="0.3.0",
     author="Nicolai Palm",
     author_email="nicolaipalm@googlemail.com",
     description="Parameter individual optimal experimental design",
@@ -15,4 +15,9 @@ setuptools.setup(
     ],
     package_dir={"": "src"},
     python_requires='>=3.6',
+    install_requires=[
+        "numpy",
+        "scipy",
+        "plotly",
+    ]
 )

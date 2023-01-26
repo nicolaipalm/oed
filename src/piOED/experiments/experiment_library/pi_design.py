@@ -22,7 +22,7 @@ class PiDesign(Experiment):
             initial_theta: np.ndarray,
             statistical_model: StatisticalModel,
             minimizer: Minimizer,
-            constraints: {LinearConstraint, NonlinearConstraint} = None,
+            constraints: {LinearConstraint, NonlinearConstraint} = (),
             previous_experiment: Experiment = None,
     ):
         """

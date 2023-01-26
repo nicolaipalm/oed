@@ -74,16 +74,14 @@ class GaussianNoiseModel(StatisticalModel):
         )
 
     def calculate_log_likelihood(
-            self, theta: np.ndarray, *args  # x0: np.ndarray, y: np.ndarray
+            self, theta: np.ndarray, x0: np.ndarray, y: np.ndarray,
     ) -> np.ndarray:
-        return np.sum(
-            (args[1] - np.array([self._function(theta=theta, x=x) for x in args[0]])) ** 2
-        )
+        return np.sum((y - np.array([self._function(theta=theta, x=x) for x in x0])) ** 2)
 
     def calculate_likelihood(
             self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray
     ) -> float:
-        return np.exp(self.calculate_log_likelihood(theta, x0, y))
+        return np.exp(self.calculate_log_likelihood(x0=x0, y=y, theta=theta))
 
     def calculate_partial_derivative_log_likelihood(
             self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray, parameter_index: int

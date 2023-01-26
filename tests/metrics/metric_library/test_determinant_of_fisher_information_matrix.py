@@ -2,10 +2,10 @@ import unittest
 
 import numpy as np
 
-from src.experiments.experiment_library.latin_hypercube import LatinHypercube
-from src.metrics.metric_library.determinant_of_fisher_information_matrix import DeterminantOfFisherInformationMatrix
-from src.parametric_function_library.linear_function import LinearFunction
-from src.statistical_models.statistical_model_library.gaussian_noise_model import GaussianNoiseModel
+from piOED.experiments.experiment_library.latin_hypercube import LatinHypercube
+from piOED.metrics.metric_library.determinant_of_fisher_information_matrix import DeterminantOfFisherInformationMatrix
+from piOED.parametric_function_library.linear_function import LinearFunction
+from piOED.statistical_models.statistical_model_library.gaussian_noise_model import GaussianNoiseModel
 
 dimension = 3
 function = LinearFunction()
@@ -36,7 +36,7 @@ metric = DeterminantOfFisherInformationMatrix(theta=theta, statistical_model=mod
 
 class TestStdParameterEstimation(unittest.TestCase):
     def test_if_correct_name_is_returned(self):
-        self.assertEqual("Estimated standard deviation of parameter estimations", metric.name)
+        self.assertEqual("Determinant of Fisher information matrix", metric.name)
 
     def test_if_determinant_of_fim_is_calculated_correctly(self):
         # The FIM is not invertible, i.e. the determinant must be (approximately) zero

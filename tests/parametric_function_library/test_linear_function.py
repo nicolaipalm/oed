@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from src.parametric_function_library.linear_function import LinearFunction
+from piOED.parametric_function_library.linear_function import LinearFunction
 
 
 class TestLinearFunction(unittest.TestCase):

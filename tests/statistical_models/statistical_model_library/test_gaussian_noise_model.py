@@ -2,9 +2,9 @@ import unittest
 
 import numpy as np
 
-from src.minimizer.minimizer_library.differential_evolution import DifferentialEvolution
-from src.parametric_function_library.linear_function import LinearFunction
-from src.statistical_models.statistical_model_library.gaussian_noise_model import GaussianNoiseModel
+from piOED.minimizer.minimizer_library.differential_evolution import DifferentialEvolution
+from piOED.parametric_function_library.linear_function import LinearFunction
+from piOED.statistical_models.statistical_model_library.gaussian_noise_model import GaussianNoiseModel
 
 dimension = 3
 function = LinearFunction()

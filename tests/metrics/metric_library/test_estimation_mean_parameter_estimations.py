@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from src.metrics.metric_library.estimation_mean_parameter_estimations import EstimationMeanParameterEstimations
+from piOED.metrics.metric_library.estimation_mean_parameter_estimations import EstimationMeanParameterEstimations
 
 metric = EstimationMeanParameterEstimations()
 estimations_of_parameter = np.arange(1, 2 * 10)

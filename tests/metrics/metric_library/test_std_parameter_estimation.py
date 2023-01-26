@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from src.metrics.metric_library.std_parameter_estimations import StdParameterEstimations
+from piOED.metrics.metric_library.std_parameter_estimations import StdParameterEstimations
 
 metric = StdParameterEstimations()
 estimations_of_parameter = np.array([0, 0, 0] + [2, 2, 2])
