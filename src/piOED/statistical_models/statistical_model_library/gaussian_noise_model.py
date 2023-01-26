@@ -9,25 +9,27 @@ from piOED.statistical_models.interfaces.statistical_model import StatisticalMod
 
 class GaussianNoiseModel(StatisticalModel):
     """Implementation of the statistical model induced by a function with white Gaussian noise
-    ...within the StatisticalModel interface
+    within the StatisticalModel interface
 
-    We specify a function f and a variance standard deviation sigma. The statistical model at some experimental experiment x
+    We specify a function f and a variance standard deviation sigma.
+    The statistical model at some experimental experiment x
     is then given by the normal distribution N(f(x),sigma^2).
     Accordingly, given an experiment x0 consisting of experimental experiment x_1,...,x_n, the corresponding
-    statistical model is then given by the multivariate normal distribution with mean vector (f(x))_{x \in x0}
+    statistical model is then given by the multivariate normal distribution with mean vector (f(x))_{x in x0}
     and covariance matrix diagonal matrix with all diagonal entries equal to sigma**2.
     """
 
     def __init__(
-            self,
-            function: ParametricFunction,
-            lower_bounds_theta: np.ndarray,
-            upper_bounds_theta: np.ndarray,
-            lower_bounds_x: np.ndarray,
-            upper_bounds_x: np.ndarray,
-            sigma: float = 1,
+        self,
+        function: ParametricFunction,
+        lower_bounds_theta: np.ndarray,
+        upper_bounds_theta: np.ndarray,
+        lower_bounds_x: np.ndarray,
+        upper_bounds_x: np.ndarray,
+        sigma: float = 1,
     ) -> None:
         """
+
         Parameters
         ----------
         function : ParametricFunction
@@ -36,7 +38,7 @@ class GaussianNoiseModel(StatisticalModel):
             Standard deviation of the underlying white noise in each component (default is 1)
         """
         self._function = function
-        self._var = sigma ** 2
+        self._var = sigma**2
         self._lower_bounds_theta = lower_bounds_theta
         self._upper_bounds_theta = upper_bounds_theta
         self._lower_bounds_x = lower_bounds_x
@@ -51,16 +53,35 @@ class GaussianNoiseModel(StatisticalModel):
         )
 
     def calculate_fisher_information(
-            self, theta: np.ndarray, i: int, j: int, x0: np.ndarray
+        self, theta: np.ndarray, i: int, j: int, x0: np.ndarray
     ):
-        return (1 / self._var * np.dot(np.array(
-            [self._function.partial_derivative(theta=theta, x=x_k, parameter_index=i) for x_k in x0]).flatten().T,
-                                       np.array(
-                                           [self._function.partial_derivative(theta=theta, x=x_k, parameter_index=j) for
-                                            x_k in x0]).flatten()))
+        return (
+            1
+            / self._var
+            * np.dot(
+                np.array(
+                    [
+                        self._function.partial_derivative(
+                            theta=theta, x=x_k, parameter_index=i
+                        )
+                        for x_k in x0
+                    ]
+                )
+                .flatten()
+                .T,
+                np.array(
+                    [
+                        self._function.partial_derivative(
+                            theta=theta, x=x_k, parameter_index=j
+                        )
+                        for x_k in x0
+                    ]
+                ).flatten(),
+            )
+        )
 
     def calculate_fisher_information_matrix(
-            self, x0: np.ndarray, theta: np.ndarray
+        self, x0: np.ndarray, theta: np.ndarray
     ) -> np.ndarray:
         k = len(theta)
         return np.array(
@@ -74,19 +95,19 @@ class GaussianNoiseModel(StatisticalModel):
         )
 
     def calculate_log_likelihood(
-            self, theta: np.ndarray, x0: np.ndarray, y: np.ndarray,
-    ) -> np.ndarray:
-        return np.sum(
+        self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray
+    ) -> float:
+        return -np.sum(
             (y - np.array([self._function(theta=theta, x=x) for x in x0])) ** 2
         )
 
     def calculate_likelihood(
-            self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray
+        self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray
     ) -> float:
         return np.exp(self.calculate_log_likelihood(x0=x0, y=y, theta=theta))
 
     def calculate_partial_derivative_log_likelihood(
-            self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray, parameter_index: int
+        self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray, parameter_index: int
     ) -> np.ndarray:
         return -np.sum(
             (y - np.array([self._function(theta=theta, x=x) for x in x0]))
@@ -101,7 +122,7 @@ class GaussianNoiseModel(StatisticalModel):
         )
 
     def calculate_maximum_likelihood_estimation(
-            self, x0: np.ndarray, y: np.ndarray, minimizer: Minimizer
+        self, x0: np.ndarray, y: np.ndarray, minimizer: Minimizer
     ) -> np.ndarray:
         return minimizer(
             function=self.calculate_log_likelihood,
@@ -129,3 +150,7 @@ class GaussianNoiseModel(StatisticalModel):
     @property
     def name(self) -> str:
         return "Gaussian white noise model"
+
+    @property
+    def function(self) -> ParametricFunction:
+        return self._function
