@@ -1,14 +1,14 @@
 import numpy as np
-from piOED.parametric_function_library.interfaces.parametric_function import (
+from ..parametric_function_library.interfaces.parametric_function import (
     ParametricFunction,
 )
-from piOED.uncertainty_quantification.interfaces.probability_measure import (
+from ..uncertainty_quantification.interfaces.probability_measure import (
     ProbabilityMeasure,
 )
 
 import plotly.graph_objects as go
 
-from piOED.visualization.plotting_functions import styled_figure
+from ..visualization.plotting_functions import styled_figure
 
 
 class ParametricFunctionWithUncertainty:

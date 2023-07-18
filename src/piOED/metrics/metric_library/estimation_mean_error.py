@@ -1,13 +1,13 @@
 import numpy as np
 
-from piOED.experiments.experiment_library.latin_hypercube import LatinHypercube
-from piOED.experiments.interfaces.design_of_experiment import (
+from ...experiments.experiment_library.latin_hypercube import LatinHypercube
+from ...experiments.interfaces.design_of_experiment import (
     Experiment,
 )
-from piOED.metrics.error_functions.average_error import AverageError
-from piOED.metrics.interfaces.error_function import ErrorFunction
-from piOED.metrics.interfaces.metric import Metric
-from piOED.statistical_models.interfaces.statistical_model import StatisticalModel
+from ...metrics.error_functions.average_error import AverageError
+from ...metrics.interfaces.error_function import ErrorFunction
+from ...metrics.interfaces.metric import Metric
+from ...statistical_models.interfaces.statistical_model import StatisticalModel
 
 
 class EstimationMeanError(Metric):

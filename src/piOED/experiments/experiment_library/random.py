@@ -2,7 +2,7 @@ from random import uniform
 
 import numpy as np
 
-from piOED.experiments.interfaces.design_of_experiment import (
+from ...experiments.interfaces.design_of_experiment import (
     Experiment,
 )
 

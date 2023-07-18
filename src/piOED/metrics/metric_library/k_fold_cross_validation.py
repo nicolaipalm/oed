@@ -1,14 +1,14 @@
 import numpy as np
 from sklearn.model_selection import KFold
 
-from piOED.experiments.interfaces.design_of_experiment import (
+from ...experiments.interfaces.design_of_experiment import (
     Experiment,
 )
-from piOED.metrics.error_functions.average_error import AverageError
-from piOED.metrics.interfaces.error_function import ErrorFunction
-from piOED.metrics.interfaces.metric import Metric
-from piOED.minimizer.interfaces.minimizer import Minimizer
-from piOED.statistical_models.interfaces.statistical_model import StatisticalModel
+from ...metrics.error_functions.average_error import AverageError
+from ...metrics.interfaces.error_function import ErrorFunction
+from ...metrics.interfaces.metric import Metric
+from ...minimizer.interfaces.minimizer import Minimizer
+from ...statistical_models.interfaces.statistical_model import StatisticalModel
 
 
 class KFoldCrossValidation(Metric):

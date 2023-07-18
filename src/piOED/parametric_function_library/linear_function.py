@@ -1,6 +1,6 @@
 import numpy as np
 
-from piOED.parametric_function_library.interfaces.parametric_function import (
+from ..parametric_function_library.interfaces.parametric_function import (
     ParametricFunction,
 )
 

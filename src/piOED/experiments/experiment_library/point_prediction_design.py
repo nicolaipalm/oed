@@ -1,10 +1,10 @@
 import numpy as np
 
-from piOED.experiments.interfaces.design_of_experiment import (
+from ...experiments.interfaces.design_of_experiment import (
     Experiment,
 )
-from piOED.minimizer.interfaces.minimizer import Minimizer
-from piOED.uncertainty_quantification.parametric_function_with_uncertainty import (
+from ...minimizer.interfaces.minimizer import Minimizer
+from ...uncertainty_quantification.parametric_function_with_uncertainty import (
     ParametricFunctionWithUncertainty,
 )
 

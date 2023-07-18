@@ -1,10 +1,10 @@
 import numpy as np
 
-from piOED.experiments.interfaces.design_of_experiment import (
+from ...experiments.interfaces.design_of_experiment import (
     Experiment,
 )
-from piOED.metrics.interfaces.metric import Metric
-from piOED.statistical_models.interfaces.statistical_model import StatisticalModel
+from ...metrics.interfaces.metric import Metric
+from ...statistical_models.interfaces.statistical_model import StatisticalModel
 
 
 class DeterminantOfFisherInformationMatrix(Metric):

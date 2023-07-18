@@ -1,7 +1,7 @@
 import numpy as np
 
 #######
-from piOED.parametric_function_library.interfaces.parametric_function import (
+from ..parametric_function_library.interfaces.parametric_function import (
     ParametricFunction,
 )
 from piOED.visualization.plotting_functions import styled_figure, line_scatter

@@ -4,10 +4,10 @@ from typing import Dict, Union, Optional
 import numpy as np
 import plotly.graph_objects as go
 
-from piOED.experiments.interfaces.design_of_experiment import (
+from ...experiments.interfaces.design_of_experiment import (
     Experiment,
 )
-from piOED.visualization.plotting_functions import (
+from ...visualization.plotting_functions import (
     dot_scatter,
     line_scatter,
     styled_figure,

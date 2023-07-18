@@ -3,7 +3,7 @@ from typing import Callable
 import numpy as np
 from scipy.optimize import differential_evolution
 
-from piOED.minimizer.interfaces.minimizer import Minimizer
+from ...minimizer.interfaces.minimizer import Minimizer
 from scipy.optimize import LinearConstraint, NonlinearConstraint
 
 

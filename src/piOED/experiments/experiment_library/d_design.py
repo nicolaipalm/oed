@@ -1,10 +1,10 @@
 import numpy as np
 
-from piOED.experiments.interfaces.design_of_experiment import (
+from ...experiments.interfaces.design_of_experiment import (
     Experiment,
 )
-from piOED.minimizer.interfaces.minimizer import Minimizer
-from piOED.statistical_models.interfaces.statistical_model import StatisticalModel
+from ...minimizer.interfaces.minimizer import Minimizer
+from ...statistical_models.interfaces.statistical_model import StatisticalModel
 from scipy.optimize import LinearConstraint, NonlinearConstraint
 
 

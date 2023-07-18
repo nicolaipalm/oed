@@ -1,6 +1,6 @@
 import numpy as np
 
-from piOED.uncertainty_quantification.interfaces.probability_measure import (
+from ...uncertainty_quantification.interfaces.probability_measure import (
     ProbabilityMeasure,
 )
 

@@ -2,8 +2,8 @@ from abc import ABC, abstractmethod
 
 import numpy as np
 
-from piOED.minimizer.interfaces.minimizer import Minimizer
-from piOED.experiments.interfaces.design_of_experiment import (
+from ...minimizer.interfaces.minimizer import Minimizer
+from ...experiments.interfaces.design_of_experiment import (
     Experiment,
 )
 

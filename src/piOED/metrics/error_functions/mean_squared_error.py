@@ -1,6 +1,6 @@
 import numpy as np
 
-from piOED.metrics.interfaces.error_function import ErrorFunction
+from ...metrics.interfaces.error_function import ErrorFunction
 
 
 class MeanSquaredError(ErrorFunction):

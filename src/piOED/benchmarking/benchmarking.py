@@ -5,12 +5,12 @@ import pandas as pd
 import plotly.graph_objs as go
 from tqdm import tqdm
 
-from piOED.experiments.interfaces.design_of_experiment import (
+from ..experiments.interfaces.design_of_experiment import (
     Experiment,
 )
-from piOED.minimizer.interfaces.minimizer import Minimizer
-from piOED.statistical_models.interfaces.statistical_model import StatisticalModel
-from piOED.visualization.plotting_functions import dot_scatter, styled_figure
+from ..minimizer.interfaces.minimizer import Minimizer
+from ..statistical_models.interfaces.statistical_model import StatisticalModel
+from ..visualization.plotting_functions import dot_scatter, styled_figure
 
 
 class Benchmarking:

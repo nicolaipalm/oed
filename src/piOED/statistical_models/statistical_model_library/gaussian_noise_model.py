@@ -1,10 +1,10 @@
 import numpy as np
 
-from piOED.minimizer.interfaces.minimizer import Minimizer
-from piOED.parametric_function_library.interfaces.parametric_function import (
+from ...minimizer.interfaces.minimizer import Minimizer
+from ...parametric_function_library.interfaces.parametric_function import (
     ParametricFunction,
 )
-from piOED.statistical_models.interfaces.statistical_model import StatisticalModel
+from ...statistical_models.interfaces.statistical_model import StatisticalModel
 
 
 class GaussianNoiseModel(StatisticalModel):

@@ -1,9 +1,9 @@
 import numpy as np
 
-from piOED.experiments.interfaces.design_of_experiment import (
+from ...experiments.interfaces.design_of_experiment import (
     Experiment,
 )
-from piOED.metrics.interfaces.metric import Metric
+from ...metrics.interfaces.metric import Metric
 
 
 class StdParameterEstimations(Metric):
