@@ -53,11 +53,11 @@ class GaussianNoiseModel(StatisticalModel):
     def calculate_fisher_information(
             self, theta: np.ndarray, i: int, j: int, x0: np.ndarray
     ):
-        return (1 / self._var * np.dot(np.array(
-            [self._function.partial_derivative(theta=theta, x=x_k, parameter_index=i) for x_k in x0]).flatten().T,
-                                       np.array(
-                                           [self._function.partial_derivative(theta=theta, x=x_k, parameter_index=j) for
-                                            x_k in x0]).flatten()))
+        return (1 / self._var *
+                np.dot(
+                    np.atleast_2d(self._function.partial_derivative(theta=theta, x=x0, parameter_index=i)).flatten().T,
+                    np.atleast_2d(self._function.partial_derivative(theta=theta, x=x0, parameter_index=j)).flatten())
+                )
 
     def calculate_fisher_information_matrix(
             self, x0: np.ndarray, theta: np.ndarray
@@ -76,7 +76,10 @@ class GaussianNoiseModel(StatisticalModel):
     def calculate_log_likelihood(
             self, theta: np.ndarray, x0: np.ndarray, y: np.ndarray,
     ) -> np.ndarray:
-        return np.sum((y - np.array([self._function(theta=theta, x=x) for x in x0])) ** 2)
+        assert np.atleast_2d(y).shape == np.atleast_2d(self._function(theta=theta, x=x0)).shape, \
+            "y and f(x) must have the same shape"
+
+        return np.sum((np.atleast_2d(y) - np.atleast_2d(self._function(theta=theta, x=x0))) ** 2)
 
     def calculate_likelihood(
             self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray
@@ -87,14 +90,11 @@ class GaussianNoiseModel(StatisticalModel):
             self, x0: np.ndarray, y: np.ndarray, theta: np.ndarray, parameter_index: int
     ) -> np.ndarray:
         return -np.sum(
-            (y - np.array([self._function(theta=theta, x=x) for x in x0]))
-            * np.array(
-                [
-                    self._function.partial_derivative(
-                        theta=theta, x=x, parameter_index=parameter_index
-                    )
-                    for x in x0
-                ]
+            (np.atleast_2d(y) - np.atleast_2d(self._function(theta=theta, x=x0)))
+            * np.atleast_2d(
+                self._function.partial_derivative(
+                    theta=theta, x=x0, parameter_index=parameter_index
+                )
             )
         )
 
