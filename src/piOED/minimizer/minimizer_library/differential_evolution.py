@@ -15,7 +15,7 @@ class DifferentialEvolution(Minimizer):
     for more details of the underlying algorithm.
     """
 
-    def __init__(self, display: bool = False, maxiter: int = 1000, workers=1, init_sampling: str = 'latinhypercube'):
+    def __init__(self, display: bool = False, maxiter: int = 1000, tol: float = 1e-5, workers=1, init_sampling: str = 'latinhypercube'):
         """
         Parameters
         ----------
@@ -33,6 +33,7 @@ class DifferentialEvolution(Minimizer):
         self._maxiter = maxiter
         self.init_sampling = init_sampling
         self.workers = workers
+        self.tol = tol
 
     def __call__(
             self,
@@ -49,7 +50,7 @@ class DifferentialEvolution(Minimizer):
             args=fcn_args,
             x0=t_initial,
             disp=self.display,
-            tol=1e-5,
+            tol=self.tol,
             bounds=[
                 (lower_bounds[i], upper_bounds[i]) for i in range(len(lower_bounds))
             ],
