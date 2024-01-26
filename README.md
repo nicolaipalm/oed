@@ -1,6 +1,6 @@
 <img src="./images/pi_design.jpeg" alt="Logo of the project" align="right" width="200">
 
-# Optimal Experimental Design (OED) &middot; [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![DOI:10.1109/ACCESS.2022.3216364](https://zenodo.org/badge/DOI/10.1109/ACCESS.2022.3216364.svg)](https://doi.org/10.1109/ACCESS.2022.3216364) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)]()
+# Optimal Experimental Design (OED) &middot; [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![DOI:10.1109/ACCESS.2022.3216364](https://zenodo.org/badge/DOI/10.1109/ACCESS.2022.3216364.svg)](https://doi.org/10.1109/ACCESS.2022.3216364) [![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)]()
 > Optimal experiment of experiment, machine learning, Fisher information
 
 This project provides
