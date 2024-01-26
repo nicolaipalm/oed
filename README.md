@@ -1,13 +1,13 @@
 <img src="./images/pi_design.jpeg" alt="Logo of the project" align="right" width="200">
 
 # Optimal Experimental Design (OED) &middot; [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![DOI:10.1109/ACCESS.2022.3216364](https://zenodo.org/badge/DOI/10.1109/ACCESS.2022.3216364.svg)](https://doi.org/10.1109/ACCESS.2022.3216364) [![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)]()
-> Optimal experiment of experiment, machine learning, Fisher information
+> Optimal experimental design, machine learning, Fisher information
 
 This project provides
-- convenient interfaces for experiment of experiment, metrics to evaluate them, functions and statistical models
-- a library for statistical models, experiment of experiment and metrics
+- convenient interfaces for experiments, metrics to evaluate them, functions and statistical models
+- a library for statistical models, experiments and metrics
 - in particular the pi-experiment
-- a pipeline for benchmarking and comparing different experiment for different scenarios
+- a pipeline for benchmarking and comparing different experiments for different scenarios
 - jupyter notebooks to easily run and learn how to use this projects content
 
 This project is closely related to the "[Parameter Individual Optimal
